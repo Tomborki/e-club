@@ -1,0 +1,4 @@
+
+# Ignore vendor from composer
+composer.phar
+/vendor/
