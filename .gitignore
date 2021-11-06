@@ -2,3 +2,4 @@
 # Ignore vendor from composer
 composer.phar
 /vendor/
+/node_modules/
