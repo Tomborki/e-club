@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="cs-cz">
+<head>
+    <base href="/localhost" />
+    <meta charset="UTF-8" />
+    <title>{% block title %}{% endblock title%}</title>
+    <meta name="description" content="{% block description %}{% endblock description%}" />
+    <meta name="keywords" content="{% block keywords %}{% endblock keywords%}" />
+    <link rel="stylesheet" href="style/main.css" type="text/css"/>
+</head>
+
+<body>
+<header>
+    <h1>ITnetworkMVC - ukázkový web</h1>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="clanek/uvod">Úvod</a></li>
+        <li><a href="clanek">Články</a></li>
+        <li><a href="kontakt">Kontakt</a></li>
+    </ul>
+</nav>
+<br clear="both" />
+
+<article>
+    {% block content %}{% endblock content%}
+</article>
+
+<footer>
+    <p>Ukázkový tutoriál pro jednoduché MVC z programátorské sociální sítě
+        <a href="http://www.itnetwork.cz" target="_blank">itnetwork.cz</a>.</p>
+</footer>
+</body>
+</html>
