@@ -47,7 +47,7 @@ class RouterController extends MainController
         }
 
         // Volání controlleru
-        $this->kontroler->zpracuj($naparsovanaURL);
+         $this->kontroler->zpracuj($naparsovanaURL);
 
         // Nastavení proměnných pro šablonu
         $this->data['titulek'] = $this->kontroler->header['titulek'];

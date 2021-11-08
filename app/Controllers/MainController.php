@@ -30,6 +30,11 @@ abstract class MainController
         exit;
     }
 
+    public function displayTwig(){
+        $controllerName = strtolower(str_replace('Controller', '', get_called_class()));
+        $this->twig->display($controllerName . '.html.twig', $this->data);
+    }
+
     function loadTwig(){
 
         $loader = new Twig\Loader\FilesystemLoader($this->loadAllTemplates());
@@ -43,7 +48,8 @@ abstract class MainController
 
     }
 
-    function loadAllTemplates(){
+    function loadAllTemplates(): array
+    {
 
         $path = '../' . DIRECTORY_VIEWS;
         $result = array();

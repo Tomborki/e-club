@@ -4,7 +4,9 @@ class LoginController extends MainController
 {
     public function zpracuj($parametry)
     {
-        $this->twig->display('login.html.twig', ['name' => 'test']);
+        $this->data['hello'] = 'e-Club';
+
+        $this->displayTwig();
     }
 
 }
