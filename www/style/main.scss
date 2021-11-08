@@ -1,9 +1,245 @@
 
 @import "components/nav";
+@import "components/login-page";
 
+$first-font: 'Montserrat';
+$second-font: 'Poppins';
+$grey-color: #282828;
+$grey-gradient-trans: linear-gradient(225.46deg, rgba(43, 43, 43, 0.612) 34.38%, #000000a7 100%);
+$orange-gradient-trans:  linear-gradient(193.4deg, rgba(255, 94, 0, 0.524) 34.38%, rgba(255, 136, 0, 0.537) 100%);
+
+$break-small: 320px;
+$break-large: 1024px;
+
+@mixin respond-to($media) {
+  @if $media == handhelds {
+    @media only screen and (max-width: $break-small) { @content; }
+  }
+  @else if $media == medium-screens {
+    @media only screen and (min-width: $break-small + 1) and (max-width: $break-large - 1) { @content; }
+  }
+  @else if $media == wide-screens {
+    @media only screen and (min-width: $break-large) { @content; }
+  }
+}
 
 body{
-  box-sizing: border-box;
   margin: 0px;
-  padding: 0px;
+  background: #E5E5E5;
+  box-sizing: border-box;
+}
+
+.main-flex-div{
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  justify-content: center;
+  background-image: url('../img/background-1.jpg');
+  background-size: contain;
+
+  @media only screen and (max-width: 816px) {
+    background: white;
+  }
+
+  .grey-gradient{
+    background: $grey-gradient-trans;
+  }
+
+  .orange-gradient{
+    background: $orange-gradient-trans;
+  }
+
+  .left-div{
+
+    width: 60vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @media only screen and (max-width: 816px) {
+      display: none;
+    }
+
+    h2{
+      font-family: $first-font;
+      color: white;
+      margin: 0px;
+      font-size: 55px;
+    }
+  }
+
+  .right-div{
+    background: white;
+    width: 40vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    h2{
+      font-family: $first-font;
+      color: $grey-color;
+      margin: 0px;
+      @include respond-to(handhelds) { font-size: 25px; margin-top: 5px;}
+      @include respond-to(medium-screens) { font-size: 45px; margin-top: 10px;}
+      @include respond-to(wide-screens) { font-size: 65px; margin-top: 30px; }
+    }
+
+    p{
+      font-family: $second-font;
+      color: $grey-color;
+      margin: 0px;
+    }
+
+    #errorLogin{
+      top: -35px;
+      position: relative;
+      color: red;
+    }
+
+    .switch {
+      position: absolute;
+      display: inline-block;
+      width: 49px;
+      height: 20px;
+      top: 13px;
+      right: 10px;
+
+      @media only screen and (max-width: 816px) {
+        display: none;
+      }
+    }
+
+    /* Hide default HTML checkbox */
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    /* The slider */
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: $grey-color;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 13px;
+      width: 13px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    input:checked + .slider {
+      background-color: orange;
+    }
+
+    input:focus + .slider {
+      box-shadow: 0 0 1px orange;
+    }
+
+    input:checked + .slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+
+    input:focus, textarea:focus, select:focus{
+      outline: none;
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
+
+    form{
+      text-align: center;
+      font-family: $second-font;
+
+      svg{
+        @include respond-to(handhelds) { width: 75px;}
+        @include respond-to(medium-screens) { width: 95px; }
+        @include respond-to(wide-screens) { width: 115px; }
+      }
+
+      #eye{
+        position: absolute;
+        top: 360px;
+        right: 78px;
+      }
+
+      label{
+        display: inline-block;
+        float: left;
+        margin-top: 25px;
+        color: #848484;
+        font-size: 15px;
+
+        &:first-of-type{
+          margin-top: 36px;
+        }
+      }
+
+      input{
+        height: 30px;
+        font-size: 28px;
+        padding: 8px;
+        border: 1px solid #AAAAAA;
+        border-radius: 9px;
+
+        @include respond-to(handhelds) { font-size: 16px;}
+        @include respond-to(medium-screens) { font-size: 22px; }
+
+      }
+
+      .password-eye{
+        position: relative;
+        display: table;
+        left: 327px;
+        font-size: 20px;
+        top: -39px;
+        color: #AAAAAA;
+
+        @include respond-to(handhelds) {left: 182px; font-size: 16px; top: -36px;}
+        @include respond-to(medium-screens) { left: 247px; }
+      }
+
+      button{
+        background: #26547C;
+        color: white;
+        padding: 10px;
+        width: 200px;
+        font-size: 24px;
+        height: auto;
+        margin-top: -14px;
+        border-radius: 9px;
+        border: none;
+        cursor: pointer;
+      }
+
+      a{
+        margin-top: 36px;
+        display: block;
+        color: $grey-color;
+      }
+    }
+
+
+  }
 }

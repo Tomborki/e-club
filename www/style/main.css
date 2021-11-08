@@ -3,9 +3,237 @@ nav {
 }
 
 body {
-  box-sizing: border-box;
   margin: 0px;
-  padding: 0px;
+  background: #E5E5E5;
+  box-sizing: border-box;
+}
+
+.main-flex-div {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  justify-content: center;
+  background-image: url("../img/background-1.jpg");
+  background-size: contain;
+}
+@media only screen and (max-width: 816px) {
+  .main-flex-div {
+    background: white;
+  }
+}
+.main-flex-div .grey-gradient {
+  background: linear-gradient(225.46deg, rgba(43, 43, 43, 0.612) 34.38%, #000000a7 100%);
+}
+.main-flex-div .orange-gradient {
+  background: linear-gradient(193.4deg, rgba(255, 94, 0, 0.524) 34.38%, rgba(255, 136, 0, 0.537) 100%);
+}
+.main-flex-div .left-div {
+  width: 60vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@media only screen and (max-width: 816px) {
+  .main-flex-div .left-div {
+    display: none;
+  }
+}
+.main-flex-div .left-div h2 {
+  font-family: "Montserrat";
+  color: white;
+  margin: 0px;
+  font-size: 55px;
+}
+.main-flex-div .right-div {
+  background: white;
+  width: 40vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Hide default HTML checkbox */
+  /* The slider */
+  /* Rounded sliders */
+}
+.main-flex-div .right-div h2 {
+  font-family: "Montserrat";
+  color: #282828;
+  margin: 0px;
+}
+@media only screen and (max-width: 320px) {
+  .main-flex-div .right-div h2 {
+    font-size: 25px;
+    margin-top: 5px;
+  }
+}
+@media only screen and (min-width: 321px) and (max-width: 1023px) {
+  .main-flex-div .right-div h2 {
+    font-size: 45px;
+    margin-top: 10px;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  .main-flex-div .right-div h2 {
+    font-size: 65px;
+    margin-top: 30px;
+  }
+}
+.main-flex-div .right-div p {
+  font-family: "Poppins";
+  color: #282828;
+  margin: 0px;
+}
+.main-flex-div .right-div #errorLogin {
+  top: -35px;
+  position: relative;
+  color: red;
+}
+.main-flex-div .right-div .switch {
+  position: absolute;
+  display: inline-block;
+  width: 49px;
+  height: 20px;
+  top: 13px;
+  right: 10px;
+}
+@media only screen and (max-width: 816px) {
+  .main-flex-div .right-div .switch {
+    display: none;
+  }
+}
+.main-flex-div .right-div .switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.main-flex-div .right-div .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #282828;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+.main-flex-div .right-div .slider:before {
+  position: absolute;
+  content: "";
+  height: 13px;
+  width: 13px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+.main-flex-div .right-div input:checked + .slider {
+  background-color: orange;
+}
+.main-flex-div .right-div input:focus + .slider {
+  box-shadow: 0 0 1px orange;
+}
+.main-flex-div .right-div input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+.main-flex-div .right-div input:focus, .main-flex-div .right-div textarea:focus, .main-flex-div .right-div select:focus {
+  outline: none;
+}
+.main-flex-div .right-div .slider.round {
+  border-radius: 34px;
+}
+.main-flex-div .right-div .slider.round:before {
+  border-radius: 50%;
+}
+.main-flex-div .right-div form {
+  text-align: center;
+  font-family: "Poppins";
+}
+@media only screen and (max-width: 320px) {
+  .main-flex-div .right-div form svg {
+    width: 75px;
+  }
+}
+@media only screen and (min-width: 321px) and (max-width: 1023px) {
+  .main-flex-div .right-div form svg {
+    width: 95px;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  .main-flex-div .right-div form svg {
+    width: 115px;
+  }
+}
+.main-flex-div .right-div form #eye {
+  position: absolute;
+  top: 360px;
+  right: 78px;
+}
+.main-flex-div .right-div form label {
+  display: inline-block;
+  float: left;
+  margin-top: 25px;
+  color: #848484;
+  font-size: 15px;
+}
+.main-flex-div .right-div form label:first-of-type {
+  margin-top: 36px;
+}
+.main-flex-div .right-div form input {
+  height: 30px;
+  font-size: 28px;
+  padding: 8px;
+  border: 1px solid #AAAAAA;
+  border-radius: 9px;
+}
+@media only screen and (max-width: 320px) {
+  .main-flex-div .right-div form input {
+    font-size: 16px;
+  }
+}
+@media only screen and (min-width: 321px) and (max-width: 1023px) {
+  .main-flex-div .right-div form input {
+    font-size: 22px;
+  }
+}
+.main-flex-div .right-div form .password-eye {
+  position: relative;
+  display: table;
+  left: 327px;
+  font-size: 20px;
+  top: -39px;
+  color: #AAAAAA;
+}
+@media only screen and (max-width: 320px) {
+  .main-flex-div .right-div form .password-eye {
+    left: 182px;
+    font-size: 16px;
+    top: -36px;
+  }
+}
+@media only screen and (min-width: 321px) and (max-width: 1023px) {
+  .main-flex-div .right-div form .password-eye {
+    left: 247px;
+  }
+}
+.main-flex-div .right-div form button {
+  background: #26547C;
+  color: white;
+  padding: 10px;
+  width: 200px;
+  font-size: 24px;
+  height: auto;
+  margin-top: -14px;
+  border-radius: 9px;
+  border: none;
+  cursor: pointer;
+}
+.main-flex-div .right-div form a {
+  margin-top: 36px;
+  display: block;
+  color: #282828;
 }
 
 /*# sourceMappingURL=main.css.map */
