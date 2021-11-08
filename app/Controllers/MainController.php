@@ -6,10 +6,12 @@ abstract class MainController
     protected $view = "";
     protected $header = array('titulek' => '', 'klicova_slova' => '', 'popis' => '');
     protected $twig;
+    protected $db;
 
     public function __construct()
     {
         $this->loadTwig();
+        $this->db = new DbModel();
     }
 
     abstract function zpracuj($parametry);

@@ -33,6 +33,8 @@ class RouterController extends MainController
     {
         $naparsovanaURL = $this->parsujURL($parametry[0]);
 
+        //print_r($naparsovanaURL);
+
         if (empty($naparsovanaURL[0])){
             $this->redirect('login');
         }
@@ -50,11 +52,9 @@ class RouterController extends MainController
          $this->kontroler->zpracuj($naparsovanaURL);
 
         // Nastavení proměnných pro šablonu
-        $this->data['titulek'] = $this->kontroler->header['titulek'];
-        $this->data['popis'] = $this->kontroler->header['popis'];
-        $this->data['klicova_slova'] = $this->kontroler->header['klicova_slova'];
+        $this->data['mainColor'] = MAIN_APP_COLOR;
 
-        $this->twig->render('rozlozeni.html.twig', $this->data);
+        $this->twig->display('rozlozeni.html.twig', $this->data);
 
     }
 

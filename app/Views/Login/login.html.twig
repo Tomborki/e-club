@@ -13,18 +13,20 @@
 
 {% block content %}
     <div class="main-flex-div">
-        <div class="left-div gray-gradient">
+        <div class="left-div orange-gradient">
             <div class="left-div-content">
                 <h2>{{hello}}</h2>
             </div>
 
         </div>
         <div class="right-div">
+            {#
             <label class="switch">
                 <input type="checkbox" class="checkbox" onclick="changeBackgroundColor()">
                 <span class="slider round"></span>
             </label>
-            <form action="index.php" method="POST">
+            #}
+            <form method="POST">
                 <svg width="130" height="130" viewBox="0 0 130 130" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                             d="M16.0673 51.2891C15.3822 51.2953 14.7077 51.1201 14.1122 50.7812C13.6754 50.5358 13.292 50.2056 12.9844 49.8101C12.6767 49.4147 12.4511 48.9618 12.3206 48.4781C12.1901 47.9944 12.1573 47.4895 12.2243 46.9929C12.2913 46.4964 12.4566 46.0182 12.7106 45.5863C17.6059 37.4156 32.5001 18.3447 65.0001 18.3447C79.0843 18.3447 91.4368 22.0441 101.697 29.3363C110.142 35.3209 114.875 42.0951 117.13 45.3578C117.416 45.7691 117.616 46.2334 117.72 46.7234C117.824 47.2134 117.829 47.7193 117.734 48.2112C117.639 48.7031 117.447 49.171 117.169 49.5876C116.891 50.0041 116.532 50.3607 116.114 50.6365C115.259 51.2014 114.218 51.4114 113.212 51.2218C112.205 51.0322 111.312 50.458 110.721 49.6209C106.641 43.7531 94.1993 25.8984 65.0001 25.8984C36.4991 25.8984 23.6134 42.3287 19.4163 49.3746C19.0791 49.963 18.5908 50.4506 18.0021 50.7872C17.4133 51.1238 16.7454 51.297 16.0673 51.2891Z"
@@ -70,13 +72,13 @@
                     </defs>
                 </svg>
                 <h2>LOGIN</h2>
-                <p>do administrace webové stránky</p>
+                <p>klubový vnitří informační systém</p>
                 <label for="username">Přihlašovací jméno</label><br>
                 <input name="username" type="text"><br>
                 <label for="password">Heslo</label><br>
                 <input name="password" id="password" type="password"><span onmouseout="passwordNo()"
                                                                            onmouseover="passwordView()" class="password-eye icon-eye-4"></span><br>
-                <p id="errorLogin">{{mess}}</p>
+                <p id="errorLogin">{{errorMessage}}</p>
                 <button type="submit" name="submit">Log in <span class="icon-login-1"></span></button><br>
                 <a href="#">Zapomenuté heslo?</a>
             </form>
@@ -84,5 +86,6 @@
     </div>
 
     <script src="js/main.js"></script>
+
 
 {% endblock content%}

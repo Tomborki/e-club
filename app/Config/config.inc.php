@@ -1,7 +1,8 @@
 <?php
 
-// Pripojeni k databazi ////
+const MAIN_APP_COLOR = "#0345fc";
 
+// Pripojeni k databazi ////
 /** Adresa serveru. */
 const DB_SERVER = "localhost";
 
@@ -16,12 +17,11 @@ const DB_PASS = "abcd123*";
 
 
 //// Nazvy tabulek v DB ////
-
 /** Tabulka s pohadkami. */
-const TABLE_INTRODUCTION = "orionlogin_mvc_introduction";
+const TABLE_ROLES = "roles";
 
 /** Tabulka s uzivateli. */
-const TABLE_USER = "orionlogin_mvc_user";
+const TABLE_USER = "users";
 
 
 //// Dostupne stranky webu ////

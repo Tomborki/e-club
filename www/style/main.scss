@@ -4,6 +4,7 @@
 
 $first-font: 'Montserrat';
 $second-font: 'Poppins';
+$main-color: var(--main-color);
 $grey-color: #282828;
 $grey-gradient-trans: linear-gradient(225.46deg, rgba(43, 43, 43, 0.612) 34.38%, #000000a7 100%);
 $orange-gradient-trans:  linear-gradient(193.4deg, rgba(255, 94, 0, 0.524) 34.38%, rgba(255, 136, 0, 0.537) 100%);
@@ -44,7 +45,15 @@ body{
   }
 
   .orange-gradient{
-    background: $orange-gradient-trans;
+    &:after{
+      width: 100%;
+      height: 100%;
+      content: " ";
+      position: absolute;
+      background-color: $main-color;
+      z-index: -1;
+      opacity: 0.4;
+    }
   }
 
   .left-div{
@@ -56,6 +65,8 @@ body{
     background-image: url(../images/login-cover.jpg);
     background-size: cover;
     background-repeat: no-repeat;
+    z-index: 1;
+    position: relative;
 
     @media only screen and (max-width: 816px) {
       display: none;
@@ -125,7 +136,7 @@ body{
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: $grey-color;
+      background-color: $main-color;
       -webkit-transition: .4s;
       transition: .4s;
     }
@@ -177,6 +188,10 @@ body{
         @include respond-to(handhelds) { width: 75px;}
         @include respond-to(medium-screens) { width: 95px; }
         @include respond-to(wide-screens) { width: 115px; }
+
+        path{
+          fill: $main-color;
+        }
       }
 
       #eye{
@@ -216,6 +231,7 @@ body{
         font-size: 20px;
         top: -39px;
         color: #AAAAAA;
+        cursor: pointer;
 
         @include respond-to(handhelds) {left: 182px; font-size: 16px; top: -36px;}
         @include respond-to(medium-screens) { left: 247px; }
