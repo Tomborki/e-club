@@ -12,7 +12,7 @@ class LoginController extends MainController
 
             if($this->checkLogin($username, $password)){
                 $this->data['errorMessage'] = "Ověřeno";
-            }else{
+            }else {
                 $this->data['errorMessage'] = "Nesprávné přihlašovací jméno nebo heslo";
             }
         }

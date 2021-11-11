@@ -23,7 +23,6 @@ class DbModel {
     public function getAllUsers():array {
         // pripravim dotaz
         $q = "SELECT * FROM ".TABLE_USER;
-        $test = array(['test' => 'xd']);
         // provedu a vysledek vratim jako pole
         // protoze je o uzkazku, tak netestuju, ze bylo neco vraceno
         return $this->pdo->query($q)->fetchAll(PDO::FETCH_ASSOC);
@@ -32,11 +31,11 @@ class DbModel {
 
     /**
      *  Vrati seznam vsech uzivatelu pro spravu uzivatelu.
-     *  @return array Obsah spravy uzivatelu.
+     *
      */
     public function addUser($username, $password){
         // pripravim dotaz
-        $q = "INSERT INTO " . TABLE_USER . " (username, password, idRole) VALUES ('" . $username . "','" . $password . "',1)";
+        $q = "INSERT INTO " . TABLE_USER . " (username, password, idRole) VALUES ('" . $username . "','" . password_hash($password, PASSWORD_DEFAULT) . "',1)";
         // provedu a vysledek vratim jako pole
         // protoze je o uzkazku, tak netestuju, ze bylo neco vraceno
         $res = $this->pdo->query($q);
