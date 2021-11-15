@@ -25,6 +25,10 @@ abstract class MainController
         }
     }
 
+    /**
+     * Funkce presmerovava stranku na stranku zadanou v parametru
+     * @param $url
+     */
     public function redirect($url)
     {
         header("Location: /$url");
@@ -32,11 +36,24 @@ abstract class MainController
         exit;
     }
 
+    /**
+     * Funkce vypisuje data do prislusne sablony. Zaroven overuje, zda je uzivatel prihlaseny
+     */
     public function displayTwig(){
+
+        // ----------------- Check login ------------------
+        if(get_called_class() != 'LoginController'){
+            $this->checkUserLogin();
+        }
+
         $controllerName = strtolower(str_replace('Controller', '', get_called_class()));
+        $this->data['pageName'] = $controllerName;
         $this->twig->display($controllerName . '.html.twig', $this->data);
     }
 
+    /**
+     * Funkce nacita samostatny twig
+     */
     function loadTwig(){
 
         $loader = new Twig\Loader\FilesystemLoader($this->loadAllTemplates());
@@ -50,6 +67,11 @@ abstract class MainController
 
     }
 
+    /**
+     * Funkce nacita vsechny twig sablony.
+     * Vraci pole s adresami sablon
+     * @return array
+     */
     function loadAllTemplates(): array
     {
 
@@ -71,5 +93,15 @@ abstract class MainController
         }
 
         return $result;
+    }
+
+    /**
+     * Funkce overi, zda je uzivatel prihlaseny. Pokud ne, presmeruje ho na login stranku
+     */
+    private function checkUserLogin(){
+
+        if(!(isset($_SESSION['user'])) || empty($_SESSION['user'])){
+           $this->redirect(login);
+        }
     }
 }

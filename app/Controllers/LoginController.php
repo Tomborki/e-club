@@ -11,10 +11,13 @@ class LoginController extends MainController
             $password = $_POST["password"];
 
             if($this->checkLogin($username, $password)){
-                $this->data['errorMessage'] = "Ověřeno";
+                $_SESSION['user'] = $username;
+                $this->redirect(home);
             }else {
                 $this->data['errorMessage'] = "Nesprávné přihlašovací jméno nebo heslo";
             }
+        }else{
+            session_destroy();
         }
 
         $this->displayTwig();

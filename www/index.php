@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require '../vendor/autoload.php';
 // include page config
 require_once ('../app/Config/config.inc.php');

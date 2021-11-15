@@ -1,0 +1,14 @@
+<?php
+
+
+class HomeController extends MainController
+{
+    public function zpracuj($parametry)
+    {
+        $this->data['user'] = $_SESSION['user'];
+
+        $this->displayTwig();
+    }
+
+
+}
