@@ -1,6 +1,6 @@
 <?php
 
-const MAIN_APP_COLOR = "#0345fc";
+const MAIN_APP_COLOR = '#003ADD';
 
 // Pripojeni k databazi ////
 /** Adresa serveru. */

@@ -49,6 +49,11 @@ abstract class MainController
         $controllerName = strtolower(str_replace('Controller', '', get_called_class()));
 
         //Predani zakladnich informaci o strance
+        if(isset($_SESSION['name']) && isset($_SESSION['surname'])){
+            $this->data['name'] = $_SESSION['name'];
+            $this->data['surname'] = $_SESSION['surname'];
+        }
+
         $this->data['pageName'] = $controllerName;
         $this->data['mainColor'] = MAIN_APP_COLOR;
 
@@ -104,7 +109,7 @@ abstract class MainController
      */
     private function checkUserLogin(){
 
-        if(!(isset($_SESSION['user'])) || empty($_SESSION['user'])){
+        if(!(isset($_SESSION['name'])) || empty($_SESSION['surname'])){
            $this->redirect(login);
         }
     }

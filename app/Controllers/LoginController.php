@@ -10,8 +10,11 @@ class LoginController extends MainController
             $username = $_POST["username"];
             $password = $_POST["password"];
 
-            if($this->checkLogin($username, $password)){
-                $_SESSION['user'] = $username;
+            $check = $this->checkLogin($username, $password);
+
+            if($check != false){
+                $_SESSION['name'] = $check['name'];
+                $_SESSION['surname'] = $check['surname'];
                 $this->redirect(home);
             }else {
                 $this->data['errorMessage'] = "Nesprávné přihlašovací jméno nebo heslo";
@@ -26,13 +29,12 @@ class LoginController extends MainController
     /**
      * @param $username
      * @param $password
-     * @return bool
      * Metoda overuje uzivatelske jmeno a heslo z databze
      */
-    private function checkLogin($username, $password):bool{
+    private function checkLogin($username, $password){
         foreach ($this->db->getAllUsers() as $user){
             if($user['username'] == $username && password_verify($password, $user['password'])){
-                return true;
+                return array('name' => $user['name'], 'surname' => $user['surname']);
             }
         }
         return false;
