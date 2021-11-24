@@ -1,17 +1,25 @@
-
-
 {% extends 'rozlozeni.html.twig' %}
 
 {# Page title #}
-{% block title %} Home {% endblock title %}
+{% block title %}
+Hlavní stránka
+{% endblock title %}
 
 {# Page description #}
-{% block description %} {% endblock description %}
+{% block description %}Hlavní stránka aplikace e-club{% endblock description %}
 
 {# Page keywords #}
-{% block keywords %} {% endblock keywords %}
+{% block keywords %}{% endblock keywords %}
 
 {% block content %}
-
-
+<h2>Ahoj
+    <span id="name"></span>!
+</h2>
 {% endblock content%}
+
+{% block scripts %}
+<script src="/js/osloveni.js"></script>
+<script>
+    $("#name").text(osloveni("{{ name }}"));
+</script>
+{% endblock scripts%}

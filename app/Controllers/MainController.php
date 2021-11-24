@@ -20,7 +20,7 @@ abstract class MainController
     {
         if ($this->view)
         {
-            extract($this->data);
+            //extract($this->data);
             require('../' . DIRECTORY_VIEWS . $this->view . ".html.twig");
         }
     }
@@ -52,6 +52,7 @@ abstract class MainController
         if(isset($_SESSION['name']) && isset($_SESSION['surname'])){
             $this->data['name'] = $_SESSION['name'];
             $this->data['surname'] = $_SESSION['surname'];
+            $this->data['userID'] = $_SESSION['userID'];
         }
 
         $this->data['pageName'] = $controllerName;

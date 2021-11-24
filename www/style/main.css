@@ -1,16 +1,34 @@
+*,
+::before,
+::after {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
 .header {
   width: 100%;
   height: 3rem;
   position: fixed;
   top: 0;
   left: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   padding: 0 1rem;
   background-color: #F7F6FB;
   z-index: 100;
-  transition: 0.5s;
+  -webkit-transition: .5s;
+  transition: .5s;
 }
 
 .header_toggle {
@@ -22,20 +40,18 @@
 .header_img {
   width: 35px;
   height: 35px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   border-radius: 50%;
   overflow: hidden;
 }
+
 .header_img img {
   width: 40px;
-}
-
-.header_name {
-  margin: 0;
-  margin-left: auto;
-  margin-right: 12px;
-  margin-bottom: 4px;
 }
 
 .l-navbar {
@@ -45,26 +61,40 @@
   width: 68px;
   height: 100vh;
   background-color: var(--main-color);
-  padding: 0.5rem 1rem 0 0;
-  transition: 0.5s;
+  padding: .5rem 1rem 0 0;
+  -webkit-transition: .5s;
+  transition: .5s;
   z-index: 100;
 }
 
 .nav {
   height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   overflow: hidden;
 }
 
-.nav_logo, .nav_link {
+.nav_logo,
+.nav_link {
+  display: -ms-grid;
   display: grid;
-  grid-template-columns: max-content max-content;
-  align-items: center;
-  column-gap: 1rem;
-  text-decoration: none;
-  padding: 0.5rem 0 0.5rem 1.5rem;
+  -ms-grid-columns: max-content max-content;
+      grid-template-columns: -webkit-max-content -webkit-max-content;
+      grid-template-columns: max-content max-content;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-column-gap: 1rem;
+          column-gap: 1rem;
+  padding: .5rem 0 .5rem 1.5rem;
 }
 
 .nav_logo {
@@ -83,12 +113,15 @@
 
 .nav_link {
   position: relative;
-  color: #F7F6FB;
+  color: #AFA5D9;
   margin-bottom: 1.5rem;
-  transition: 0.3s;
+  -webkit-transition: .3s;
+  transition: .3s;
+  text-decoration: none;
 }
+
 .nav_link:hover {
-  color: white;
+  color: #F7F6FB;
 }
 
 .nav_icon {
@@ -99,15 +132,19 @@
   left: 0;
 }
 
-.body-pd {
-  padding-left: calc(68px + 1rem);
-}
-
 .active {
   color: #F7F6FB;
 }
+
+.header_name {
+  margin: 0;
+  margin-left: auto;
+  margin-right: 12px;
+  margin-bottom: 3px;
+}
+
 .active::before {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   width: 2px;
@@ -120,16 +157,10 @@
 }
 
 @media screen and (min-width: 768px) {
-  #body-pd {
-    margin: 4rem 0 0 0;
-    padding-left: calc(68px + 2rem);
-  }
-
   .header {
-    height: 4rem;
+    height: calc(3rem + 1rem);
     padding: 0 2rem 0 calc(68px + 2rem);
   }
-
   .header_img {
     width: 40px;
     height: 40px;
@@ -137,40 +168,63 @@
   .header_img img {
     width: 45px;
   }
-
   .l-navbar {
     left: 0;
     padding: 1rem 1rem 0 0;
   }
-
   .show {
-    width: 224px;
+    width: calc(68px + 156px);
   }
-
   .body-pd {
-    padding-left: 256px;
+    padding-left: calc(68px + 188px);
   }
 }
+
+#body-pd {
+  position: relative;
+  margin: 3rem 0 0 0 !important;
+  padding: 0 1rem !important;
+  font-size: 1rem;
+  -webkit-transition: .5s;
+  transition: .5s;
+  margin-top: 80px !important;
+  padding-left: 100px !important;
+}
+
+@media only screen and (max-width: 768px) {
+  #body-pd {
+    padding-left: 15px !important;
+  }
+}
+
 body {
   margin: 0px;
   background: #E5E5E5;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .main-flex-div {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   width: 100%;
   height: 100vh;
-  justify-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
+
 @media only screen and (max-width: 816px) {
   .main-flex-div {
     background: white;
   }
 }
+
 .main-flex-div .grey-gradient {
   background: linear-gradient(225.46deg, rgba(43, 43, 43, 0.612) 34.38%, #000000a7 100%);
 }
+
 .main-flex-div .orange-gradient:after {
   width: 100%;
   height: 100%;
@@ -180,71 +234,94 @@ body {
   z-index: -1;
   opacity: 0.4;
 }
+
 .main-flex-div .left-div {
   width: 60vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   background-image: url(../images/login-cover.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   z-index: 1;
   position: relative;
 }
+
 @media only screen and (max-width: 816px) {
   .main-flex-div .left-div {
     display: none;
   }
 }
+
 .main-flex-div .left-div h2 {
   font-family: "Montserrat";
   color: white;
   margin: 0px;
   font-size: 55px;
 }
+
 .main-flex-div .right-div {
   background: white;
   width: 40vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   /* Hide default HTML checkbox */
   /* The slider */
   /* Rounded sliders */
 }
+
 .main-flex-div .right-div h2 {
   font-family: "Montserrat";
   color: #282828;
   margin: 0px;
 }
+
 @media only screen and (max-width: 320px) {
   .main-flex-div .right-div h2 {
     font-size: 25px;
     margin-top: 5px;
   }
 }
-@media only screen and (min-width: 321px) and (max-width: 1023px) {
+
+@media only screen and (min-width: 320px) and (max-width: 1024px) {
   .main-flex-div .right-div h2 {
     font-size: 45px;
     margin-top: 10px;
   }
 }
+
 @media only screen and (min-width: 1024px) {
   .main-flex-div .right-div h2 {
     font-size: 65px;
     margin-top: 30px;
   }
 }
+
 .main-flex-div .right-div p {
   font-family: "Poppins";
   color: #282828;
   margin: 0px;
 }
+
 .main-flex-div .right-div #errorLogin {
   top: -35px;
   position: relative;
   color: red;
 }
+
 .main-flex-div .right-div .switch {
   position: absolute;
   display: inline-block;
@@ -253,16 +330,19 @@ body {
   top: 13px;
   right: 10px;
 }
+
 @media only screen and (max-width: 816px) {
   .main-flex-div .right-div .switch {
     display: none;
   }
 }
+
 .main-flex-div .right-div .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
+
 .main-flex-div .right-div .slider {
   position: absolute;
   cursor: pointer;
@@ -271,9 +351,10 @@ body {
   right: 0;
   bottom: 0;
   background-color: var(--main-color);
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
+  -webkit-transition: .4s;
+  transition: .4s;
 }
+
 .main-flex-div .right-div .slider:before {
   position: absolute;
   content: "";
@@ -282,56 +363,69 @@ body {
   left: 4px;
   bottom: 4px;
   background-color: white;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
+  -webkit-transition: .4s;
+  transition: .4s;
 }
+
 .main-flex-div .right-div input:checked + .slider {
   background-color: orange;
 }
+
 .main-flex-div .right-div input:focus + .slider {
-  box-shadow: 0 0 1px orange;
+  -webkit-box-shadow: 0 0 1px orange;
+          box-shadow: 0 0 1px orange;
 }
+
 .main-flex-div .right-div input:checked + .slider:before {
   -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
   transform: translateX(26px);
 }
+
 .main-flex-div .right-div input:focus, .main-flex-div .right-div textarea:focus, .main-flex-div .right-div select:focus {
   outline: none;
 }
+
 .main-flex-div .right-div .slider.round {
   border-radius: 34px;
 }
+
 .main-flex-div .right-div .slider.round:before {
   border-radius: 50%;
 }
+
 .main-flex-div .right-div form {
   text-align: center;
   font-family: "Poppins";
 }
+
 @media only screen and (max-width: 320px) {
   .main-flex-div .right-div form svg {
     width: 75px;
   }
 }
-@media only screen and (min-width: 321px) and (max-width: 1023px) {
+
+@media only screen and (min-width: 320px) and (max-width: 1024px) {
   .main-flex-div .right-div form svg {
     width: 95px;
   }
 }
+
 @media only screen and (min-width: 1024px) {
   .main-flex-div .right-div form svg {
     width: 115px;
   }
 }
+
 .main-flex-div .right-div form svg path {
   fill: var(--main-color);
 }
+
 .main-flex-div .right-div form #eye {
   position: absolute;
   top: 360px;
   right: 78px;
 }
+
 .main-flex-div .right-div form label {
   display: inline-block;
   float: left;
@@ -339,26 +433,30 @@ body {
   color: #848484;
   font-size: 15px;
 }
+
 .main-flex-div .right-div form label:first-of-type {
   margin-top: 36px;
 }
+
 .main-flex-div .right-div form input {
-  height: 30px;
   font-size: 28px;
   padding: 8px;
   border: 1px solid #AAAAAA;
   border-radius: 9px;
 }
+
 @media only screen and (max-width: 320px) {
   .main-flex-div .right-div form input {
     font-size: 16px;
   }
 }
-@media only screen and (min-width: 321px) and (max-width: 1023px) {
+
+@media only screen and (min-width: 320px) and (max-width: 1024px) {
   .main-flex-div .right-div form input {
     font-size: 22px;
   }
 }
+
 .main-flex-div .right-div form .password-eye {
   position: relative;
   display: table;
@@ -368,6 +466,7 @@ body {
   color: #AAAAAA;
   cursor: pointer;
 }
+
 @media only screen and (max-width: 320px) {
   .main-flex-div .right-div form .password-eye {
     left: 182px;
@@ -375,11 +474,13 @@ body {
     top: -36px;
   }
 }
-@media only screen and (min-width: 321px) and (max-width: 1023px) {
+
+@media only screen and (min-width: 320px) and (max-width: 1024px) {
   .main-flex-div .right-div form .password-eye {
     left: 247px;
   }
 }
+
 .main-flex-div .right-div form button {
   background: #26547C;
   color: white;
@@ -392,10 +493,10 @@ body {
   border: none;
   cursor: pointer;
 }
+
 .main-flex-div .right-div form a {
   margin-top: 36px;
   display: block;
   color: #282828;
 }
-
 /*# sourceMappingURL=main.css.map */
