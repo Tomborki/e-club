@@ -51,11 +51,9 @@ class RouterController extends MainController
         // Volání controlleru
          $this->kontroler->zpracuj($naparsovanaURL);
 
-        // Nastavení proměnných pro šablonu
-        $this->data['mainColor'] = MAIN_APP_COLOR;
+       // print_r($this->kontroler);
 
-        $this->twig->display('rozlozeni.html.twig', $this->data);
-
+        $this->twig->render('rozlozeni.html.twig', $this->data);
     }
 
 }

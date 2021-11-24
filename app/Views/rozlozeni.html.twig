@@ -23,16 +23,18 @@
     </style>
 </head>
 <body>
-    <nav>
-        {% include '_components/nav.html.twig' %}
-    </nav>
-
+    {% if pageName != 'login' %}
+        <nav>
+            {% include '_components/nav.html.twig' %}
+        </nav>
+    {% endif %}
     <div id="main-content">
         {% block content %}{% endblock content%}
     </div>
-
-    <footer>
-        {% include '_components/footer.html.twig' %}
-    </footer>
+    {% if pageName != 'login' %}
+        <footer>
+            {% include '_components/footer.html.twig' %}
+        </footer>
+    {% endif %}
 </body>
 </html>

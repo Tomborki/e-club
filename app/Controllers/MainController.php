@@ -47,7 +47,11 @@ abstract class MainController
         }
 
         $controllerName = strtolower(str_replace('Controller', '', get_called_class()));
+
+        //Predani zakladnich informaci o strance
         $this->data['pageName'] = $controllerName;
+        $this->data['mainColor'] = MAIN_APP_COLOR;
+
         $this->twig->display($controllerName . '.html.twig', $this->data);
     }
 
