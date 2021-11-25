@@ -76,17 +76,31 @@ a {
 }
 
 .nav_logo {
-    margin-bottom: 2rem
+    margin-bottom: 2rem;
+    text-decoration: none;
+    margin-top: -8px;
 }
 
 .nav_logo-icon {
-    font-size: 1.25rem;
-    color: $whiteColor
+    position: relative;
+    right: 3px;
+    top: 0px;
+
+    svg{
+        margin: auto;
+        max-width: 26px;
+        height: fit-content;
+
+        path{
+            fill: $whiteColor;
+        }
+    }
 }
 
 .nav_logo-name {
     color: $whiteColor;
-    font-weight: 700
+    font-weight: 700;
+    font-size: 20px;
 }
 
 .nav_link {
@@ -131,6 +145,10 @@ a {
 
 .height-100 {
     height: 100vh
+}
+
+.body-pd{
+    padding-left: 82px;
 }
 
 @media screen and (min-width: 768px) {

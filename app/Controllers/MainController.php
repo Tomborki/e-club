@@ -16,6 +16,7 @@ abstract class MainController
 
     abstract function zpracuj($parametry);
 
+
     public function showView()
     {
         if ($this->view)

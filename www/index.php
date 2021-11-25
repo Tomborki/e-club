@@ -11,5 +11,5 @@ require_once ('autoloader.php');
 
 $router = new RouterController();
 $router->zpracuj(array($_SERVER['REQUEST_URI']));
-$router->showView();
+//$router->showView();
 
