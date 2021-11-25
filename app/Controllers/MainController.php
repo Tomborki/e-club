@@ -7,6 +7,7 @@ abstract class MainController
     protected $header = array('titulek' => '', 'klicova_slova' => '', 'popis' => '');
     protected $twig;
     protected $db;
+    protected $blackListRoles;
 
     public function __construct()
     {
@@ -40,10 +41,11 @@ abstract class MainController
     /**
      * Funkce vypisuje data do prislusne sablony. Zaroven overuje, zda je uzivatel prihlaseny
      */
-    public function displayTwig(){
+    public function displayTwig($allowRoles = array(), $specificController = NULL){
 
         // ----------------- Check login ------------------
         $this->checkUserLogin(get_called_class());
+
 
         $controllerName = strtolower(str_replace('Controller', '', get_called_class()));
 
@@ -52,12 +54,24 @@ abstract class MainController
             $this->data['name'] = $_SESSION['name'];
             $this->data['surname'] = $_SESSION['surname'];
             $this->data['userID'] = $_SESSION['userID'];
+            $this->data['userRole'] = $_SESSION['userRole'];
         }
 
         $this->data['pageName'] = $controllerName;
         $this->data['mainColor'] = MAIN_APP_COLOR;
 
-        $this->twig->display($controllerName . '.html.twig', $this->data);
+        if(!($this->checkRole(get_called_class(), $allowRoles))){
+            $this->twig->display('opravneni.html.twig', $this->data);
+            return;
+        }
+
+        if(is_null($specificController)){
+
+            $this->twig->display($controllerName . '.html.twig', $this->data);
+        }else{
+            $this->twig->display($specificController . '.html.twig', $this->data);
+        }
+
     }
 
     /**
@@ -116,6 +130,32 @@ abstract class MainController
                 if(!(isset($_SESSION['name'])) || empty($_SESSION['surname'])){
                     $this->redirect(login);
                 }
+        }
+    }
+
+    /**
+     * Funce overuje, jestli ma uzivatel dostatecnou roli na to, aby mohl stranku zobrazit
+     * @param $class stranka, ktera se nacita
+     * @param $roles role, ktere jsou povolene
+     * @return bool vraci true nebo false podle toho, jestli má uživatel správná prave.. pokud ne vrati false
+     * pokud promena $roles je prazdne pole, uzivatel ma pravo tutu stranku zobrazit
+     */
+    private function checkRole($class, $roles){
+
+        if(empty($roles)){
+            return true;
+        }
+
+        switch ($class){
+            case "LoginController": return true;
+            case "Error404Controller": return true;
+            default:
+                foreach ($roles as $oneRole){
+                    if($oneRole == $_SESSION['userRole']){
+                        return true;
+                    }
+                }
+                return false;
         }
     }
 }
