@@ -42,9 +42,7 @@ abstract class MainController
     public function displayTwig(){
 
         // ----------------- Check login ------------------
-        if(get_called_class() != 'LoginController'){
-            $this->checkUserLogin();
-        }
+        $this->checkUserLogin(get_called_class());
 
         $controllerName = strtolower(str_replace('Controller', '', get_called_class()));
 
@@ -108,10 +106,15 @@ abstract class MainController
     /**
      * Funkce overi, zda je uzivatel prihlaseny. Pokud ne, presmeruje ho na login stranku
      */
-    private function checkUserLogin(){
+    private function checkUserLogin($class){
 
-        if(!(isset($_SESSION['name'])) || empty($_SESSION['surname'])){
-           $this->redirect(login);
+        switch ($class){
+            case "LoginController": return;
+            case "Error404Controller": return;
+            default:
+                if(!(isset($_SESSION['name'])) || empty($_SESSION['surname'])){
+                    $this->redirect(login);
+                }
         }
     }
 }

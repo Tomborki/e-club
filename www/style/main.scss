@@ -1,6 +1,7 @@
 
 @import "components/nav";
 @import "components/login-page";
+@import "components/error404";
 
 $first-font: 'Montserrat';
 $second-font: 'Poppins';
@@ -11,7 +12,6 @@ $orange-gradient-trans:  linear-gradient(193.4deg, rgba(255, 94, 0, 0.524) 34.38
 
 $break-small: 320px;
 $break-large: 1024px;
-
 
 
 @mixin respond-to($media) {
