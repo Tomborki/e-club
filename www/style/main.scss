@@ -2,6 +2,9 @@
 @import "components/nav";
 @import "components/login-page";
 @import "components/error404";
+@import "components/permission-page";
+@import "components/calendar";
+@import "components/home-page";
 
 $first-font: 'Montserrat';
 $second-font: 'Poppins';
@@ -26,18 +29,29 @@ $break-large: 1024px;
   }
 }
 
+html{
+  height: 100%;
+  width: 100%;
+}
+
 #body-pd {
     position: relative;
-    margin: 3rem 0 0 0 !important;
     padding: 0 1rem !important; 
     font-size: 1rem;
     transition: .5s;
-    margin-top: 80px !important;
+    padding-top: 90px !important;
     padding-left: 100px !important;
+    height: 100%;
+    box-sizing: border-box;
+    background-color: #eeeeee;
 
     @media only screen and (max-width: 768px) {
         padding-left: 15px !important;
     }
+
+  #main-content{
+    height: 100%;
+  }
 }
 
 body{
@@ -282,7 +296,5 @@ body{
         color: $grey-color;
       }
     }
-
-
   }
 }

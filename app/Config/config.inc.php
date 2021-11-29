@@ -12,12 +12,12 @@ const MAIN_APP_COLOR = '#003ADD';
  * array(
  *       Nazev stranky
  *       jmeno ikonky na boxicons https://boxicons.com/ - (bx bx-{jmeno})
- *       pole s cislama povolenych roly
+ *       pole s cislama povolenych roly (all = vsichni)
  *       odkaz na controller
  * )
  */
 const NAV_ITEMS = array(
-    array('Hlavní stránka', 'home-alt', array(1,2,3), 'home'),
+    array('Hlavní stránka', 'home-alt', array('all'), 'home'),
     array('Mé pokuty', 'coin', array(1,2,3), 'my-fines'),
     array('Mé zápasy', 'football', array(1,2,3), 'my-matches'),
     array('Uživatelé', 'user', array(3), 'users'),

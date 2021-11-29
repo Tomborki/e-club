@@ -5,6 +5,9 @@
 {% block keywords %} K této stránce nemáte oprávnění {% endblock keywords %}
 
 {% block content %}
-    <i class='bx bxs-error-alt'></i>
-    <h1>Bohužel... Nemáte oprávnění</h1>
+    <div class="permission-div">
+        <i class='bx bxs-error-alt'></i>
+        <h2>K zobrazení této stránky nemáte dostatečné opravnění</h2>
+        <a class="btn btn-outline-danger" href="home" role="button">Zpět na hlavní stránku</a>
+    </div>
 {% endblock content%}

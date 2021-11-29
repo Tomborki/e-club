@@ -1,0 +1,241 @@
+#calendar-esports {
+  font-weight: bold;
+  color: #575656;
+
+
+  .divTableCalendar {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+  .divTableRowCalendar {
+    display: table-row;
+  }
+  .divTableHeadingCalendar {
+    background-color: #eee;
+    display: table-header-group;
+  }
+  .divTableCellCalendar,
+  .divTableHeadCalendar {
+    display: table-cell;
+    padding: 0px 5px;
+    position: relative;
+
+    &::before {
+      content: '';
+      display: block;
+      padding-top: 100%;
+      background-color: #eeeeee;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+  }
+  .divTableHeadingCalendar {
+    background-color: #eee;
+    display: table-header-group;
+    font-weight: bold;
+  }
+  .divTableFootCalendar {
+    background-color: #eee;
+    display: table-footer-group;
+    font-weight: bold;
+  }
+  .divTableBodyCalendar {
+    display: table-row-group;
+  }
+
+  .header-days {
+    background-color: grey;
+    display: none;
+
+    .divTableCellCalendar,
+    .divTableHeadCalendar {
+      display: table-cell;
+      padding: 3px 0px;
+    }
+  }
+
+  .prev,
+  .next {
+    color: rgba(255, 255, 255, 0.397);
+    visibility: hidden;
+  }
+
+  .event {
+    color: white;
+    // transition: all 0.3s;
+    //  cursor: pointer;
+
+    &:hover {
+      // color: black;
+      // background-color: red;
+    }
+  }
+  .event:before {
+    // background-color: #f7a941 !important;
+    background-color: red;
+  }
+
+  .header-month {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    font-size: 20px;
+    margin-bottom: 10px;
+
+    p {
+      margin: 0px;
+      width: 160px;
+      text-align: center;
+    }
+
+    img {
+      height: 30px;
+      cursor: pointer;
+    }
+
+    .arrow-circle {
+      border-radius: 100%;
+      padding: 5px 9px 1px 2px;
+      position: relative;
+      top: -10px;
+      margin-left: 8px;
+      transition: all 0.3s ease-in-out;
+      cursor: pointer;
+
+      &:first-of-type {
+        padding: 5px 2px 1px 9px;
+        margin-left: 0px;
+        margin-right: 8px;
+      }
+
+      &:hover {
+        background-color: #eeeeee;
+        transition: all 0.3s ease-in-out;
+      }
+    }
+
+    .arrow {
+      border: solid #575656;
+      border-width: 0 6px 6px 0;
+      display: inline-block;
+      padding: 14px;
+    }
+
+    .right {
+      transform: rotate(-45deg);
+      -webkit-transform: rotate(-45deg) scale(0.5);
+      position: relative;
+    }
+
+    .left {
+      transform: rotate(135deg);
+      -webkit-transform: rotate(135deg) scale(0.5);
+      position: relative;
+    }
+
+    .up {
+      transform: rotate(-135deg);
+      -webkit-transform: rotate(-135deg);
+    }
+
+    .down {
+      transform: rotate(45deg);
+      -webkit-transform: rotate(45deg);
+    }
+  }
+
+  span {
+    display: table;
+    padding: 0px 15px;
+    font-size: 25px;
+    position: relative;
+    top: -20px;
+    margin-top: -20px;
+  }
+
+  .today {
+    //background-color: grey;
+  }
+
+  .eventContent {
+    position: absolute;
+    top: 0;
+    width: 94%;
+    height: 74%;
+    overflow-y: auto;
+
+    p {
+      padding-bottom: 9px;
+      padding-top: 7px;
+      padding-left: 10px;
+      padding-right: 10px;
+      font-weight: 700;
+      font-size: 20px;
+      border: none;
+      margin-top: 5px;
+      text-align: center;
+
+      @media only screen and (max-width: 1920px) {
+        font-size: 15px;
+
+        @media only screen and (max-width: 1140px) {
+          font-size: 13px;
+
+          @media only screen and (max-width: 1150) {
+            font-size: 11px;
+          }
+        }
+      }
+    }
+  }
+
+  .event-div {
+    background-color: grey;
+    border-top: 4px solid red;
+    border-bottom: 4px solid gray;
+    display: none;
+
+    p {
+      padding: 0px 15px;
+      margin: 5px 0px 0px 0px;
+
+      &:last-of-type {
+        font-weight: normal;
+        margin-bottom: 10px;
+        margin-top: 0px;
+      }
+    }
+  }
+}
+.items-container {
+  margin-left: -15px;
+  a {
+    flex: 0 0 25% !important;
+  }
+  button {
+    font-size: 1rem !important;
+    max-width: 210px !important;
+    &::before {
+      font-size: 1.5rem !important;
+      top: 4px !important;
+    }
+  }
+}
+.item-content {
+  p {
+    font-size: 1.3rem !important;
+    margin-top: 25px !important;
+  }
+}
+
+@media (max-width: 1919px) {
+  .items-container a {
+    flex: 0 0 33.333% !important;
+  }
+}
+@media (max-width: 1240px) {
+  .items-container a {
+    flex: 0 50% !important;
+  }
+}

@@ -12,14 +12,91 @@ Hlavní stránka
 {% block keywords %}{% endblock keywords %}
 
 {% block content %}
-<h2>Ahoj
-    <span id="name"></span>!
-</h2>
+    <div id="homepage">
+        <h2>Ahoj
+            <span id="name"></span>!
+        </h2>
+        <div id="calendar">
+            <div id="calendar-esports">
+                <div class="header-month">
+                    <div class="arrow-circle arrow-prev">
+                        <i class=" arrow left"></i>
+                    </div>
+                    <p></p>
+                    <div class="arrow-circle arrow-next">
+                        <i class=" arrow right"></i>
+                    </div>
+                </div>
+                <div id="calendar-content"></div>
+            </div>
+            <div class="matches">
+                <h5>Nejbližší zápasy</h5>
+                <div class="match">
+                    <div class="date">14.11.</div>
+                    <div class="info">
+                        <p><span>Letná</span>vs<span>Prazdroj</span></p>
+                    </div>
+                </div>
+                <div class="match">
+                    <div class="date">29.11.</div>
+                    <div class="info">
+                        <p><span>Rapid B</span>vs<span>Letná</span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <a href="my-matches" class="btn btn-primary" type="button">Další zápasy</a>
+            </div>
+        </div>
+    </div>
 {% endblock content%}
 
 {% block scripts %}
-<script src="/js/osloveni.js"></script>
-<script>
-    $("#name").text(osloveni("{{ name }}"));
-</script>
+    <script src="/js/osloveni.js"></script>
+    <script src="/js/Calendar.js"></script>
+    <script>
+
+        // 2d pole s daty, ktere se maji ukazat v kalendari.
+        // Na prvnim indexu se zadava den, kde se ma akce v kalendari zobrazit ve formatu: "rok-mesic-den"
+        // Na druhem indexu je zbarveni polozky v kalendar
+        // Pote je dalsi prvek pole vypsan jako jedna akce a prvek za ni je kam smeruje odkaz po kliknuti na akci v kalendari
+        // např. "Akce 1", "https://www.google.cz",
+        // Pokud bude jen nazev akce, ale bude chybet odkaz, potom když se klikne na akci v kalendari, tak se nic nestane
+        var events = [
+            [new Date("2021-11-14"), "{{mainColor}}",
+                "Letná vs Prazdroj", "my-matches",
+            ],
+            [new Date("2021-11-29"), "{{mainColor}}",
+                "Rapid B vs Letná", "my-matches",
+            ],
+        ];
+
+        // Iniciace kalendare, nasledna metoda print() vypise kalendar do divu s id indentifikatorem "calendar-content"
+        var calendar = new Calendar(events);
+        calendar.print();
+
+        // Element, ktery ma indentifikator "arrow-next" prepina kalendar dopredu
+        $(".arrow-next").click(function (e) {
+            calendar.nextMonth();
+        });
+
+        // Element, ktery ma indentifikator "arrow-prev" prepina kalendar dozadu
+        $(".arrow-prev").click(function (e) {
+            calendar.prevMonth();
+        });
+
+        // Funkce, ktera zajisti zobrazeni spravneho divu s informacema o eventu, na ktery na jedete mysi
+        function showEventDiv(id) {
+            $(".eventId" + id).show("fast");
+        }
+
+        // Funkce, ktera zajisti skryti spravneho divu s informacema o eventu kdyz odjedete mysi z dne
+        function hideEventDiv(id) {
+            $(".eventId" + id).hide("fast");
+        }
+
+    </script>
+    <script>
+        $("#name").text(osloveni("{{ name }}"));
+    </script>
 {% endblock scripts%}

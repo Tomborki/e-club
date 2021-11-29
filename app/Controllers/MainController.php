@@ -88,7 +88,7 @@ abstract class MainController
             'autoescape' => true
         );
 
-        $this->twig = new Twig\Environment($loader, $params);
+        $this->twig = new Twig\Environment($loader);
         $this->twig->addExtension(new \Twig\Extension\DebugExtension());
 
     }
@@ -145,14 +145,13 @@ abstract class MainController
      */
     private function checkRole($class, $roles){
 
-        if(empty($roles)){
-            return true;
-        }
-
         switch ($class){
             case "LoginController": return true;
             case "Error404Controller": return true;
             default:
+                if($roles[0] == "all") {
+                    return true;
+                }
                 foreach ($roles as $oneRole){
                     if($oneRole == $_SESSION['userRole']){
                         return true;

@@ -45,7 +45,9 @@ class RouterController extends MainController
         if (file_exists('../' . DIRECTORY_CONTROLLERS . $tridaKontroleru . ".php")){
             $this->kontroler = new $tridaKontroleru;
         } else{
-           // $this->redirect('error404');
+            if(!DEBUG_MODE){
+                $this->redirect('error404');
+            }
         }
 
         // Volání controlleru

@@ -197,19 +197,338 @@ a {
   margin-top: 25px;
 }
 
+.permission-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 75%;
+}
+.permission-div h2 {
+  text-align: center;
+  margin-top: 20px;
+}
+.permission-div i {
+  font-size: 110px;
+  color: var(--bs-danger);
+}
+.permission-div a {
+  margin-top: 20px;
+}
+
+#calendar-esports {
+  font-weight: bold;
+  color: #575656;
+}
+#calendar-esports .divTableCalendar {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+#calendar-esports .divTableRowCalendar {
+  display: table-row;
+}
+#calendar-esports .divTableHeadingCalendar {
+  background-color: #eee;
+  display: table-header-group;
+}
+#calendar-esports .divTableCellCalendar,
+#calendar-esports .divTableHeadCalendar {
+  display: table-cell;
+  padding: 0px 5px;
+  position: relative;
+}
+#calendar-esports .divTableCellCalendar::before,
+#calendar-esports .divTableHeadCalendar::before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+  background-color: #eeeeee;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+#calendar-esports .divTableHeadingCalendar {
+  background-color: #eee;
+  display: table-header-group;
+  font-weight: bold;
+}
+#calendar-esports .divTableFootCalendar {
+  background-color: #eee;
+  display: table-footer-group;
+  font-weight: bold;
+}
+#calendar-esports .divTableBodyCalendar {
+  display: table-row-group;
+}
+#calendar-esports .header-days {
+  background-color: grey;
+  display: none;
+}
+#calendar-esports .header-days .divTableCellCalendar,
+#calendar-esports .header-days .divTableHeadCalendar {
+  display: table-cell;
+  padding: 3px 0px;
+}
+#calendar-esports .prev,
+#calendar-esports .next {
+  color: rgba(255, 255, 255, 0.397);
+  visibility: hidden;
+}
+#calendar-esports .event {
+  color: white;
+}
+#calendar-esports .event:before {
+  background-color: red;
+}
+#calendar-esports .header-month {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+#calendar-esports .header-month p {
+  margin: 0px;
+  width: 160px;
+  text-align: center;
+}
+#calendar-esports .header-month img {
+  height: 30px;
+  cursor: pointer;
+}
+#calendar-esports .header-month .arrow-circle {
+  border-radius: 100%;
+  padding: 5px 9px 1px 2px;
+  position: relative;
+  top: -10px;
+  margin-left: 8px;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+#calendar-esports .header-month .arrow-circle:first-of-type {
+  padding: 5px 2px 1px 9px;
+  margin-left: 0px;
+  margin-right: 8px;
+}
+#calendar-esports .header-month .arrow-circle:hover {
+  background-color: #eeeeee;
+  transition: all 0.3s ease-in-out;
+}
+#calendar-esports .header-month .arrow {
+  border: solid #575656;
+  border-width: 0 6px 6px 0;
+  display: inline-block;
+  padding: 14px;
+}
+#calendar-esports .header-month .right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg) scale(0.5);
+  position: relative;
+}
+#calendar-esports .header-month .left {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg) scale(0.5);
+  position: relative;
+}
+#calendar-esports .header-month .up {
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+}
+#calendar-esports .header-month .down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+#calendar-esports span {
+  display: table;
+  padding: 0px 15px;
+  font-size: 25px;
+  position: relative;
+  top: -20px;
+  margin-top: -20px;
+}
+#calendar-esports .eventContent {
+  position: absolute;
+  top: 0;
+  width: 94%;
+  height: 74%;
+  overflow-y: auto;
+}
+#calendar-esports .eventContent p {
+  padding-bottom: 9px;
+  padding-top: 7px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-weight: 700;
+  font-size: 20px;
+  border: none;
+  margin-top: 5px;
+  text-align: center;
+}
+@media only screen and (max-width: 1920px) {
+  #calendar-esports .eventContent p {
+    font-size: 15px;
+  }
+}
+@media only screen and (max-width: 1920px) and (max-width: 1140px) {
+  #calendar-esports .eventContent p {
+    font-size: 13px;
+  }
+}
+@media only screen and (max-width: 1920px) and (max-width: 1140px) and (max-width: 1150) {
+  #calendar-esports .eventContent p {
+    font-size: 11px;
+  }
+}
+#calendar-esports .event-div {
+  background-color: grey;
+  border-top: 4px solid red;
+  border-bottom: 4px solid gray;
+  display: none;
+}
+#calendar-esports .event-div p {
+  padding: 0px 15px;
+  margin: 5px 0px 0px 0px;
+}
+#calendar-esports .event-div p:last-of-type {
+  font-weight: normal;
+  margin-bottom: 10px;
+  margin-top: 0px;
+}
+
+.items-container {
+  margin-left: -15px;
+}
+.items-container a {
+  flex: 0 0 25% !important;
+}
+.items-container button {
+  font-size: 1rem !important;
+  max-width: 210px !important;
+}
+.items-container button::before {
+  font-size: 1.5rem !important;
+  top: 4px !important;
+}
+
+.item-content p {
+  font-size: 1.3rem !important;
+  margin-top: 25px !important;
+}
+
+@media (max-width: 1919px) {
+  .items-container a {
+    flex: 0 0 33.333% !important;
+  }
+}
+@media (max-width: 1240px) {
+  .items-container a {
+    flex: 0 50% !important;
+  }
+}
+#homepage h2 {
+  margin-bottom: 30px;
+}
+#homepage #calendar {
+  max-width: 400px;
+  width: 100%;
+  max-width: 400px;
+  width: 100%;
+  background-color: white;
+  padding: 30px;
+  box-sizing: content-box;
+  border-radius: 15px;
+}
+#homepage #calendar #calendar-esports span {
+  font-size: 20px;
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+  top: -46px;
+  margin-bottom: -20px;
+  text-align: center;
+  margin-top: 0;
+  padding: 0;
+  padding-top: 7px;
+}
+#homepage #calendar #calendar-esports .divTableCellCalendar:before {
+  margin: 0px;
+}
+#homepage #calendar .prev, #homepage #calendar .next {
+  visibility: unset;
+  color: #7b7b7b;
+  opacity: 0.3;
+}
+#homepage #calendar .matches {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+#homepage #calendar .matches .match {
+  display: flex;
+  background-color: #f1f1f1;
+  border-radius: 10px;
+  padding: 10px 15px;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+#homepage #calendar .matches .match:hover {
+  background-color: #e0e0e0;
+}
+#homepage #calendar .matches .match .date {
+  padding: 7px;
+  background-color: var(--main-color);
+  height: 40px;
+  text-align: center;
+  line-height: 26px;
+  border-radius: 10px;
+  font-weight: 700;
+  color: white;
+}
+#homepage #calendar .matches .match .info {
+  width: 100%;
+  display: block;
+  text-align: center;
+}
+#homepage #calendar .matches .match .info p {
+  margin: 0px;
+  font-size: 20px;
+  display: flex;
+}
+#homepage #calendar .matches .match .info p span {
+  margin: 0px 10px;
+  color: #003add;
+  width: 120px;
+  font-weight: 500;
+  display: block;
+}
+
+html {
+  height: 100%;
+  width: 100%;
+}
+
 #body-pd {
   position: relative;
-  margin: 3rem 0 0 0 !important;
   padding: 0 1rem !important;
   font-size: 1rem;
   transition: 0.5s;
-  margin-top: 80px !important;
+  padding-top: 90px !important;
   padding-left: 100px !important;
+  height: 100%;
+  box-sizing: border-box;
+  background-color: #eeeeee;
 }
 @media only screen and (max-width: 768px) {
   #body-pd {
     padding-left: 15px !important;
   }
+}
+#body-pd #main-content {
+  height: 100%;
 }
 
 body {
