@@ -7,6 +7,15 @@ const DEBUG_MODE = true;
 /** Hlavni barva stranky */
 const MAIN_APP_COLOR = '#003ADD';
 
+/**
+ * Polozky v navigaci stranky
+ * array(
+ *       Nazev stranky
+ *       jmeno ikonky na boxicons https://boxicons.com/ - (bx bx-{jmeno})
+ *       pole s cislama povolenych roly
+ *       odkaz na controller
+ * )
+ */
 const NAV_ITEMS = array(
     array('Hlavní stránka', 'home-alt', array(1,2,3), 'home'),
     array('Mé pokuty', 'coin', array(1,2,3), 'my-fines'),
