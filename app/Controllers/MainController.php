@@ -41,7 +41,7 @@ abstract class MainController
     /**
      * Funkce vypisuje data do prislusne sablony. Zaroven overuje, zda je uzivatel prihlaseny
      */
-    public function displayTwig($allowRoles = array(), $specificController = NULL){
+    public function displayTwig($specificController = NULL){
 
         // ----------------- Check login ------------------
         $this->checkUserLogin(get_called_class());
@@ -57,16 +57,16 @@ abstract class MainController
             $this->data['userRole'] = $_SESSION['userRole'];
         }
 
+        $this->data['navItems'] = NAV_ITEMS;
         $this->data['pageName'] = $controllerName;
         $this->data['mainColor'] = MAIN_APP_COLOR;
 
-        if(!($this->checkRole(get_called_class(), $allowRoles))){
+        if(!($this->checkRole(get_called_class(), $this->getAllowRoles(get_called_class())))){
             $this->twig->display('opravneni.html.twig', $this->data);
             return;
         }
 
         if(is_null($specificController)){
-
             $this->twig->display($controllerName . '.html.twig', $this->data);
         }else{
             $this->twig->display($specificController . '.html.twig', $this->data);
@@ -82,11 +82,14 @@ abstract class MainController
         $loader = new Twig\Loader\FilesystemLoader($this->loadAllTemplates());
         // set up environment
         $params = array(
+            'debug' => DEBUG_MODE,
             'cache' => "../cache",
             'auto_reload' => true, // disable cache
             'autoescape' => true
         );
+
         $this->twig = new Twig\Environment($loader, $params);
+        $this->twig->addExtension(new \Twig\Extension\DebugExtension());
 
     }
 
@@ -157,5 +160,25 @@ abstract class MainController
                 }
                 return false;
         }
+    }
+
+    private function getAllowRoles($controller){
+        $result = $this->from_camel_case($controller);
+        //echo $result;
+        foreach (NAV_ITEMS as $item) {
+            if ($item[3] == $result){
+                return $item[2];
+            }
+        }
+        return array();
+    }
+
+    function from_camel_case($input) {
+        preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
+        $ret = $matches[0];
+        foreach ($ret as &$match) {
+            $match = $match == strtoupper($match) ? strtolower($match) : lcfirst($match);
+        }
+        return str_replace("-controller","",implode('-', $ret));
     }
 }

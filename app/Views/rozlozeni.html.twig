@@ -29,7 +29,7 @@
 <body {% if (pageName != 'login') and (pageName != 'error404') %} id="body-pd" {% endif %}>
     {% if (pageName != 'login') and (pageName != 'error404') %}
         <nav>
-            {% include '_components/nav.html.twig' with {'name': name, 'surname' : surname, 'userRole' : userRole} %}
+            {% include '_components/nav.html.twig' with {'name': name, 'surname' : surname, 'userRole' : userRole, 'navItems' : navItems} %}
         </nav>
     {% endif %}
     <div id="main-content">

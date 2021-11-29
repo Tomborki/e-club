@@ -1,9 +1,10 @@
 {% extends 'rozlozeni.html.twig' %}
 
-{% block title %} Chyba 404 {% endblock title %}
-{% block description %} Chyba 404{% endblock description %}
-{% block keywords %} Chyba 404{% endblock keywords %}
+{% block title %} K této stránce nemáte oprávnění {% endblock title %}
+{% block description %} K této stránce nemáte oprávnění {% endblock description %}
+{% block keywords %} K této stránce nemáte oprávnění {% endblock keywords %}
 
 {% block content %}
+    <i class='bx bxs-error-alt'></i>
     <h1>Bohužel... Nemáte oprávnění</h1>
 {% endblock content%}

@@ -13,8 +13,10 @@ $router = new RouterController();
 $router->zpracuj(array($_SERVER['REQUEST_URI']));
 //$router->showView();
 
+/*
 if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 600)) {
     $router->redirect('login');
 }
 $_SESSION['LAST_ACTIVITY'] = time();
+*/
 

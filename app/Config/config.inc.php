@@ -1,8 +1,23 @@
 <?php
 
+const DEBUG_MODE = true;
+
+//------------------------- NASTAVENI STRANKY --------------------------------
+
+/** Hlavni barva stranky */
 const MAIN_APP_COLOR = '#003ADD';
 
-// Pripojeni k databazi ////
+const NAV_ITEMS = array(
+    array('Hlavní stránka', 'home-alt', array(1,2,3), 'home'),
+    array('Mé pokuty', 'coin', array(1,2,3), 'my-fines'),
+    array('Mé zápasy', 'football', array(1,2,3), 'my-matches'),
+    array('Uživatelé', 'user', array(3), 'users'),
+    array('Role', 'shield-quarter', array(3), 'roles'),
+    array('Nastavení', 'cog', array(3), 'settings'),
+);
+
+//------------------------------ DATABAZE ------------------------------------
+
 /** Adresa serveru. */
 const DB_SERVER = "localhost";
 
@@ -15,7 +30,6 @@ const DB_USER = "root";
 /** Heslo uzivatele databaze */
 const DB_PASS = "abcd123*";
 
-
 //// Nazvy tabulek v DB ////
 /** Tabulka s pohadkami. */
 const TABLE_ROLES = "roles";
@@ -23,8 +37,7 @@ const TABLE_ROLES = "roles";
 /** Tabulka s uzivateli. */
 const TABLE_USER = "users";
 
-
-//// Dostupne stranky webu ////
+//------------------------------ ADRESARE ------------------------------------
 
 /** Adresar kontroleru. */
 const DIRECTORY_CONTROLLERS = "app/Controllers/";
@@ -35,11 +48,9 @@ const DIRECTORY_MODELS = "app/Models/";
 /** Adresar sablon */
 const DIRECTORY_VIEWS = "app/Views/";
 
+//------------------------------ SABLONY ------------------------------------
 
-/** Klic defaultni webove stranky. */
-const DEFAULT_WEB_PAGE_KEY = "uvod";
-
-/** Klic defaultni webove stranky. */
+/** Zakonceni souboru sablon. */
 const DEFAULT_TEMPLATE_FILE_END = ".twig";
 
 ?>
