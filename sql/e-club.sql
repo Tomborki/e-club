@@ -24,16 +24,22 @@ INSERT INTO `divisions` (`id`, `nameDivision`) VALUES
 
 DROP TABLE IF EXISTS `finer`;
 CREATE TABLE `finer` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `typeFines_id` int(11) NOT NULL,
   `users_id` int(11) NOT NULL,
-  `date` date NOT NULL,
+  `date` datetime NOT NULL,
   `paid` tinyint(4) NOT NULL,
-  PRIMARY KEY (`typeFines_id`,`users_id`),
+  PRIMARY KEY (`id`),
+  KEY `typeFines_id` (`typeFines_id`),
   KEY `users_id` (`users_id`),
   CONSTRAINT `finer_ibfk_1` FOREIGN KEY (`typeFines_id`) REFERENCES `typefines` (`id`),
   CONSTRAINT `finer_ibfk_2` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
+INSERT INTO `finer` (`id`, `typeFines_id`, `users_id`, `date`, `paid`) VALUES
+(1,	1,	1,	'2021-11-29 23:05:47',	0),
+(2,	2,	1,	'2021-11-29 23:06:02',	0),
+(3,	1,	2,	'2021-11-29 23:06:18',	0);
 
 DROP TABLE IF EXISTS `matches`;
 CREATE TABLE `matches` (
@@ -42,9 +48,9 @@ CREATE TABLE `matches` (
   `idTeam2` int(11) NOT NULL,
   `idDivision` int(11) NOT NULL,
   `date` date NOT NULL,
-  `team1Score` smallint(1) NOT NULL,
-  `team2Score` smallint(1) NOT NULL,
-  `end` tinyint(1) DEFAULT NULL,
+  `team1Score` smallint(1) DEFAULT NULL,
+  `team2Score` smallint(1) DEFAULT NULL,
+  `end` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`,`idTeam1`,`idTeam2`,`idDivision`),
   KEY `idTeam1` (`idTeam1`),
   KEY `idTeam2` (`idTeam2`),
@@ -54,6 +60,10 @@ CREATE TABLE `matches` (
   CONSTRAINT `matches_ibfk_3` FOREIGN KEY (`idDivision`) REFERENCES `divisions` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
+INSERT INTO `matches` (`id`, `idTeam1`, `idTeam2`, `idDivision`, `date`, `team1Score`, `team2Score`, `end`) VALUES
+(1,	1,	2,	1,	'2021-11-29',	2,	1,	1),
+(2,	5,	3,	1,	'2021-11-29',	0,	1,	1),
+(3,	7,	9,	1,	'2021-11-29',	NULL,	NULL,	0);
 
 DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles` (
@@ -74,14 +84,33 @@ CREATE TABLE `teams` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
+INSERT INTO `teams` (`id`, `teamName`) VALUES
+(1,	'Zruč B'),
+(2,	'Sokol Lhota B'),
+(3,	'Rapid Plzeň B'),
+(4,	'Plzeň-Letná'),
+(5,	'Plzeň-Černice B'),
+(6,	'Starý Plzenec'),
+(7,	'Plzeň-Litice'),
+(8,	'Union Plzeň'),
+(9,	'Košutka Plzeň B'),
+(10,	'Prazdroj Plzeň'),
+(11,	'VS Plzeň'),
+(12,	'Sokol Druztová'),
+(13,	'Plzeň-Hradiště'),
+(14,	'FC Chotíkov B');
 
 DROP TABLE IF EXISTS `typefines`;
 CREATE TABLE `typefines` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nameFine` varchar(255) COLLATE utf8_czech_ci NOT NULL,
+  `money` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
+INSERT INTO `typefines` (`id`, `nameFine`, `money`) VALUES
+(1,	'Pozdní příchod na zápas (do 5 minut)',	20),
+(2,	'Pozdní příchod na zápas (nad 5 minut)',	50);
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
@@ -106,4 +135,4 @@ INSERT INTO `users` (`id`, `username`, `password`, `name`, `surname`, `email`, `
 (2,	'terka',	'$2y$10$okYrpDvCDRhY0SrblNUWXOpCZr7im55qqTqRrJ31bVfWI5RTQ0Erm',	'Tereza',	'Richterová',	'terka@gmail.com',	'789456123',	2,	2),
 (3,	'filip',	'$2y$10$okYrpDvCDRhY0SrblNUWXOpCZr7im55qqTqRrJ31bVfWI5RTQ0Erm',	'Filip',	'Borkovec',	'filip@gmail.com',	'789456123',	3,	3);
 
--- 2021-11-29 21:16:42
+-- 2021-11-29 23:08:21
