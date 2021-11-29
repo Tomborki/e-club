@@ -16,6 +16,7 @@ Hlavní stránka
         <h2>Ahoj
             <span id="name"></span>!
         </h2>
+        <div class="content">
         <div id="calendar">
             <div id="calendar-esports">
                 <div class="header-month">
@@ -47,6 +48,15 @@ Hlavní stránka
             <div class="d-grid gap-2 col-6 mx-auto">
                 <a href="my-matches" class="btn btn-primary" type="button">Další zápasy</a>
             </div>
+        </div>
+
+        <div id="dept">
+            <h5>Momentálně dlužím: </h5>
+            <p class="{% if dept > 20 %}text-danger{% elseif dept != 0 %}text-warning{% else %}text-success{% endif %}">{{ dept }}Kč</p>
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <a href="my-matches" class="btn btn-secondary" type="button">Mé všechny pokuty</a>
+            </div>
+        </div>
         </div>
     </div>
 {% endblock content%}

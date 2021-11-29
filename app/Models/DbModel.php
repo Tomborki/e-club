@@ -60,4 +60,30 @@ class DbModel {
         }
     }
 
+    /**
+     * @param int $userId
+     * @return array|false
+     * Metoda vrati vsechny pokuty uzivatele. At uz zaplacené nebo nezaplacene
+     */
+    public function getAllFinesIdUser(int $userId){
+        // pripravim dotaz
+        $q = "SELECT * FROM ". TABLE_FINER . " WHERE users_id = " . $userId;
+        // provedu a vysledek vratim jako pole
+        // protoze je o uzkazku, tak netestuju, ze bylo neco vraceno
+        return $this->pdo->query($q)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * @param int $userId
+     * @return array|false
+     * Metoda vrati vsechny pokuty uzivatele. At uz zaplacené nebo nezaplacene
+     */
+    public function getFinerInfo(int $finerID){
+        // pripravim dotaz
+        $q = "SELECT * FROM ". TABLE_TYPE_FINES . " WHERE id = " . $finerID;
+        // provedu a vysledek vratim jako pole
+        // protoze je o uzkazku, tak netestuju, ze bylo neco vraceno
+        return $this->pdo->query($q)->fetchAll(PDO::FETCH_ASSOC)[0];
+    }
+
 }

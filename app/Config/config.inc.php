@@ -46,6 +46,22 @@ const TABLE_ROLES = "roles";
 /** Tabulka s uzivateli. */
 const TABLE_USER = "users";
 
+/** Tabulka s pokutami. */
+const TABLE_FINER = "finer";
+
+/** Tabulka s typama pokut. */
+const TABLE_TYPE_FINES = "typeFines";
+
+/** Tabulka se zapasama. */
+const TABLE_MATCHES = "matches";
+
+/** Tabulka s tymama. */
+const TABLE_TEAMS = "teams";
+
+/** Tabulka s oddilama. */
+const TABLE_DIVISIONS = "divisions";
+
+
 //------------------------------ ADRESARE ------------------------------------
 
 /** Adresar kontroleru. */

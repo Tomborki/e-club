@@ -428,7 +428,11 @@ a {
 #homepage h2 {
   margin-bottom: 30px;
 }
-#homepage #calendar {
+#homepage .content {
+  display: flex;
+  gap: 20px;
+}
+#homepage .content #calendar {
   max-width: 400px;
   width: 100%;
   max-width: 400px;
@@ -438,7 +442,7 @@ a {
   box-sizing: content-box;
   border-radius: 15px;
 }
-#homepage #calendar #calendar-esports span {
+#homepage .content #calendar #calendar-esports span {
   font-size: 20px;
   display: block;
   width: 100%;
@@ -452,19 +456,19 @@ a {
   padding: 0;
   padding-top: 7px;
 }
-#homepage #calendar #calendar-esports .divTableCellCalendar:before {
+#homepage .content #calendar #calendar-esports .divTableCellCalendar:before {
   margin: 0px;
 }
-#homepage #calendar .prev, #homepage #calendar .next {
+#homepage .content #calendar .prev, #homepage .content #calendar .next {
   visibility: unset;
   color: #7b7b7b;
   opacity: 0.3;
 }
-#homepage #calendar .matches {
+#homepage .content #calendar .matches {
   margin-top: 20px;
   margin-bottom: 20px;
 }
-#homepage #calendar .matches .match {
+#homepage .content #calendar .matches .match {
   display: flex;
   background-color: #f1f1f1;
   border-radius: 10px;
@@ -475,10 +479,10 @@ a {
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
-#homepage #calendar .matches .match:hover {
+#homepage .content #calendar .matches .match:hover {
   background-color: #e0e0e0;
 }
-#homepage #calendar .matches .match .date {
+#homepage .content #calendar .matches .match .date {
   padding: 7px;
   background-color: var(--main-color);
   height: 40px;
@@ -488,22 +492,36 @@ a {
   font-weight: 700;
   color: white;
 }
-#homepage #calendar .matches .match .info {
+#homepage .content #calendar .matches .match .info {
   width: 100%;
   display: block;
   text-align: center;
 }
-#homepage #calendar .matches .match .info p {
+#homepage .content #calendar .matches .match .info p {
   margin: 0px;
   font-size: 20px;
   display: flex;
 }
-#homepage #calendar .matches .match .info p span {
+#homepage .content #calendar .matches .match .info p span {
   margin: 0px 10px;
   color: #003add;
   width: 120px;
   font-weight: 500;
   display: block;
+}
+#homepage .content #dept {
+  max-width: 300px;
+  width: 100%;
+  background-color: white;
+  padding: 30px;
+  box-sizing: content-box;
+  border-radius: 15px;
+  height: 200px;
+  text-align: center;
+}
+#homepage .content #dept p {
+  font-size: 60px;
+  font-weight: 700;
 }
 
 html {
