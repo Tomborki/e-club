@@ -14,36 +14,27 @@
 {% block content %}
     <div id="divisions">
         <h2>Oddíly</h2>
+        {{ dump(divisions) }}
 
         <div class="table-container">
             <table class="table table-striped">
                 <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
+                    <th scope="col">Jméno oddílu</th>
+                    <th scope="col">Akce</th>
                 </tr>
                 </thead>
                 <tbody>
+                {% for division in divisions %}
                 <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td>{{ division.nameDivision }}</td>
+                    <td>
+                        <a class="btn btn-warning" href="divisions?action=likeDivision&id={{ division.id }}" role="button"> <i class='bx bxs-star'></i> Oblíbit oddíl</a>
+                    </td>
                 </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                </tr>
-                </tbody>
+                {% endfor %}
             </table>
         </div>
     </div>

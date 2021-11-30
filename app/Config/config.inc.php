@@ -1,6 +1,6 @@
 <?php
 
-const DEBUG_MODE = false;
+const DEBUG_MODE = TRUE;
 
 //------------------------- NASTAVENI STRANKY --------------------------------
 

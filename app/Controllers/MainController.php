@@ -34,9 +34,12 @@ abstract class MainController
      */
     public function redirect($url)
     {
-        header("Location: /$url");
-        header("Connection: close");
-        exit;
+        if (headers_sent()){
+            die('<script type="text/javascript">window.location=\''.$url.'\';</script‌​>');
+        }else{
+            header('Location: ' . $url);
+            die();
+        }
     }
 
     /**

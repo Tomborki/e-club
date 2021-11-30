@@ -86,4 +86,28 @@ class DbModel {
         return $this->pdo->query($q)->fetchAll(PDO::FETCH_ASSOC)[0];
     }
 
+    /**
+     * @param int $userId
+     * @return array|false
+     * Metoda vrati vsechny pokuty uzivatele. At uz zaplacené nebo nezaplacene
+     */
+    public function getAllDivisions(){
+        // pripravim dotaz
+        $q = "SELECT * FROM ". TABLE_DIVISIONS;
+        // provedu a vysledek vratim jako pole
+        return $this->pdo->query($q)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * @param int $userId
+     * @return array|false
+     * Metoda vrati vsechny pokuty uzivatele. At uz zaplacené nebo nezaplacene
+     */
+    public function userLikedDivision($userID, $divisionID){
+        // pripravim dotaz
+        $q = "UPDATE " . TABLE_USER . " SET idDivision='" . $divisionID . "' WHERE id=" . $userID;
+        // provedu a vysledek vratim jako pole
+        $res = $this->pdo->query($q);
+    }
+
 }
