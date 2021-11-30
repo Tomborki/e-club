@@ -509,6 +509,13 @@ a {
   font-weight: 500;
   display: block;
 }
+#homepage .content #calendar .no-division {
+  text-align: center;
+}
+#homepage .content #calendar .no-division i {
+  font-size: 40px;
+  margin-bottom: 15px;
+}
 #homepage .content #dept {
   max-width: 300px;
   width: 100%;
@@ -522,6 +529,15 @@ a {
 #homepage .content #dept p {
   font-size: 60px;
   font-weight: 700;
+}
+
+#divisions h2 {
+  margin-bottom: 30px;
+}
+#divisions .table-container {
+  background-color: white;
+  padding: 30px;
+  border-radius: 15px;
 }
 
 html {

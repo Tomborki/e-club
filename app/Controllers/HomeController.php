@@ -8,6 +8,7 @@ class HomeController extends MainController
     {
         $this->data['name'] = $_SESSION['name'];
         $this->data['dept'] = $this->getDept();
+        $this->data['userDivision'] = $_SESSION['userDivision'];
 
         $this->displayTwig();
     }

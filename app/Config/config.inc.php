@@ -1,6 +1,6 @@
 <?php
 
-const DEBUG_MODE = true;
+const DEBUG_MODE = false;
 
 //------------------------- NASTAVENI STRANKY --------------------------------
 
@@ -20,6 +20,7 @@ const NAV_ITEMS = array(
     array('Hlavní stránka', 'home-alt', array('all'), 'home'),
     array('Mé pokuty', 'coin', array(1,2,3), 'my-fines'),
     array('Mé zápasy', 'football', array(1,2,3), 'my-matches'),
+    array('Oddíly', 'sitemap', array('all'), 'divisions'),
     array('Uživatelé', 'user', array(3), 'users'),
     array('Role', 'shield-quarter', array(3), 'roles'),
     array('Nastavení', 'cog', array(3), 'settings'),

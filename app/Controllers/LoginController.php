@@ -17,6 +17,7 @@ class LoginController extends MainController
                 $_SESSION['surname'] = $check['surname'];
                 $_SESSION['userID'] = $check['id'];
                 $_SESSION['userRole'] = $check['userRole'];
+                $_SESSION['userDivision'] = $check['idDivision'];
                 $this->redirect(home);
             }else {
                 $this->data['errorMessage'] = "Nesprávné přihlašovací jméno nebo heslo";
@@ -40,7 +41,8 @@ class LoginController extends MainController
                     'name' => $user['name'],
                     'surname' => $user['surname'],
                     'id' => $user['id'],
-                    'userRole' => $user['idRole']
+                    'userRole' => $user['idRole'],
+                    'idDivision' => $user['idDivision']
                 );
             }
         }

@@ -13,6 +13,7 @@ abstract class MainController
     {
         $this->loadTwig();
         $this->db = new DbModel();
+        $this->checkUserLogin(get_called_class());
     }
 
     abstract function zpracuj($parametry);
@@ -125,10 +126,10 @@ abstract class MainController
      * Funkce overi, zda je uzivatel prihlaseny. Pokud ne, presmeruje ho na login stranku
      */
     private function checkUserLogin($class){
-
         switch ($class){
             case "LoginController": return;
             case "Error404Controller": return;
+            case "RouterController": return;
             default:
                 if(!(isset($_SESSION['name'])) || empty($_SESSION['surname'])){
                     $this->redirect(login);
