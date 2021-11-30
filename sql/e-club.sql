@@ -122,8 +122,8 @@ CREATE TABLE `users` (
   `email` varchar(50) COLLATE utf8_czech_ci DEFAULT NULL,
   `tel` varchar(11) COLLATE utf8_czech_ci DEFAULT NULL,
   `idRole` int(11) NOT NULL,
-  `idDivision` int(11) NOT NULL,
-  PRIMARY KEY (`id`,`idRole`,`idDivision`),
+  `idDivision` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
   KEY `idRole` (`idRole`),
   KEY `idDivision` (`idDivision`),
   CONSTRAINT `users_ibfk_1` FOREIGN KEY (`idRole`) REFERENCES `roles` (`id`),
@@ -131,8 +131,8 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 INSERT INTO `users` (`id`, `username`, `password`, `name`, `surname`, `email`, `tel`, `idRole`, `idDivision`) VALUES
-(1,	'tomborki',	'$2y$10$okYrpDvCDRhY0SrblNUWXOpCZr7im55qqTqRrJ31bVfWI5RTQ0Erm',	'Tomáš',	'Borkovec',	'tomasborki@gmail.com',	'720141853',	1,	1),
+(1,	'tomborki',	'$2y$10$okYrpDvCDRhY0SrblNUWXOpCZr7im55qqTqRrJ31bVfWI5RTQ0Erm',	'Tomáš',	'Borkovec',	'tomasborki@gmail.com',	'720141853',	1,	NULL),
 (2,	'terka',	'$2y$10$okYrpDvCDRhY0SrblNUWXOpCZr7im55qqTqRrJ31bVfWI5RTQ0Erm',	'Tereza',	'Richterová',	'terka@gmail.com',	'789456123',	2,	2),
 (3,	'filip',	'$2y$10$okYrpDvCDRhY0SrblNUWXOpCZr7im55qqTqRrJ31bVfWI5RTQ0Erm',	'Filip',	'Borkovec',	'filip@gmail.com',	'789456123',	3,	3);
 
--- 2021-11-29 23:08:21
+-- 2021-11-30 10:25:39
