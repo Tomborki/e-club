@@ -531,13 +531,38 @@ a {
   font-weight: 700;
 }
 
+#divisions {
+  position: relative;
+}
 #divisions h2 {
   margin-bottom: 30px;
+}
+#divisions .other-buttons {
+  margin-bottom: 15px;
 }
 #divisions .table-container {
   background-color: white;
   padding: 30px;
   border-radius: 15px;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+#divisions .drag-info {
+  display: none;
+  position: absolute;
+  right: 0;
+  padding: 9px;
+  color: gray;
+  font-size: 15px;
+}
+@media only screen and (max-width: 580px) {
+  #divisions .drag-info {
+    display: block;
+  }
+}
+#divisions .drag-info i {
+  position: relative;
+  top: 2px;
 }
 
 html {

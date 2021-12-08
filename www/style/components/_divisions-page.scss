@@ -1,11 +1,37 @@
 #divisions{
+  position: relative;
+  
   h2{
     margin-bottom: 30px;
+  }
+
+  .other-buttons{
+    margin-bottom: 15px;
   }
 
   .table-container{
     background-color: white;
     padding: 30px;
     border-radius: 15px;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .drag-info{
+    display: none;
+    position: absolute;
+    right: 0;
+    padding: 9px;
+    color: gray;
+    font-size: 15px;
+
+    @media only screen and (max-width: 580px) {
+      display: block;
+    }
+
+    i{
+      position: relative;
+      top: 2px;
+    }
   }
 }

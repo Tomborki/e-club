@@ -1,5 +1,6 @@
 <?php
 
+use \Tamtamchik\SimpleFlash\Flash;
 
 class DivisionsController extends MainController
 {
@@ -8,19 +9,25 @@ class DivisionsController extends MainController
     {
         $this->data['divisions'] = $this->db->getAllDivisions();
 
-        if (isset($_GET["action"]))
-        {
-            $func = $_GET['action'];
-            $this->$func($_GET['id']);
-            $this->redirect(divisions);
+        if(isset($_SESSION['userDivision'])){
+            $this->data['userDivision'] = $_SESSION['userDivision'];
+        }else{
+            $this->data['userDivision'] = null;
         }
 
         $this->displayTwig();
     }
 
-    private function likeDivision($id){
+    public function ACTION_likeDivision($id){
         $this->db->userLikedDivision($_SESSION['userID'], $id);
         $_SESSION['userDivision'] = $id;
+        $this->redirect(divisions);
+    }
+
+    public function ACTION_unLikeDivision(){
+        $this->db->unLikeDivision($_SESSION['userID']);
+        $_SESSION['userDivision'] = null;
+        $this->redirect(divisions);
     }
 
 }

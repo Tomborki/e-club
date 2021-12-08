@@ -1,32 +1,25 @@
 <?php
 
+
 abstract class MainController
 {
+
     protected $data = array();
     protected $view = "";
-    protected $header = array('titulek' => '', 'klicova_slova' => '', 'popis' => '');
     protected $twig;
     protected $db;
     protected $blackListRoles;
+    protected $urlParams;
 
     public function __construct()
     {
         $this->loadTwig();
         $this->db = new DbModel();
+        $this->urlParams = $this->getUrlParams();
         $this->checkUserLogin(get_called_class());
     }
 
     abstract function zpracuj($parametry);
-
-
-    public function showView()
-    {
-        if ($this->view)
-        {
-            //extract($this->data);
-            require('../' . DIRECTORY_VIEWS . $this->view . ".html.twig");
-        }
-    }
 
     /**
      * Funkce presmerovava stranku na stranku zadanou v parametru
@@ -65,10 +58,14 @@ abstract class MainController
         $this->data['pageName'] = $controllerName;
         $this->data['mainColor'] = MAIN_APP_COLOR;
 
+        // Overeni, jestli ma uzivatel k teto strance pristup
         if(!($this->checkRole(get_called_class(), $this->getAllowRoles(get_called_class())))){
             $this->twig->display('opravneni.html.twig', $this->data);
             return;
         }
+
+        //Funce spousti action metody
+        $this->doAction($controllerName);
 
         if(is_null($specificController)){
             $this->twig->display($controllerName . '.html.twig', $this->data);
@@ -165,6 +162,11 @@ abstract class MainController
         }
     }
 
+    /**
+     * Vraci povolene role pro zvoleny controller
+     * @param $controller
+     * @return array|mixed
+     */
     private function getAllowRoles($controller){
         $result = $this->from_camel_case($controller);
         //echo $result;
@@ -176,7 +178,12 @@ abstract class MainController
         return array();
     }
 
-    function from_camel_case($input) {
+    /**
+     * Funkce prevadi string z camelcase
+     * @param $input
+     * @return array|string|string[]
+     */
+    public function from_camel_case($input) {
         preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
         $ret = $matches[0];
         foreach ($ret as &$match) {
@@ -184,4 +191,53 @@ abstract class MainController
         }
         return str_replace("-controller","",implode('-', $ret));
     }
+
+    /**
+     * Funkce vraci pole s url parametry
+     * @return mixed
+     */
+    public function getUrlParams(){
+        parse_str($_SERVER['QUERY_STRING'], $params);
+        return $params;
+    }
+
+    /**
+     * Funkce vraci string mezi dvema oddelovaci
+     * @param $string zakladni string
+     * @param $start prvni oddelovac
+     * @param $end druhy oddelovac
+     * @return false|string
+     */
+    public function get_string_between($string, $start, $end){
+        $string = ' ' . $string;
+        $ini = strpos($string, $start);
+        if ($ini == 0) return '';
+        $ini += strlen($start);
+        $len = strpos($string, $end, $ini) - $ini;
+        return substr($string, $ini, $len);
+    }
+
+    /**
+     * Funkce vola action metody v Cotrolleru.
+     * V Controlleru se musí action metoda jmenovat: ACTION_{nazev-metody}
+     * V šabloně stačí potom zavolat jenom například href="{jmeno-controlloru}/action={nazev-metody(parametry)}"
+     * @param $redirect kam se ma presmerovat stranka, pokud action metoda neexistuje
+     */
+    function doAction($redirect){
+        if (isset($this->urlParams["action"]))
+        {
+            $onlyActionName = 'ACTION_' . explode('(', $this->urlParams['action'])[0];
+            $testMethod = array($this, $onlyActionName);
+            $parseParameters = $this->get_string_between($this->urlParams['action'], '(', ')');
+
+
+            if(method_exists($this, $onlyActionName)){
+                $this->{$onlyActionName}($parseParameters);
+            }else{
+                $this->redirect($redirect);
+            }
+        }
+    }
+
+
 }

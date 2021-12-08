@@ -110,4 +110,16 @@ class DbModel {
         $res = $this->pdo->query($q);
     }
 
+    /**
+     * @param int $userId
+     * @return array|false
+     * Metoda vrati vsechny pokuty uzivatele. At uz zaplacené nebo nezaplacene
+     */
+    public function unLikeDivision($userID){
+        // pripravim dotaz
+        $q = "UPDATE " . TABLE_USER . " SET idDivision=NULL WHERE id=" . $userID;
+        // provedu a vysledek vratim jako pole
+        $res = $this->pdo->query($q);
+    }
+
 }
