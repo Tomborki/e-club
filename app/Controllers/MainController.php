@@ -10,6 +10,7 @@ abstract class MainController
     protected $db;
     protected $blackListRoles;
     protected $urlParams;
+    protected $diferendTemplate;
 
     public function __construct()
     {
@@ -68,11 +69,19 @@ abstract class MainController
         $this->doAction($controllerName);
 
         if(is_null($specificController)){
-            $this->twig->display($controllerName . '.html.twig', $this->data);
+            if(isset($this->diferendTemplate)){
+                $this->twig->display($controllerName . '-' . $this->diferendTemplate . '.html.twig', $this->data);
+            }else{
+                $this->twig->display($controllerName . '.html.twig', $this->data);
+            }
         }else{
             $this->twig->display($specificController . '.html.twig', $this->data);
         }
 
+    }
+
+    public function setTemplate($template){
+        $this->diferendTemplate = $template;
     }
 
     /**

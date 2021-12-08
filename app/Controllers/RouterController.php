@@ -21,6 +21,7 @@ class RouterController extends MainController
         $naparsovanaURL = parse_url($url);
         // Odstranění počátečního lomítka
         $naparsovanaURL["path"] = ltrim($naparsovanaURL["path"], "/");
+        $naparsovanaURL["path"] = rtrim($naparsovanaURL["path"], "/");
         // Odstranění bílých znaků kolem adresy
         $naparsovanaURL["path"] = trim($naparsovanaURL["path"]);
         // Rozbití řetězce podle lomítek
@@ -33,14 +34,16 @@ class RouterController extends MainController
     {
         $naparsovanaURL = $this->parsujURL($parametry[0]);
 
-        //print_r($naparsovanaURL);
+
 
         if (empty($naparsovanaURL[0])){
             $this->redirect('login');
         }
 
         // kontroler je 1. parametr URL
-        $tridaKontroleru = $this->pomlckyDoVelbloudiNotace(array_shift($naparsovanaURL)) . 'Controller';
+        $tridaKontroleru = $this->pomlckyDoVelbloudiNotace($naparsovanaURL[0]) . 'Controller';
+
+
 
         if (file_exists('../' . DIRECTORY_CONTROLLERS . $tridaKontroleru . ".php")){
             $this->kontroler = new $tridaKontroleru;
@@ -50,10 +53,16 @@ class RouterController extends MainController
             }
         }
 
-        // Volání controlleru
-         $this->kontroler->zpracuj($naparsovanaURL);
+        if(isset($naparsovanaURL[1])){
+            $this->kontroler->diferendTemplate = $naparsovanaURL[1];
+        }
 
-       // print_r($this->kontroler);
+        // Volání controlleru
+
+        $this->kontroler->zpracuj($naparsovanaURL);
+
+
+        //var_dump($this->kontroler);
 
         $this->twig->render('rozlozeni.html.twig', $this->data);
     }

@@ -17,9 +17,6 @@
         <div class="other-buttons">
             <a class="btn btn-success" href="divisions/add" role="button"><i class='bx bx-plus-circle'></i> Přidat nový oddíl</a>
         </div>
-
-        {{ flash|raw }}
-
         <span class="drag-info">posouvejte doleva <i class='bx bx-arrow-from-left'></i></span>
         <div class="table-container">
             <table class="table table-striped">
@@ -39,18 +36,17 @@
                     <td class="text-center">
                         {% if userDivision is not null %}
                             {% if division.id == userDivision %}
-                                <a class="btn btn-danger" href="divisions?action=unLikeDivision()" role="button"><i class='bx bx-dislike'></i></a>
+                                <a class="btn btn-danger" href="/divisions?action=unLikeDivision()" role="button"><i class='bx bx-dislike'></i></a>
                             {% else %}
                                 <a class="btn btn-warning disabled" href="#" role="button" style="cursor: not-allowed !important;" ><i class='bx bxs-star'></i></a>
                             {% endif %}
                         {% else %}
-                            <a class="btn btn-warning" href="divisions?action=likeDivision({{ division.id }})" role="button"> <i class='bx bxs-star'></i></a>
+                            <a class="btn btn-warning" href="/divisions?action=likeDivision({{ division.id }})" role="button"> <i class='bx bxs-star'></i></a>
                         {% endif %}
                     </td>
                     <td class="align-middle">{{ division.nameDivision }}</td>
                     <td class="align-middle">{{ division.chief }}</td>
                     <td class="align-middle">{{ division.contact }}</td>
-
                 </tr>
                 {% endfor %}
             </table>

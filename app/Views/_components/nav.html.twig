@@ -21,7 +21,7 @@
 			<div class="nav_list">
 				{% for item in navItems  %}
 					{% if (userRole in item.2) or ('all' in item.2) %}
-						<a href="{{ item.3 }}" class="nav_link {% if (item.3|replace({'-' : ""})) == pageName %} active {% endif %}" title="{{ item.0 }}">
+						<a href="/{{ item.3 }}" class="nav_link {% if (item.3|replace({'-' : ""})) == pageName %} active {% endif %}" title="{{ item.0 }}">
 							<i class='bx bx-{{ item.1}} nav_icon'></i>
 							<span class="nav_name">{{ item.0 }}</span>
 						</a>
