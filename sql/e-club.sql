@@ -8,19 +8,21 @@ SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 DROP TABLE IF EXISTS `divisions`;
 CREATE TABLE `divisions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `chief` varchar(255) COLLATE utf8_czech_ci NOT NULL,
+  `contact` varchar(255) COLLATE utf8_czech_ci NOT NULL,
   `nameDivision` varchar(255) COLLATE utf8_czech_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
-INSERT INTO `divisions` (`id`, `nameDivision`) VALUES
-(1,	'Muži A'),
-(2,	'Muži B'),
-(3,	'Stará garda'),
-(4,	'Starší dorost'),
-(5,	'Mladší dorost'),
-(6,	'Starší žáci'),
-(7,	'Mladší žáci'),
-(8,	'Přípravka');
+INSERT INTO `divisions` (`id`, `chief`, `contact`, `nameDivision`) VALUES
+(1,	'Josef Dobrý',	'josefdobry@seznam.cz',	'Muži A'),
+(2,	'František Novák',	'frno@gmail.com',	'Muži B'),
+(3,	'Josef Tříska',	'-',	'Stará garda'),
+(4,	'Tomáš Bohdan',	'+420345728473',	'Starší dorost'),
+(5,	'',	'',	'Mladší dorost'),
+(6,	'',	'',	'Starší žáci'),
+(7,	'',	'',	'Mladší žáci'),
+(8,	'',	'',	'Přípravka');
 
 DROP TABLE IF EXISTS `finer`;
 CREATE TABLE `finer` (
@@ -131,8 +133,8 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 INSERT INTO `users` (`id`, `username`, `password`, `name`, `surname`, `email`, `tel`, `idRole`, `idDivision`) VALUES
-(1,	'tomborki',	'$2y$10$okYrpDvCDRhY0SrblNUWXOpCZr7im55qqTqRrJ31bVfWI5RTQ0Erm',	'Tomáš',	'Borkovec',	'tomasborki@gmail.com',	'720141853',	1,	NULL),
-(2,	'terka',	'$2y$10$okYrpDvCDRhY0SrblNUWXOpCZr7im55qqTqRrJ31bVfWI5RTQ0Erm',	'Tereza',	'Richterová',	'terka@gmail.com',	'789456123',	2,	2),
-(3,	'filip',	'$2y$10$okYrpDvCDRhY0SrblNUWXOpCZr7im55qqTqRrJ31bVfWI5RTQ0Erm',	'Filip',	'Borkovec',	'filip@gmail.com',	'789456123',	3,	3);
+(1,	'tomborki',	'$2y$10$okYrpDvCDRhY0SrblNUWXOpCZr7im55qqTqRrJ31bVfWI5RTQ0Erm',	'Tomáš',	'Borkovec',	'tomasborki@gmail.com',	'720141853',	1,	2),
+(2,	'terka',	'$2y$10$okYrpDvCDRhY0SrblNUWXOpCZr7im55qqTqRrJ31bVfWI5RTQ0Erm',	'Tereza',	'Richterová',	'terka@gmail.com',	'789456123',	2,	4),
+(3,	'filip',	'$2y$10$okYrpDvCDRhY0SrblNUWXOpCZr7im55qqTqRrJ31bVfWI5RTQ0Erm',	'Filip',	'Borkovec',	'filip@gmail.com',	'789456123',	3,	6);
 
--- 2021-11-30 10:25:39
+-- 2021-12-13 17:06:05
