@@ -1,0 +1,26 @@
+{% extends 'rozlozeni.html.twig' %}
+
+{# Page title #}
+{% block title %}
+    Můj profil
+{% endblock title %}
+
+{# Page description #}
+{% block description %}Můj profil{% endblock description %}
+
+{# Page keywords #}
+{% block keywords %}{% endblock keywords %}
+
+{% block content %}
+    <div id="my-profile">
+        <h2>Můj profil</h2>
+        <div class="info-box">
+            <h3>{{ name }} {{ surname }}</h3>
+            <img src="/data/userAvatars/{{ userID }}/avatar.jpg">
+        </div>
+    </div>
+{% endblock content%}
+
+{% block scripts %}
+
+{% endblock scripts%}

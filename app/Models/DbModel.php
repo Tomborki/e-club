@@ -30,28 +30,43 @@ class DbModel {
     /**
      * @param $username
      * @param $password
+     * @param $name
+     * @param $surname
+     * @param $email
+     * @param $tel
      * @param null $idRole
-     * @return bool
-     * Metoda pridava noveho uzivatele. Heslo se rovnou zahesuje. Pokud se prikaz nevykoda dobre, metoda vrati false... jinak true.
+     * @param null $idDivision
+     * @return false|string
+     * Metoda prida noveho uzivatele do databaze. Samotna metoda se stara o zaheshovani hesla
      */
-    public function addUser($username, $password, $idRole = null){
-        $query = $this->pdo->prepare("INSERT INTO " . TABLE_USER . " (username, password, idRole) VALUES (:username, :password, :idRole)");
-
+    public function addUser($username, $password, $name, $surname, $email, $tel, $idRole = NULL, $idDivision = NULL){
+        $query = $this->pdo->prepare("INSERT INTO " . TABLE_USER . " (username, password, name, surname, email, tel, idRole, idDivision) 
+                                    VALUES (:username, :password, :realName, :surname, :email, :tel, :idRole, :idDivision)");
         if($idRole == null){
             $idRole = 3;
         }
 
+
         $result = $query->execute(array(
             ":username" => $username,
             ":password" => password_hash($password, PASSWORD_DEFAULT),
-            ":idRole" => $idRole
+            ":realName" => $name,
+            ":surname" => $surname,
+            ":email" => $email,
+            ":tel" => $tel,
+            ":idRole" => $idRole,
+            ":idDivision" => $idDivision
         ));
+
+        print_r($query->errorInfo());
 
         if ($result) {
             // neni false
-            return true;
+
+            return $this->pdo->lastInsertId();
         } else {
             // je false
+            echo $result;
             return false;
         }
     }
@@ -62,7 +77,7 @@ class DbModel {
      * Metoda maze uzivatele podle zadaneho id. Pokud se prikaz nevykoda dobre, metoda vrati false... jinak true.
      */
     public function deleteUser(int $userId):bool {
-        $query = $this->pdo->prepare("DELETE FROM " . TABLE_USER . " WHERE id_user = :userId");
+        $query = $this->pdo->prepare("DELETE FROM " . TABLE_USER . " WHERE id = :userId");
         $result = $query->execute(array(
                     ":userId" => $userId
                 ));
@@ -223,6 +238,20 @@ class DbModel {
             // je false
             return false;
         }
+    }
+
+    public function getRoleById($roleId){
+        $query = $this->pdo->prepare("SELECT * FROM " . TABLE_ROLES . " WHERE id = :roleId");
+        $query->execute(array(
+            "roleId" => $roleId
+        ));
+        return $query->fetchAll(PDO::FETCH_ASSOC)[0];
+    }
+
+    public function getAllRoles(){
+        $query = $this->pdo->prepare("SELECT * FROM " . TABLE_ROLES);
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
 }

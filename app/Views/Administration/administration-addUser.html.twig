@@ -1,0 +1,65 @@
+{% extends 'rozlozeni.html.twig' %}
+
+{# Page title #}
+{% block title %}
+    Administrace - přidat oddíl
+{% endblock title %}
+
+{# Page description #}
+{% block description %}Přidat nový oddíl{% endblock description %}
+
+{# Page keywords #}
+{% block keywords %}{% endblock keywords %}
+
+{% block content %}
+    <div id="divisions">
+        <h2>Přidat uživatele</h2>
+        <form method="post" enctype="multipart/form-data" action="/{{ pageName }}?form=addNewUser">
+            <div class="form-group">
+                <label for="divisionName">Uživatelské jméno (login)</label>
+                <input type="text" class="form-control form-control-lg" name="username" id="username" placeholder="login" required>
+                <small id="telHelp" class="form-text text-muted">Slouží k přihlášení</small>
+            </div>
+            <div class="form-group">
+                <label for="divisionName">Heslo</label>
+                <input type="password" class="form-control form-control-lg" name="password" id="password" placeholder="Heslo" required>
+                <small id="passSecond" class="form-text text-muted">Zadejte znovu své heslo</small>
+                <input type="password" class="form-control form-control-lg" name="password2" id="password2" placeholder="Zopakujte heslo" required>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <label for="realName">Reálné jméno</label>
+                    <input type="text" name="realName" class="form-control" placeholder="Jméno">
+                </div>
+                <div class="col">
+                    <label for="realSurname">Reálné příjmení</label>
+                    <input type="text" name="realSurname" class="form-control" placeholder="Příjmení">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" name="email" id="email" placeholder="email" >
+                <label for="tel">Telefon</label>
+                <input type="tel" pattern="^\+420([0-9]{3}[0-9]{3}[0-9]{3})\b"  class="form-control" name="tel" id="tel" placeholder="telefon" >
+                <small id="telHelp" class="form-text text-muted">Telefon zadávejte ve formátu: +420123456789</small>
+            </div>
+            <div class="form-group">
+                <label for="role">Role</label>
+                <select name="role" class="form-control">
+                    {% for role in roles|reverse %}
+                    <option value="{{ role.id }}">{{ role.roleName }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="avatar">Profilový obrázek</label>
+                <input type="file" class="form-control-file" name="avatar" id="avatar">
+            </div>
+            <button type="submit" name="submitAddUserForm" class="btn btn-primary">Přidat oddíl</button>
+        </form>
+    </div>
+{% endblock content%}
+
+{% block scripts %}
+
+{% endblock scripts%}

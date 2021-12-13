@@ -19,7 +19,7 @@
                 <div class="other-buttons">
                     <a class="btn btn-success" href="{{ pageName }}/addDivision" role="button"><i class='bx bx-plus-circle'></i> Přidat nový oddíl</a>
                 </div>
-                <table class="table table-striped">
+                <table class="table table-striped" id="divisionTable">
                     <thead>
                     <tr>
                         <th class="text-center" scope="col">#</th>
@@ -40,6 +40,39 @@
                                 <a class="btn btn-primary" href="/{{ pageName }}?action=redirectToEdit({{ division.id }})" role="button"><i class='bx bx-pencil'></i></a>
                             </td>
                             <td class="align-middle">{{ division.nameDivision }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="users-box">
+                <div class="other-buttons">
+                    <a class="btn btn-success" href="{{ pageName }}/addUser" role="button"><i class='bx bx-plus-circle'></i> Přidat nového uživatele</a>
+                </div>
+                <table class="table table-striped" id="userTable">
+                    <thead>
+                    <tr>
+                        <th class="text-center" scope="col">#</th>
+                        <th class="text-center" scope="col">Akce</th>
+                        <th scope="col">Login</th>
+                        <th scope="col">Celé jméno</th>
+                        <th scope="col">Role</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <th class="text-center align-middle" scope="row">{{ loop.index }}</th>
+                            <td class="text-center">
+                                <a class="btn btn-danger confirmation"
+                                   alertMess="Opravdu chcete odstranit uživatele: {{ user.username }}?"
+                                   alertYes="Ano, odstranit"
+                                   alertNo="Zrušit"
+                                   href="/{{ pageName }}?action=deleteUser({{ user.id }})" role="button"><i class='bx bx-trash'></i></a>
+                                <a class="btn btn-primary" href="/{{ pageName }}?action=redirectToEdit({{ user.id }})" role="button"><i class='bx bx-pencil'></i></a>
+                            </td>
+                            <td class="align-middle">{{ user.username }}</td>
+                            <td class="align-middle">{{ user.name }} {{ user.surname }}</td>
+                            <td class="align-middle">{{ user.roleText }}</td>
                         </tr>
                     {% endfor %}
                 </table>
@@ -78,5 +111,10 @@
                 }
             });
         });
+
+        $(document).ready( function () {
+            $('#userTable').DataTable();
+            $('#divisionTable').DataTable();
+        } );
     </script>
 {% endblock scripts%}

@@ -18,6 +18,7 @@ const MAIN_APP_COLOR = '#003ADD';
  */
 const NAV_ITEMS = array(
     array('Hlavní stránka', 'home-alt', array('all'), 'home'),
+    array('Můj profil', 'smile', array('all'), 'my-profile'),
     array('Mé pokuty', 'coin', array('all'), 'my-fines'),
     array('Mé zápasy', 'football', array('all'), 'my-matches'),
     array('Oddíly', 'sitemap', array('all'), 'divisions'),

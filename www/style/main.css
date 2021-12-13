@@ -570,6 +570,11 @@ a {
 
 #administration .main-container {
   margin-top: 30px;
+  display: flex;
+  gap: 20px;
+}
+#administration .main-container .other-buttons {
+  margin-bottom: 20px;
 }
 #administration .main-container .division-box {
   max-width: 400px;
@@ -577,9 +582,15 @@ a {
   box-sizing: border-box;
   background-color: white;
   border-radius: 10px;
+  width: 100%;
+  height: fit-content;
 }
-#administration .main-container .division-box .other-buttons {
-  margin-bottom: 20px;
+#administration .main-container .users-box {
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: white;
+  border-radius: 10px;
+  height: fit-content;
 }
 
 html {
