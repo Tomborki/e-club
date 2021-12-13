@@ -233,6 +233,15 @@ abstract class MainController
      * @param $redirect kam se ma presmerovat stranka, pokud action metoda neexistuje
      */
     function doAction($redirect){
+        if(isset($this->urlParams["form"])){
+            $onlyFormName = 'FORM_' . $this->urlParams['form'];
+            if(method_exists($this, $onlyFormName)){
+                $this->{$onlyFormName}();
+            }else{
+                $this->redirect($redirect);
+            }
+        }
+
         if (isset($this->urlParams["action"]))
         {
             $onlyActionName = 'ACTION_' . explode('(', $this->urlParams['action'])[0];

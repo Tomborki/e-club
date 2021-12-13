@@ -9,6 +9,10 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-mbstring" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/tamtamchik/simple-flash" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/davidecesarano/embryo-pdo" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/davidecesarano/embryo-http" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/psr/http-message" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/psr/http-factory" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

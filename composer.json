@@ -1,6 +1,7 @@
 {
     "require": {
         "twig/twig": "3.0",
-        "tamtamchik/simple-flash": "^2.0"
+        "tamtamchik/simple-flash": "^2.0",
+        "davidecesarano/embryo-pdo": "^1.0"
     }
 }

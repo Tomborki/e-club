@@ -5,11 +5,32 @@ class DbModel {
 
     /** @var PDO $pdo  Objekt pracujici s databazi prostrednictvim PDO. */
     private $pdo;
+    public $pdotest;
+
 
     /**
      * Inicializace pripojeni k databazi.
      */
     public function __construct() {
+
+        $database = [
+            'local' => [
+                'engine'   => 'mysql',
+                'host'     => DB_SERVER,
+                'name'     => DB_NAME,
+                'user'     => DB_USER,
+                'password' => DB_PASS,
+                'charset'  => 'utf8mb4',
+                'options'  => [
+                    \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
+                ]
+            ]
+        ];
+
+        $database = new Embryo\PDO\Database($database);
+        $this->pdotest = $database->connection('local');
+
+
         // inicializace DB
         $this->pdo = new PDO("mysql:host=".DB_SERVER.";dbname=".DB_NAME, DB_USER, DB_PASS);
         // vynuceni kodovani UTF-8

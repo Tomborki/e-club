@@ -564,6 +564,9 @@ a {
   position: relative;
   top: 2px;
 }
+#divisions form label {
+  margin-top: 15px;
+}
 
 html {
   height: 100%;
