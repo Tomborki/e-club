@@ -63,12 +63,17 @@
                         <tr>
                             <th class="text-center align-middle" scope="row">{{ loop.index }}</th>
                             <td class="text-center">
-                                <a class="btn btn-danger confirmation"
+                                <a class="btn btn-danger confirmation {% if user.id == userID %} disabled {% endif %}" title="Odstranit uživatele"
                                    alertMess="Opravdu chcete odstranit uživatele: {{ user.username }}?"
                                    alertYes="Ano, odstranit"
                                    alertNo="Zrušit"
                                    href="/{{ pageName }}?action=deleteUser({{ user.id }})" role="button"><i class='bx bx-trash'></i></a>
-                                <a class="btn btn-primary" href="/{{ pageName }}?action=redirectToEdit({{ user.id }})" role="button"><i class='bx bx-pencil'></i></a>
+                                <a class="btn btn-primary" title="Upravit uživatele" href="/{{ pageName }}?action=redirectToEdit({{ user.id }})" role="button"><i class='bx bx-pencil'></i></a>
+                                {% if user.cashier == 0 %}
+                                    <a class="btn btn-success" title="Pověřit pokladníkem" href="/{{ pageName }}?action=entrustCashier({{ user.id }})" role="button"><i class='bx bx-badge-check'></i></a>
+                                {% else %}
+                                    <a class="btn btn-warning" title="Zrušit pověření pokladníka" href="/{{ pageName }}?action=disableCashier({{ user.id }})" role="button"><i class='bx bx-badge-check'></i></a>
+                                {% endif %}
                             </td>
                             <td class="align-middle">{{ user.username }}</td>
                             <td class="align-middle">{{ user.name }} {{ user.surname }}</td>

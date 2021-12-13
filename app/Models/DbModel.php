@@ -36,12 +36,13 @@ class DbModel {
      * @param $tel
      * @param null $idRole
      * @param null $idDivision
+     * @param $cashier
      * @return false|string
      * Metoda prida noveho uzivatele do databaze. Samotna metoda se stara o zaheshovani hesla
      */
-    public function addUser($username, $password, $name, $surname, $email, $tel, $idRole = NULL, $idDivision = NULL){
-        $query = $this->pdo->prepare("INSERT INTO " . TABLE_USER . " (username, password, name, surname, email, tel, idRole, idDivision) 
-                                    VALUES (:username, :password, :realName, :surname, :email, :tel, :idRole, :idDivision)");
+    public function addUser($username, $password, $name, $surname, $email, $tel, $idRole = NULL, $idDivision = NULL, $cashier = 0){
+        $query = $this->pdo->prepare("INSERT INTO " . TABLE_USER . " (username, password, name, surname, email, tel, idRole, idDivision, cashier) 
+                                    VALUES (:username, :password, :realName, :surname, :email, :tel, :idRole, :idDivision, :cashier)");
         if($idRole == null){
             $idRole = 3;
         }
@@ -55,7 +56,8 @@ class DbModel {
             ":email" => $email,
             ":tel" => $tel,
             ":idRole" => $idRole,
-            ":idDivision" => $idDivision
+            ":idDivision" => $idDivision,
+            ":cashier" => $cashier
         ));
 
         print_r($query->errorInfo());
@@ -67,6 +69,38 @@ class DbModel {
         } else {
             // je false
             echo $result;
+            return false;
+        }
+    }
+
+    public function entrustUserToCashier($userId){
+        $query =  $this->pdo->prepare("UPDATE " . TABLE_USER . " SET cashier= 1  WHERE id= :userId");
+        $result = $query->execute(array(
+            ":userId" => $userId
+        ));
+
+        // pokud neni false, tak vratim vysledek, jinak null
+        if ($result) {
+            // neni false
+            return true;
+        } else {
+            // je false
+            return false;
+        }
+    }
+
+    public function unEntrustUserToCashier($userId){
+        $query =  $this->pdo->prepare("UPDATE " . TABLE_USER . " SET cashier= 0  WHERE id= :userId");
+        $result = $query->execute(array(
+            ":userId" => $userId
+        ));
+
+        // pokud neni false, tak vratim vysledek, jinak null
+        if ($result) {
+            // neni false
+            return true;
+        } else {
+            // je false
             return false;
         }
     }

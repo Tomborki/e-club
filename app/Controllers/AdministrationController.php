@@ -115,6 +115,16 @@ class AdministrationController extends MainController
         $this->redirect(administration);
     }
 
+    public function ACTION_entrustCashier($id){
+        $this->db->entrustUserToCashier($id);
+        $this->redirect(administration);
+    }
+
+    public function ACTION_disableCashier($id){
+        $this->db->unEntrustUserToCashier($id);
+        $this->redirect(administration);
+    }
+
     public function ACTION_deleteDivision($id){
         $this->db->deleteDivision($id);
         $this->redirect(administration);
