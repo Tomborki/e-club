@@ -8,21 +8,22 @@ SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 DROP TABLE IF EXISTS `divisions`;
 CREATE TABLE `divisions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `chief` varchar(255) COLLATE utf8_czech_ci NOT NULL,
-  `contact` varchar(255) COLLATE utf8_czech_ci NOT NULL,
   `nameDivision` varchar(255) COLLATE utf8_czech_ci NOT NULL,
+  `chief` varchar(255) COLLATE utf8_czech_ci NOT NULL,
+  `telContact` varchar(255) COLLATE utf8_czech_ci DEFAULT NULL,
+  `emailContact` varchar(255) COLLATE utf8_czech_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
-INSERT INTO `divisions` (`id`, `chief`, `contact`, `nameDivision`) VALUES
-(1,	'Josef Dobrý',	'josefdobry@seznam.cz',	'Muži A'),
-(2,	'František Novák',	'frno@gmail.com',	'Muži B'),
-(3,	'Josef Tříska',	'-',	'Stará garda'),
-(4,	'Tomáš Bohdan',	'+420345728473',	'Starší dorost'),
-(5,	'',	'',	'Mladší dorost'),
-(6,	'',	'',	'Starší žáci'),
-(7,	'',	'',	'Mladší žáci'),
-(8,	'',	'',	'Přípravka');
+INSERT INTO `divisions` (`id`, `nameDivision`, `chief`, `telContact`, `emailContact`) VALUES
+(1,	'Muži A',	'Josef Dobrý',	'+420153698226',	'josefdobry@gmail.com'),
+(2,	'Muži B',	'František Novák',	'+420157854256',	'frno@gmail.com'),
+(4,	'Starší dorost',	'Tomáš Bohdan',	'+420345728473',	NULL),
+(5,	'Mladší dorost',	'',	'',	''),
+(6,	'Starší žáci',	'',	'',	''),
+(7,	'Mladší žáci',	'',	'',	''),
+(8,	'Přípravka',	'',	'',	''),
+(29,	'Stará garda',	'Jiří Gertner',	'+420159875552',	'gertnerj@centrum.cz');
 
 DROP TABLE IF EXISTS `finer`;
 CREATE TABLE `finer` (
@@ -122,19 +123,21 @@ CREATE TABLE `users` (
   `name` varchar(255) COLLATE utf8_czech_ci NOT NULL,
   `surname` varchar(255) COLLATE utf8_czech_ci NOT NULL,
   `email` varchar(50) COLLATE utf8_czech_ci DEFAULT NULL,
-  `tel` varchar(11) COLLATE utf8_czech_ci DEFAULT NULL,
+  `tel` varchar(13) COLLATE utf8_czech_ci DEFAULT NULL,
   `idRole` int(11) NOT NULL,
   `idDivision` int(11) DEFAULT NULL,
+  `cashier` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `idRole` (`idRole`),
   KEY `idDivision` (`idDivision`),
   CONSTRAINT `users_ibfk_1` FOREIGN KEY (`idRole`) REFERENCES `roles` (`id`),
-  CONSTRAINT `users_ibfk_2` FOREIGN KEY (`idDivision`) REFERENCES `divisions` (`id`)
+  CONSTRAINT `users_ibfk_3` FOREIGN KEY (`idDivision`) REFERENCES `divisions` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
-INSERT INTO `users` (`id`, `username`, `password`, `name`, `surname`, `email`, `tel`, `idRole`, `idDivision`) VALUES
-(1,	'tomborki',	'$2y$10$okYrpDvCDRhY0SrblNUWXOpCZr7im55qqTqRrJ31bVfWI5RTQ0Erm',	'Tomáš',	'Borkovec',	'tomasborki@gmail.com',	'720141853',	1,	2),
-(2,	'terka',	'$2y$10$okYrpDvCDRhY0SrblNUWXOpCZr7im55qqTqRrJ31bVfWI5RTQ0Erm',	'Tereza',	'Richterová',	'terka@gmail.com',	'789456123',	2,	4),
-(3,	'filip',	'$2y$10$okYrpDvCDRhY0SrblNUWXOpCZr7im55qqTqRrJ31bVfWI5RTQ0Erm',	'Filip',	'Borkovec',	'filip@gmail.com',	'789456123',	3,	6);
+INSERT INTO `users` (`id`, `username`, `password`, `name`, `surname`, `email`, `tel`, `idRole`, `idDivision`, `cashier`) VALUES
+(1,	'tomborki',	'$2y$10$okYrpDvCDRhY0SrblNUWXOpCZr7im55qqTqRrJ31bVfWI5RTQ0Erm',	'Tomáš',	'Borkovec',	'tomasborki@gmail.com',	'720141853',	1,	2,	0),
+(2,	'terka',	'$2y$10$okYrpDvCDRhY0SrblNUWXOpCZr7im55qqTqRrJ31bVfWI5RTQ0Erm',	'Tereza',	'Richterová',	'terka@gmail.com',	'789456123',	2,	1,	0),
+(3,	'filip',	'$2y$10$okYrpDvCDRhY0SrblNUWXOpCZr7im55qqTqRrJ31bVfWI5RTQ0Erm',	'Filip',	'Borkovec',	'filip@gmail.com',	'789456123',	3,	6,	1),
+(5,	'petr',	'$2y$10$wOJr4UYq5TT1D03Wo9uoM.q4pFbIy72DJT0Oxh9cDHOtDR5cuXb5.',	'Petr',	'Bartovský',	'petr@gmail.com',	'+420111444777',	3,	4,	0);
 
--- 2021-12-13 17:06:05
+-- 2021-12-13 23:30:40
