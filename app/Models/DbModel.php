@@ -5,32 +5,12 @@ class DbModel {
 
     /** @var PDO $pdo  Objekt pracujici s databazi prostrednictvim PDO. */
     private $pdo;
-    public $pdotest;
 
 
     /**
      * Inicializace pripojeni k databazi.
      */
     public function __construct() {
-
-        $database = [
-            'local' => [
-                'engine'   => 'mysql',
-                'host'     => DB_SERVER,
-                'name'     => DB_NAME,
-                'user'     => DB_USER,
-                'password' => DB_PASS,
-                'charset'  => 'utf8mb4',
-                'options'  => [
-                    \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
-                ]
-            ]
-        ];
-
-        $database = new Embryo\PDO\Database($database);
-        $this->pdotest = $database->connection('local');
-
-
         // inicializace DB
         $this->pdo = new PDO("mysql:host=".DB_SERVER.";dbname=".DB_NAME, DB_USER, DB_PASS);
         // vynuceni kodovani UTF-8
@@ -38,41 +18,57 @@ class DbModel {
     }
 
     /**
-     *  Vrati seznam vsech uzivatelu pro spravu uzivatelu.
-     *  @return array Obsah spravy uzivatelu.
+     * @return array
+     * Metoda vrati vsechny uzivatele v db
      */
     public function getAllUsers():array {
-        // pripravim dotaz
-        $q = "SELECT * FROM ".TABLE_USER;
-        // provedu a vysledek vratim jako pole
-        // protoze je o uzkazku, tak netestuju, ze bylo neco vraceno
-        return $this->pdo->query($q)->fetchAll(PDO::FETCH_ASSOC);
-        return $test;
+        $query = $this->pdo->prepare("SELECT * FROM " . TABLE_USER);
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
-     *  Vrati seznam vsech uzivatelu pro spravu uzivatelu.
-     *
+     * @param $username
+     * @param $password
+     * @param null $idRole
+     * @return bool
+     * Metoda pridava noveho uzivatele. Heslo se rovnou zahesuje. Pokud se prikaz nevykoda dobre, metoda vrati false... jinak true.
      */
-    public function addUser($username, $password){
-        // pripravim dotaz
-        $q = "INSERT INTO " . TABLE_USER . " (username, password, idRole) VALUES ('" . $username . "','" . password_hash($password, PASSWORD_DEFAULT) . "',1)";
-        // provedu a vysledek vratim jako pole
-        // protoze je o uzkazku, tak netestuju, ze bylo neco vraceno
-        $res = $this->pdo->query($q);
+    public function addUser($username, $password, $idRole = null){
+        $query = $this->pdo->prepare("INSERT INTO " . TABLE_USER . " (username, password, idRole) VALUES (:username, :password, :idRole)");
+
+        if($idRole == null){
+            $idRole = 3;
+        }
+
+        $result = $query->execute(array(
+            ":username" => $username,
+            ":password" => password_hash($password, PASSWORD_DEFAULT),
+            ":idRole" => $idRole
+        ));
+
+        if ($result) {
+            // neni false
+            return true;
+        } else {
+            // je false
+            return false;
+        }
     }
 
     /**
-     *  Smaze daneho uzivatele z DB.
-     *  @param int $userId  ID uzivatele.
+     * @param int $userId
+     * @return bool
+     * Metoda maze uzivatele podle zadaneho id. Pokud se prikaz nevykoda dobre, metoda vrati false... jinak true.
      */
     public function deleteUser(int $userId):bool {
-        // pripravim dotaz
-        $q = "DELETE FROM ".TABLE_USER." WHERE id_user = $userId";
-        // provedu dotaz
-        $res = $this->pdo->query($q);
+        $query = $this->pdo->prepare("DELETE FROM " . TABLE_USER . " WHERE id_user = :userId");
+        $result = $query->execute(array(
+                    ":userId" => $userId
+                ));
+
         // pokud neni false, tak vratim vysledek, jinak null
-        if ($res) {
+        if ($result) {
             // neni false
             return true;
         } else {
@@ -87,60 +83,58 @@ class DbModel {
      * Metoda vrati vsechny pokuty uzivatele. At uz zaplacené nebo nezaplacene
      */
     public function getAllFinesIdUser(int $userId){
-        // pripravim dotaz
-        $q = "SELECT * FROM ". TABLE_FINER . " WHERE users_id = " . $userId;
-        // provedu a vysledek vratim jako pole
-        // protoze je o uzkazku, tak netestuju, ze bylo neco vraceno
-        return $this->pdo->query($q)->fetchAll(PDO::FETCH_ASSOC);
+        $query = $this->pdo->prepare("SELECT * FROM " . TABLE_FINER  . " WHERE users_id = :userID");
+        $query->execute(array(
+            ":userID" => $userId
+        ));
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
-     * @param int $userId
-     * @return array|false
-     * Metoda vrati vsechny pokuty uzivatele. At uz zaplacené nebo nezaplacene
+     * @param int $finerID
+     * @return mixed
+     * Metoda vraci jmeno pokuty podle jeho id
      */
     public function getFinerInfo(int $finerID){
-        // pripravim dotaz
-        $q = "SELECT * FROM ". TABLE_TYPE_FINES . " WHERE id = " . $finerID;
-        // provedu a vysledek vratim jako pole
-        // protoze je o uzkazku, tak netestuju, ze bylo neco vraceno
-        return $this->pdo->query($q)->fetchAll(PDO::FETCH_ASSOC)[0];
+        $query =  $this->pdo->prepare("SELECT * FROM ". TABLE_TYPE_FINES . " WHERE id = :finerID");
+        $query->execute(array(
+            ":finerID" => $finerID
+        ));
+        return $query->fetchAll(PDO::FETCH_ASSOC)[0];
     }
 
     /**
-     * @param int $userId
      * @return array|false
-     * Metoda vrati vsechny pokuty uzivatele. At uz zaplacené nebo nezaplacene
+     * Metoda vraci vsechny oddily
      */
     public function getAllDivisions(){
-        // pripravim dotaz
-        $q = "SELECT * FROM ". TABLE_DIVISIONS;
-        // provedu a vysledek vratim jako pole
-        return $this->pdo->query($q)->fetchAll(PDO::FETCH_ASSOC);
+        $query =  $this->pdo->prepare("SELECT * FROM ". TABLE_DIVISIONS);
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
-     * @param int $userId
-     * @return array|false
-     * Metoda vrati vsechny pokuty uzivatele. At uz zaplacené nebo nezaplacene
+     * @param $userID
+     * @param $divisionID
+     * Metoda upravuje oblibeny oddil u uzivatele v db
      */
     public function userLikedDivision($userID, $divisionID){
-        // pripravim dotaz
-        $q = "UPDATE " . TABLE_USER . " SET idDivision='" . $divisionID . "' WHERE id=" . $userID;
-        // provedu a vysledek vratim jako pole
-        $res = $this->pdo->query($q);
+        $query =  $this->pdo->prepare("UPDATE " . TABLE_USER . " SET idDivision= :idDivision  WHERE id= :userId");
+        $query->execute(array(
+            ":idDivision" => $divisionID,
+            ":userId" => $userID
+        ));
     }
 
     /**
-     * @param int $userId
-     * @return array|false
-     * Metoda vrati vsechny pokuty uzivatele. At uz zaplacené nebo nezaplacene
+     * @param $userID
+     * Metoda priradi hodnotu null u oblibeneho oddilu u uzivatele podle jeho id v db
      */
     public function unLikeDivision($userID){
-        // pripravim dotaz
-        $q = "UPDATE " . TABLE_USER . " SET idDivision=NULL WHERE id=" . $userID;
-        // provedu a vysledek vratim jako pole
-        $res = $this->pdo->query($q);
+        $query =  $this->pdo->prepare("UPDATE " . TABLE_USER . " SET idDivision=NULL WHERE id= :userId");
+        $query->execute(array(
+            ":userId" => $userID
+        ));
     }
 
 }
