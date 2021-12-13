@@ -1,6 +1,5 @@
 <?php
 
-
 abstract class MainController
 {
 
@@ -29,11 +28,12 @@ abstract class MainController
     public function redirect($url)
     {
         if (headers_sent()){
-            die('<script type="text/javascript">window.location=\''.$url.'\';</script‌​>');
+            exit('<script type="text/javascript">window.location=\''.$url.'\';</script‌​>');
         }else{
             header('Location: ' . $url);
-            die();
+            exit();
         }
+
     }
 
     /**

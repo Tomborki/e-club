@@ -18,12 +18,12 @@ const MAIN_APP_COLOR = '#003ADD';
  */
 const NAV_ITEMS = array(
     array('Hlavní stránka', 'home-alt', array('all'), 'home'),
-    array('Mé pokuty', 'coin', array(1,2,3), 'my-fines'),
-    array('Mé zápasy', 'football', array(1,2,3), 'my-matches'),
+    array('Mé pokuty', 'coin', array('all'), 'my-fines'),
+    array('Mé zápasy', 'football', array('all'), 'my-matches'),
     array('Oddíly', 'sitemap', array('all'), 'divisions'),
-    array('Uživatelé', 'user', array(3), 'users'),
-    array('Role', 'shield-quarter', array(3), 'roles'),
-    array('Nastavení', 'cog', array(3), 'settings'),
+    array('Uživatelé', 'user', array(1), 'users'),
+    array('Role', 'shield-quarter', array(1), 'roles'),
+    array('Administrace', 'cog', array(1), 'administration'),
 );
 
 //------------------------------ DATABAZE ------------------------------------

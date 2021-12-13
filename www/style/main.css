@@ -568,6 +568,20 @@ a {
   margin-top: 15px;
 }
 
+#administration .main-container {
+  margin-top: 30px;
+}
+#administration .main-container .division-box {
+  max-width: 400px;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: white;
+  border-radius: 10px;
+}
+#administration .main-container .division-box .other-buttons {
+  margin-bottom: 20px;
+}
+
 html {
   height: 100%;
   width: 100%;

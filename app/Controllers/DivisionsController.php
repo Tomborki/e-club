@@ -15,11 +15,6 @@ class DivisionsController extends MainController
             $this->data['userDivision'] = null;
         }
 
-        if(isset($_POST['addDivisionForm'])){
-            echo 'xd';
-        }
-
-
         $this->displayTwig();
     }
 
@@ -34,13 +29,4 @@ class DivisionsController extends MainController
         $_SESSION['userDivision'] = null;
         $this->redirect(divisions);
     }
-
-    public function FORM_addNewDivision(){
-        $name = $_POST['divisionName'];
-        $chief = $_POST['divisionChief'];
-        $email = $_POST['emailContact'];
-        $tel = $_POST['telContact'];
-
-    }
-
 }

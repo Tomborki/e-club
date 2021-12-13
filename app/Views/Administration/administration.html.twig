@@ -1,0 +1,82 @@
+{% extends 'rozlozeni.html.twig' %}
+
+{# Page title #}
+{% block title %}
+    Administrace
+{% endblock title %}
+
+{# Page description #}
+{% block description %}Administrace stránky{% endblock description %}
+
+{# Page keywords #}
+{% block keywords %}{% endblock keywords %}
+
+{% block content %}
+    <div id="administration">
+        <h2>Administrace stránky</h2>
+        <div class="main-container">
+            <div class="division-box">
+                <div class="other-buttons">
+                    <a class="btn btn-success" href="{{ pageName }}/addDivision" role="button"><i class='bx bx-plus-circle'></i> Přidat nový oddíl</a>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th class="text-center" scope="col">#</th>
+                        <th class="text-center" scope="col">Akce</th>
+                        <th scope="col">Jméno oddílu</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for division in divisions %}
+                        <tr>
+                            <th class="text-center align-middle" scope="row">{{ loop.index }}</th>
+                            <td class="text-center">
+                                <a class="btn btn-danger confirmation"
+                                   alertMess="Opravdu chcete odstranit oddíl: {{ division.nameDivision }}?"
+                                   alertYes="Ano, odstranit"
+                                   alertNo="Zrušit"
+                                   href="/{{ pageName }}?action=deleteDivision({{ division.id }})" role="button"><i class='bx bx-trash'></i></a>
+                                <a class="btn btn-primary" href="/{{ pageName }}?action=redirectToEdit({{ division.id }})" role="button"><i class='bx bx-pencil'></i></a>
+                            </td>
+                            <td class="align-middle">{{ division.nameDivision }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+    </div>
+{% endblock content%}
+
+{% block scripts %}
+    <script>
+        $('.confirmation').on('click', function (e) {
+            e.preventDefault();
+
+            var href = $(this).attr('href');
+            var alertMess = $(this).attr('alertMess');
+            var alertYes = $(this).attr('alertYes');
+            var alertNo = $(this).attr('alertNo');
+
+            return bootbox.confirm({
+                message: alertMess,
+                buttons: {
+                    confirm: {
+                        label: alertYes,
+                        className: 'btn-outline-danger'
+                    },
+                    cancel: {
+                        label: alertNo,
+                        className: 'btn-secondary'
+                    }
+                },
+                callback: function (result) {
+                    if (result) {
+                        window.location = href
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock scripts%}

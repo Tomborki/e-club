@@ -14,9 +14,6 @@
 {% block content %}
     <div id="divisions">
         <h2>Oddíly</h2>
-        <div class="other-buttons">
-            <a class="btn btn-success" href="divisions/add" role="button"><i class='bx bx-plus-circle'></i> Přidat nový oddíl</a>
-        </div>
         <span class="drag-info">posouvejte doleva <i class='bx bx-arrow-from-left'></i></span>
         <div class="table-container">
             <table class="table table-striped">
@@ -26,7 +23,8 @@
                     <th class="text-center" scope="col">Akce</th>
                     <th scope="col">Jméno oddílu</th>
                     <th scope="col">Vedoucí</th>
-                    <th scope="col">Kontakt</th>
+                    <th scope="col">Telefon</th>
+                    <th scope="col">Email</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -46,7 +44,18 @@
                     </td>
                     <td class="align-middle">{{ division.nameDivision }}</td>
                     <td class="align-middle">{{ division.chief }}</td>
-                    <td class="align-middle">{{ division.contact }}</td>
+
+                    {% if division.telContact != null %}
+                        <td class="align-middle"><a href="tel:{{ division.telContact }}">{{ division.telContact }}</a></td>
+                    {% else %}
+                        <td class="align-middle">---</td>
+                    {% endif %}
+
+                    {% if division.emailContact != null %}
+                        <td class="align-middle"><a href="mailto:{{ division.emailContact }}">{{ division.emailContact }}</a></td>
+                    {% else %}
+                        <td class="align-middle">---</td>
+                    {% endif %}
                 </tr>
                 {% endfor %}
             </table>
