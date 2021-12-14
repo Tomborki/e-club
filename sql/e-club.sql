@@ -40,8 +40,6 @@ CREATE TABLE `finer` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 INSERT INTO `finer` (`id`, `typeFines_id`, `users_id`, `date`, `paid`) VALUES
-(1,	1,	1,	'2021-11-29 23:05:47',	0),
-(2,	2,	1,	'2021-11-29 23:06:02',	0),
 (3,	1,	2,	'2021-11-29 23:06:18',	0);
 
 DROP TABLE IF EXISTS `matches`;
@@ -127,6 +125,7 @@ CREATE TABLE `users` (
   `idRole` int(11) NOT NULL,
   `idDivision` int(11) DEFAULT NULL,
   `cashier` tinyint(4) NOT NULL,
+  `avatarImageName` varchar(255) COLLATE utf8_czech_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `idRole` (`idRole`),
   KEY `idDivision` (`idDivision`),
@@ -134,10 +133,10 @@ CREATE TABLE `users` (
   CONSTRAINT `users_ibfk_3` FOREIGN KEY (`idDivision`) REFERENCES `divisions` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
-INSERT INTO `users` (`id`, `username`, `password`, `name`, `surname`, `email`, `tel`, `idRole`, `idDivision`, `cashier`) VALUES
-(1,	'tomborki',	'$2y$10$okYrpDvCDRhY0SrblNUWXOpCZr7im55qqTqRrJ31bVfWI5RTQ0Erm',	'Tomáš',	'Borkovec',	'tomasborki@gmail.com',	'720141853',	1,	2,	0),
-(2,	'terka',	'$2y$10$okYrpDvCDRhY0SrblNUWXOpCZr7im55qqTqRrJ31bVfWI5RTQ0Erm',	'Tereza',	'Richterová',	'terka@gmail.com',	'789456123',	2,	1,	0),
-(3,	'filip',	'$2y$10$okYrpDvCDRhY0SrblNUWXOpCZr7im55qqTqRrJ31bVfWI5RTQ0Erm',	'Filip',	'Borkovec',	'filip@gmail.com',	'789456123',	3,	6,	1),
-(5,	'petr',	'$2y$10$wOJr4UYq5TT1D03Wo9uoM.q4pFbIy72DJT0Oxh9cDHOtDR5cuXb5.',	'Petr',	'Bartovský',	'petr@gmail.com',	'+420111444777',	3,	4,	0);
+INSERT INTO `users` (`id`, `username`, `password`, `name`, `surname`, `email`, `tel`, `idRole`, `idDivision`, `cashier`, `avatarImageName`) VALUES
+(2,	'terka',	'$2y$10$okYrpDvCDRhY0SrblNUWXOpCZr7im55qqTqRrJ31bVfWI5RTQ0Erm',	'Tereza',	'Richterová',	'terka@gmail.com',	'789456123',	2,	1,	0,	''),
+(3,	'filip',	'$2y$10$okYrpDvCDRhY0SrblNUWXOpCZr7im55qqTqRrJ31bVfWI5RTQ0Erm',	'Filip',	'Borkovec',	'filip@gmail.com',	'789456123',	3,	6,	1,	''),
+(5,	'petr',	'$2y$10$wOJr4UYq5TT1D03Wo9uoM.q4pFbIy72DJT0Oxh9cDHOtDR5cuXb5.',	'Petr',	'Bartovský',	'petr@gmail.com',	'+420111444777',	3,	4,	0,	''),
+(15,	'tomborki',	'$2y$10$1hYTpfxcb98oAoult.TSQuTMWEng015q0My3i4jzHXVwTok7zkt5y',	'Tomáš',	'Borkovec',	'tomasborki@gmail.com',	'+420720141853',	1,	1,	0,	'avatar02c4680fbb78c1efc115965a4321345c57e2ba8f.jpg');
 
--- 2021-12-13 23:30:40
+-- 2021-12-14 20:42:15
