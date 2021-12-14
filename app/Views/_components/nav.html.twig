@@ -3,7 +3,12 @@
 		<i class='bx bx-menu' id="header-toggle"></i>
 	</div>
 	<a href="/my-profile" class="header_name">{{ name }} {{ surname }} {{ userRole }}</a>
-	<div class="header_img"><img src="/data/userAvatars/{{ userID }}/avatar.jpg" alt="">
+	<div class="header_img">
+		{% if userAvatar != null %}
+			<img src="/data/userAvatars/{{ userID }}/{{ userAvatar }}" alt="Profilový obrázek">
+		{% else %}
+			<img src="/data/userAvatars/default.png" alt="Profilový obrázek">
+		{% endif %}
 	</div>
 </header>
 

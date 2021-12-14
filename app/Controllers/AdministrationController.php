@@ -71,20 +71,17 @@ class AdministrationController extends MainController
             $tel = $_POST['tel'];
             $role = $_POST['role'];
 
-            if($this->db->addUser($username, $password, $realName, $realSurname, $email, $tel, $role)){
-                $this->redirect(administration);
-            }else{
-
-            }
-
-            /*
             $errors= array();
             $file_name = $_FILES['avatar']['name'];
             $file_size =$_FILES['avatar']['size'];
             $file_tmp =$_FILES['avatar']['tmp_name'];
-            $file_type=$_FILES['avatar']['type'];
-            $file_ext_temp = explode('.',$_FILES['avatar']['name']);
+            $file_type= $_FILES['avatar']['type'];
+            $file_ext_temp = explode('.',$file_name);
             $file_ext= strtolower(end($file_ext_temp));
+
+            $avatarName = 'avatar' . bin2hex(random_bytes(20)) . '.' . $file_ext;
+
+            $lastInseredID = $this->db->addUser($username, $password, $realName, $realSurname, $email, $tel, $avatarName, $role);
 
             $extensions= array("jpeg","jpg","png");
 
@@ -97,14 +94,16 @@ class AdministrationController extends MainController
             }
 
             if(empty($errors)==true){
-                move_uploaded_file($file_tmp,"/data/userAvatars/" . $lastInseredID . "/avatar" . $file_ext );
+                $structure = './data/userAvatars/' . $lastInseredID . '/';
+                if (!mkdir($structure, 0777, true)) {
+                    die('Failed to create directories...');
+                }else{
+                    move_uploaded_file($file_tmp,"./data/userAvatars/" . $lastInseredID . "/" . $avatarName);
+                    $this->redirect(administration);
+                }
             }else{
                 print_r($errors);
             }
-            */
-
-
-
         }else{
             $this->redirect(administration);
         }
@@ -112,6 +111,7 @@ class AdministrationController extends MainController
 
     public function ACTION_deleteUser($id){
         $this->db->deleteUser($id);
+        $this->deleteDir('./data/userAvatars/' . $id);
         $this->redirect(administration);
     }
 

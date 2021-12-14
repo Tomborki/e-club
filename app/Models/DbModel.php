@@ -40,9 +40,9 @@ class DbModel {
      * @return false|string
      * Metoda prida noveho uzivatele do databaze. Samotna metoda se stara o zaheshovani hesla
      */
-    public function addUser($username, $password, $name, $surname, $email, $tel, $idRole = NULL, $idDivision = NULL, $cashier = 0){
-        $query = $this->pdo->prepare("INSERT INTO " . TABLE_USER . " (username, password, name, surname, email, tel, idRole, idDivision, cashier) 
-                                    VALUES (:username, :password, :realName, :surname, :email, :tel, :idRole, :idDivision, :cashier)");
+    public function addUser($username, $password, $name, $surname, $email, $tel, $avatar, $idRole = NULL, $idDivision = NULL, $cashier = 0){
+        $query = $this->pdo->prepare("INSERT INTO " . TABLE_USER . " (username, password, name, surname, email, tel, idRole, idDivision, cashier, avatarImageName) 
+                                    VALUES (:username, :password, :realName, :surname, :email, :tel, :idRole, :idDivision, :cashier, :avatar)");
         if($idRole == null){
             $idRole = 3;
         }
@@ -57,7 +57,8 @@ class DbModel {
             ":tel" => $tel,
             ":idRole" => $idRole,
             ":idDivision" => $idDivision,
-            ":cashier" => $cashier
+            ":cashier" => $cashier,
+            ":avatar" => $avatar
         ));
 
         print_r($query->errorInfo());

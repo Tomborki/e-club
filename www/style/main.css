@@ -37,6 +37,9 @@ a {
   border-radius: 50%;
   overflow: hidden;
 }
+.header_img img {
+  object-fit: contain;
+}
 
 .header_img img {
   width: 40px;
@@ -115,6 +118,7 @@ a {
 
 .show {
   left: 0;
+  box-shadow: 400px 40px 100vW 100vW rgba(0, 0, 0, 0.38);
 }
 
 .active {
@@ -167,6 +171,7 @@ a {
 
   .show {
     width: 224px;
+    box-shadow: 400px 40px 100vW 100vW rgba(0, 0, 0, 0.38);
   }
 
   .body-pd {
@@ -577,7 +582,7 @@ a {
   margin-bottom: 20px;
 }
 #administration .main-container .division-box {
-  max-width: 400px;
+  max-width: 470px;
   padding: 20px;
   box-sizing: border-box;
   background-color: white;

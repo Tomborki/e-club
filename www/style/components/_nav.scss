@@ -39,7 +39,11 @@ a {
     display: flex;
     justify-content: center;
     border-radius: 50%;
-    overflow: hidden
+    overflow: hidden;
+
+    img{
+        object-fit: contain;
+    }
 }
 
 .header_img img {
@@ -120,7 +124,8 @@ a {
 }
 
 .show {
-    left: 0
+    left: 0;
+    box-shadow: 400px 40px 100vW 100vW rgb(0 0 0 / 38%);
 }
 
 .active {
@@ -173,7 +178,8 @@ a {
     }
 
     .show {
-        width: calc(68px + 156px)
+        width: calc(68px + 156px);
+        box-shadow: 400px 40px 100vW 100vW rgb(0 0 0 / 38%);
     }
 
     .body-pd {

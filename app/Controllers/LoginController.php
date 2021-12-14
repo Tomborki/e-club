@@ -16,8 +16,9 @@ class LoginController extends MainController
                 $_SESSION['name'] = $check['name'];
                 $_SESSION['surname'] = $check['surname'];
                 $_SESSION['userID'] = $check['id'];
-                $_SESSION['userRole'] = $check['userRole'];
+                $_SESSION['userRole'] = $check['idRole'];
                 $_SESSION['userDivision'] = $check['idDivision'];
+                $_SESSION['userAvatar'] = $check['avatarImageName'];
                 $this->redirect(home);
             }else {
                 $this->data['errorMessage'] = "Nesprávné přihlašovací jméno nebo heslo";
@@ -37,13 +38,7 @@ class LoginController extends MainController
     private function checkLogin($username, $password){
         foreach ($this->db->getAllUsers() as $user){
             if($user['username'] == $username && password_verify($password, $user['password'])){
-                return array(
-                    'name' => $user['name'],
-                    'surname' => $user['surname'],
-                    'id' => $user['id'],
-                    'userRole' => $user['idRole'],
-                    'idDivision' => $user['idDivision']
-                );
+                return $user;
             }
         }
         return false;

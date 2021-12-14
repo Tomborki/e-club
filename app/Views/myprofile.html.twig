@@ -16,7 +16,11 @@
         <h2>Můj profil</h2>
         <div class="info-box">
             <h3>{{ name }} {{ surname }}</h3>
-            <img src="/data/userAvatars/{{ userID }}/avatar.jpg">
+            {% if userAvatar != null %}
+                <img src="/data/userAvatars/{{ userID }}/{{ userAvatar }}" alt="Profilový obrázek">
+            {% else %}
+                <img src="/data/userAvatars/default.png" alt="Profilový obrázek">
+            {% endif %}
         </div>
     </div>
 {% endblock content%}

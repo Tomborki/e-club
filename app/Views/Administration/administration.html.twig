@@ -70,7 +70,7 @@
                                    href="/{{ pageName }}?action=deleteUser({{ user.id }})" role="button"><i class='bx bx-trash'></i></a>
                                 <a class="btn btn-primary" title="Upravit uživatele" href="/{{ pageName }}?action=redirectToEdit({{ user.id }})" role="button"><i class='bx bx-pencil'></i></a>
                                 {% if user.cashier == 0 %}
-                                    <a class="btn btn-success" title="Pověřit pokladníkem" href="/{{ pageName }}?action=entrustCashier({{ user.id }})" role="button"><i class='bx bx-badge-check'></i></a>
+                                    <a class="btn btn-secondary" title="Pověřit pokladníkem" href="/{{ pageName }}?action=entrustCashier({{ user.id }})" role="button"><i class='bx bx-badge-check'></i></a>
                                 {% else %}
                                     <a class="btn btn-warning" title="Zrušit pověření pokladníka" href="/{{ pageName }}?action=disableCashier({{ user.id }})" role="button"><i class='bx bx-badge-check'></i></a>
                                 {% endif %}
