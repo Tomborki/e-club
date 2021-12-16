@@ -5,27 +5,82 @@
     display: flex;
     gap: 20px;
 
+    @media only screen and (max-width: 1300px) {
+      flex-direction: column;
+    }
+
     .other-buttons{
       margin-bottom: 20px;
     }
 
-    .division-box{
-      max-width: 470px;
+    .action-buttons{
+      display: flex;
+      gap: 4px;
+
+      @media only screen and (max-width: 1425px) {
+        flex-direction: column;
+        max-width: 40px;
+        width: 100%;
+        margin: auto;
+
+        @media only screen and (max-width: 1300px) {
+          flex-direction: unset;
+          max-width: unset;
+          width: fit-content;
+
+          @media only screen and (max-width: 1300px) {
+            flex-direction: column;
+            max-width: 40px;
+            width: 100%;
+            margin: auto;
+          }
+        }
+      }
+    }
+
+    .box{
       padding: 20px;
       box-sizing: border-box;
       background-color: white;
       border-radius: 10px;
       width: 100%;
-      height: fit-content;
-    }
 
-    .users-box{
-      padding: 20px;
-      box-sizing: border-box;
-      background-color: white;
-      border-radius: 10px;
-      height: fit-content;
+      .dataTables_wrapper{
+        overflow-x: auto;
+      }
     }
   }
 
+  .avatar-form-group{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    @media only screen and (max-width: 680px) {
+      flex-direction: column;
+    }
+
+    .avatar-container{
+      padding: 15px;
+      background-color: white;
+      border-radius: 5px;
+      border: 1px solid #d4d4d4;
+
+      img{
+        width: 200px;
+        height: 200px;
+        object-fit: contain;
+      }
+    }
+  }
+
+  .error{
+    color: red;
+    margin-top: 5px;
+    display: block;
+  }
+
+  form{
+    padding-bottom: 30px;
+  }
 }

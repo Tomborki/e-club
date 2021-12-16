@@ -15,7 +15,9 @@
     <div id="administration">
         <h2>Administrace stránky</h2>
         <div class="main-container">
-            <div class="division-box">
+
+            <div class="box">
+                <h3>Oddíly</h3>
                 <div class="other-buttons">
                     <a class="btn btn-success" href="{{ pageName }}/addDivision" role="button"><i class='bx bx-plus-circle'></i> Přidat nový oddíl</a>
                 </div>
@@ -31,20 +33,22 @@
                     {% for division in divisions %}
                         <tr>
                             <th class="text-center align-middle" scope="row">{{ loop.index }}</th>
-                            <td class="text-center">
+                            <td class="text-center action-buttons">
                                 <a class="btn btn-danger confirmation"
                                    alertMess="Opravdu chcete odstranit oddíl: {{ division.nameDivision }}?"
                                    alertYes="Ano, odstranit"
                                    alertNo="Zrušit"
                                    href="/{{ pageName }}?action=deleteDivision({{ division.id }})" role="button"><i class='bx bx-trash'></i></a>
-                                <a class="btn btn-primary" href="/{{ pageName }}?action=redirectToEdit({{ division.id }})" role="button"><i class='bx bx-pencil'></i></a>
+                                <a class="btn btn-primary" href="/{{ pageName }}?action=redirectToEditDivision({{ division.id }})" role="button"><i class='bx bx-pencil'></i></a>
                             </td>
                             <td class="align-middle">{{ division.nameDivision }}</td>
                         </tr>
                     {% endfor %}
                 </table>
             </div>
-            <div class="users-box">
+
+            <div class="box">
+                <h3>Uživatelé</h3>
                 <div class="other-buttons">
                     <a class="btn btn-success" href="{{ pageName }}/addUser" role="button"><i class='bx bx-plus-circle'></i> Přidat nového uživatele</a>
                 </div>
@@ -62,13 +66,13 @@
                     {% for user in users %}
                         <tr>
                             <th class="text-center align-middle" scope="row">{{ loop.index }}</th>
-                            <td class="text-center">
+                            <td class="text-center action-buttons">
                                 <a class="btn btn-danger confirmation {% if user.id == userID %} disabled {% endif %}" title="Odstranit uživatele"
                                    alertMess="Opravdu chcete odstranit uživatele: {{ user.username }}?"
                                    alertYes="Ano, odstranit"
                                    alertNo="Zrušit"
                                    href="/{{ pageName }}?action=deleteUser({{ user.id }})" role="button"><i class='bx bx-trash'></i></a>
-                                <a class="btn btn-primary" title="Upravit uživatele" href="/{{ pageName }}?action=redirectToEdit({{ user.id }})" role="button"><i class='bx bx-pencil'></i></a>
+                                <a class="btn btn-primary" title="Upravit uživatele" href="/{{ pageName }}?action=redirectToEditUser({{ user.id }})" role="button"><i class='bx bx-pencil'></i></a>
                                 {% if user.cashier == 0 %}
                                     <a class="btn btn-secondary" title="Pověřit pokladníkem" href="/{{ pageName }}?action=entrustCashier({{ user.id }})" role="button"><i class='bx bx-badge-check'></i></a>
                                 {% else %}
@@ -82,6 +86,41 @@
                     {% endfor %}
                 </table>
             </div>
+
+            <div class="box">
+                <h3>Pokuty</h3>
+                <div class="other-buttons">
+                    <a class="btn btn-success" href="{{ pageName }}/addFine" role="button"><i class='bx bx-plus-circle'></i> Přidat nový typ pokuty</a>
+                </div>
+                <table class="table table-striped" id="finesTable">
+                    <thead>
+                    <tr>
+                        <th class="text-center" scope="col">#</th>
+                        <th class="text-center" scope="col">Akce</th>
+                        <th scope="col">Název</th>
+                        <th scope="col">Pokuta</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for fine in typeFines %}
+                        <tr>
+                            <th class="text-center align-middle" scope="row">{{ loop.index }}</th>
+                            <td class="text-center action-buttons">
+                                <a class="btn btn-danger confirmation" title="Odstranit uživatele"
+                                   alertMess="Opravdu chcete odstranit uživatele: {{ fine.nameFine }}?"
+                                   alertYes="Ano, odstranit"
+                                   alertNo="Zrušit"
+                                   href="/{{ pageName }}?action=deleteFineType({{ fine.id }})" role="button"><i class='bx bx-trash'></i></a>
+                                <a class="btn btn-primary" title="Upravit uživatele" href="/{{ pageName }}?action=redirectToEdit({{ user.id }})" role="button"><i class='bx bx-pencil'></i></a>
+                            </td>
+                            <td class="align-middle">{{ fine.nameFine }}</td>
+                            <td class="align-middle">{{ fine.money }}Kč</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+
         </div>
 
     </div>
@@ -118,8 +157,15 @@
         });
 
         $(document).ready( function () {
-            $('#userTable').DataTable();
-            $('#divisionTable').DataTable();
+            $('#userTable').DataTable({
+                responsive: false,
+            });
+            $('#divisionTable').DataTable({
+                responsive: false
+            });
+            $('#finesTable').DataTable({
+                responsive: false
+            });
         } );
     </script>
 {% endblock scripts%}

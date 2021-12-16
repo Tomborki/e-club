@@ -28,6 +28,18 @@ class DbModel {
     }
 
     /**
+     * @return array
+     * Metoda vrati vsechny uzivatele v db
+     */
+    public function getUserById($id):array {
+        $query = $this->pdo->prepare("SELECT * FROM " . TABLE_USER . " WHERE id= :idUser");
+        $query->execute(array(
+            "idUser" => $id
+        ));
+        return $query->fetchAll(PDO::FETCH_ASSOC)[0];
+    }
+
+    /**
      * @param $username
      * @param $password
      * @param $name
@@ -287,6 +299,101 @@ class DbModel {
         $query = $this->pdo->prepare("SELECT * FROM " . TABLE_ROLES);
         $query->execute();
         return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getAllTypeFines(){
+        $query = $this->pdo->prepare("SELECT * FROM " . TABLE_TYPE_FINES);
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function addFineType($nameFine, $money){
+        $query = $this->pdo->prepare("INSERT INTO " . TABLE_TYPE_FINES . " (nameFine, money) VALUES (:nameFine, :money)");
+        $result = $query->execute(array(
+            "nameFine" => $nameFine,
+            ":money" => $money,
+        ));
+
+        // pokud neni false, tak vratim vysledek, jinak null
+        if ($result) {
+            // neni false
+            return true;
+        } else {
+            // je false
+            return false;
+        }
+    }
+
+    public function deleteFineType($idFine){
+        $query = $this->pdo->prepare("DELETE FROM " . TABLE_TYPE_FINES . " WHERE id = :fineID");
+        $result = $query->execute(array(
+            ":fineID" => $idFine,
+        ));
+
+        // pokud neni false, tak vratim vysledek, jinak null
+        if ($result) {
+            // neni false
+            return true;
+        } else {
+            // je false
+            return false;
+        }
+    }
+
+    public function changeUserPassword($userId, $newPassword){
+        $query =  $this->pdo->prepare("UPDATE " . TABLE_USER . " SET password= :password  WHERE id= :userId");
+        $result = $query->execute(array(
+            ":password" => password_hash($newPassword, PASSWORD_DEFAULT),
+            ":userId" => $userId
+        ));
+
+        // pokud neni false, tak vratim vysledek, jinak null
+        if ($result) {
+            // neni false
+            return true;
+        } else {
+            // je false
+            return false;
+        }
+    }
+
+    public function changeUserAvatarImageName($userId, $newName){
+        $query =  $this->pdo->prepare("UPDATE " . TABLE_USER . " SET avatarImageName= :avatarImageName  WHERE id= :userId");
+        $result = $query->execute(array(
+            ":avatarImageName" => $newName,
+            ":userId" => $userId
+        ));
+
+        // pokud neni false, tak vratim vysledek, jinak null
+        if ($result) {
+            // neni false
+            return true;
+        } else {
+            // je false
+            return false;
+        }
+    }
+
+    public function editUserWithoutPassAvatar($userId, $username, $name, $surname, $email, $tel, $idRole = NULL){
+        $query = $this->pdo->prepare("UPDATE " . TABLE_USER . " SET username=:username, name=:name, surname=:surname, email=:email, tel=:tel, idRole=:idRole  WHERE id= :userId");
+        $result = $query->execute(array(
+            "username" => $username,
+            ":name" => $name,
+            ":surname" => $surname,
+            ":email" => $email,
+            ":tel" => $tel,
+            ":idRole" => $idRole,
+            ":userId" => $userId,
+        ));
+
+        // pokud neni false, tak vratim vysledek, jinak null
+        if ($result) {
+            // neni false
+            return true;
+        } else {
+            // je false
+            return false;
+        }
     }
 
 }

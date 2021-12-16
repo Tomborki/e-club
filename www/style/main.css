@@ -116,7 +116,7 @@ a {
   font-size: 1.25rem;
 }
 
-.show {
+nav .show {
   left: 0;
   box-shadow: 400px 40px 100vW 100vW rgba(0, 0, 0, 0.38);
 }
@@ -169,7 +169,7 @@ a {
     padding: 1rem 1rem 0 0;
   }
 
-  .show {
+  nav .show {
     width: 224px;
     box-shadow: 400px 40px 100vW 100vW rgba(0, 0, 0, 0.38);
   }
@@ -379,7 +379,7 @@ a {
     font-size: 13px;
   }
 }
-@media only screen and (max-width: 1920px) and (max-width: 1140px) and (max-width: 1150) {
+@media only screen and (max-width: 1920px) and (max-width: 1140px) and (max-width: 1150px) {
   #calendar-esports .eventContent p {
     font-size: 11px;
   }
@@ -578,24 +578,79 @@ a {
   display: flex;
   gap: 20px;
 }
+@media only screen and (max-width: 1300px) {
+  #administration .main-container {
+    flex-direction: column;
+  }
+}
 #administration .main-container .other-buttons {
   margin-bottom: 20px;
 }
-#administration .main-container .division-box {
-  max-width: 470px;
+#administration .main-container .action-buttons {
+  display: flex;
+  gap: 4px;
+}
+@media only screen and (max-width: 1425px) {
+  #administration .main-container .action-buttons {
+    flex-direction: column;
+    max-width: 40px;
+    width: 100%;
+    margin: auto;
+  }
+}
+@media only screen and (max-width: 1425px) and (max-width: 1300px) {
+  #administration .main-container .action-buttons {
+    flex-direction: unset;
+    max-width: unset;
+    width: fit-content;
+  }
+}
+@media only screen and (max-width: 1425px) and (max-width: 1300px) and (max-width: 1300px) {
+  #administration .main-container .action-buttons {
+    flex-direction: column;
+    max-width: 40px;
+    width: 100%;
+    margin: auto;
+  }
+}
+#administration .main-container .box {
   padding: 20px;
   box-sizing: border-box;
   background-color: white;
   border-radius: 10px;
   width: 100%;
-  height: fit-content;
 }
-#administration .main-container .users-box {
-  padding: 20px;
-  box-sizing: border-box;
+#administration .main-container .box .dataTables_wrapper {
+  overflow-x: auto;
+}
+#administration .avatar-form-group {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+@media only screen and (max-width: 680px) {
+  #administration .avatar-form-group {
+    flex-direction: column;
+  }
+}
+#administration .avatar-form-group .avatar-container {
+  padding: 15px;
   background-color: white;
-  border-radius: 10px;
-  height: fit-content;
+  border-radius: 5px;
+  border: 1px solid #d4d4d4;
+}
+#administration .avatar-form-group .avatar-container img {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+}
+#administration .error {
+  color: red;
+  margin-top: 5px;
+  display: block;
+}
+#administration form {
+  padding-bottom: 30px;
 }
 
 html {

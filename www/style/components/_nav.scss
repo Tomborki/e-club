@@ -123,9 +123,11 @@ a {
     font-size: 1.25rem
 }
 
-.show {
-    left: 0;
-    box-shadow: 400px 40px 100vW 100vW rgb(0 0 0 / 38%);
+nav{
+    .show {
+        left: 0;
+        box-shadow: 400px 40px 100vW 100vW rgb(0 0 0 / 38%);
+    }
 }
 
 .active {
@@ -177,9 +179,11 @@ a {
         padding: 1rem 1rem 0 0
     }
 
-    .show {
-        width: calc(68px + 156px);
-        box-shadow: 400px 40px 100vW 100vW rgb(0 0 0 / 38%);
+    nav{
+        .show {
+            width: calc(68px + 156px);
+            box-shadow: 400px 40px 100vW 100vW rgb(0 0 0 / 38%);
+        }
     }
 
     .body-pd {

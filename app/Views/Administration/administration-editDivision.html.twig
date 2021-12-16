@@ -2,37 +2,37 @@
 
 {# Page title #}
 {% block title %}
-    Administrace - upravit oddíl {{ divisionName }}
+    Administrace - upravit oddíl {{ editDivision.nameDivision }}
 {% endblock title %}
 
 {# Page description #}
-{% block description %}Upravit oddíl: {{ divisionName }}{% endblock description %}
+{% block description %}Upravit oddíl: {{ editDivision.nameDivision }}{% endblock description %}
 
 {# Page keywords #}
 {% block keywords %}{% endblock keywords %}
 
 {% block content %}
     <div id="divisions">
-        <h2>Upravit oddíl: {{ divisionName }}</h2>
+        <h2>Upravit oddíl: {{ editDivision.nameDivision }}</h2>
         <form method="post" action="/{{ pageName }}?form=editDivision">
             <div class="form-group">
                 <label for="divisionName">Jméno oddílu</label>
-                <input value="{{ divisionName }}" type="text" class="form-control form-control-lg" name="divisionName" id="divisionName" placeholder="Jméno oddílu" required>
+                <input value="{{ editDivision.nameDivision }}" type="text" class="form-control form-control-lg" name="divisionName" id="divisionName" placeholder="Jméno oddílu" required>
             </div>
             <div class="form-group">
                 <label for="divisionChief">Vedoucí oddílu</label>
-                <input value="{{ chief }}" type="text" class="form-control" name="divisionChief" id="divisionChief" placeholder="Vedoucí" required>
+                <input value="{{ editDivision.chief }}" type="text" class="form-control" name="divisionChief" id="divisionChief" placeholder="Vedoucí" required>
             </div>
             <div class="form-group">
                 <label for="emailContact">Email na vedoucího oddílu</label>
-                <input value="{{ emailContact }}" type="email" class="form-control" name="emailContact" id="emailContact" placeholder="Email" >
+                <input value="{{ editDivision.emailContact }}" type="email" class="form-control" name="emailContact" id="emailContact" placeholder="Email" >
             </div>
             <div class="form-group">
                 <label for="telContact">Telefon na vedoucího oddílu</label>
-                <input value="{{ telContact }}" type="tel" class="form-control" aria-describedby="telHelp" name="telContact" id="telContact" pattern="^\+420([0-9]{3}[0-9]{3}[0-9]{3})\b" placeholder="Telefon" >
+                <input value="{{ editDivision.telContact }}" type="tel" class="form-control" aria-describedby="telHelp" name="telContact" id="telContact" pattern="^\+420([0-9]{3}[0-9]{3}[0-9]{3})\b" placeholder="Telefon" >
                 <small id="telHelp" class="form-text text-muted">Telefon zadávejte ve formátu: +420123456789</small>
             </div>
-            <input value="{{ idDivision }}" type="hidden" name="divisionId">
+            <input value="{{ editDivision.id }}" type="hidden" name="divisionId">
             <button type="submit" name="submitEditDivisionForm" class="btn btn-primary">Upravit oddíl</button>
         </form>
     </div>
