@@ -34,12 +34,12 @@
                         <tr>
                             <th class="text-center align-middle" scope="row">{{ loop.index }}</th>
                             <td class="text-center action-buttons">
-                                <a class="btn btn-danger confirmation"
+                                <a class="btn btn-danger confirmation" title="Odstranit oddíl"
                                    alertMess="Opravdu chcete odstranit oddíl: {{ division.nameDivision }}?"
                                    alertYes="Ano, odstranit"
                                    alertNo="Zrušit"
                                    href="/{{ pageName }}?action=deleteDivision({{ division.id }})" role="button"><i class='bx bx-trash'></i></a>
-                                <a class="btn btn-primary" href="/{{ pageName }}?action=redirectToEditDivision({{ division.id }})" role="button"><i class='bx bx-pencil'></i></a>
+                                <a class="btn btn-primary" title="Upravit oddíl" href="/{{ pageName }}?action=redirectToEditDivision({{ division.id }})" role="button"><i class='bx bx-pencil'></i></a>
                             </td>
                             <td class="align-middle">{{ division.nameDivision }}</td>
                         </tr>
@@ -72,7 +72,7 @@
                                    alertYes="Ano, odstranit"
                                    alertNo="Zrušit"
                                    href="/{{ pageName }}?action=deleteUser({{ user.id }})" role="button"><i class='bx bx-trash'></i></a>
-                                <a class="btn btn-primary" title="Upravit uživatele" href="/{{ pageName }}?action=redirectToEditUser({{ user.id }})" role="button"><i class='bx bx-pencil'></i></a>
+                                <a class="btn btn-primary" title="Upravit uživatele" href="/{{ pageName }}npo" role="button"><i class='bx bx-pencil'></i></a>
                                 {% if user.cashier == 0 %}
                                     <a class="btn btn-secondary" title="Pověřit pokladníkem" href="/{{ pageName }}?action=entrustCashier({{ user.id }})" role="button"><i class='bx bx-badge-check'></i></a>
                                 {% else %}
@@ -106,12 +106,12 @@
                         <tr>
                             <th class="text-center align-middle" scope="row">{{ loop.index }}</th>
                             <td class="text-center action-buttons">
-                                <a class="btn btn-danger confirmation" title="Odstranit uživatele"
-                                   alertMess="Opravdu chcete odstranit uživatele: {{ fine.nameFine }}?"
+                                <a class="btn btn-danger confirmation" title="Odstranit typ pokuty"
+                                   alertMess="Opravdu chcete odstranit pokutu: {{ fine.nameFine }}?"
                                    alertYes="Ano, odstranit"
                                    alertNo="Zrušit"
                                    href="/{{ pageName }}?action=deleteFineType({{ fine.id }})" role="button"><i class='bx bx-trash'></i></a>
-                                <a class="btn btn-primary" title="Upravit uživatele" href="/{{ pageName }}?action=redirectToEdit({{ user.id }})" role="button"><i class='bx bx-pencil'></i></a>
+                                <a class="btn btn-primary" title="Upravit typ pokuty" href="/{{ pageName }}?action=redirectToEdit({{ user.id }})" role="button"><i class='bx bx-pencil'></i></a>
                             </td>
                             <td class="align-middle">{{ fine.nameFine }}</td>
                             <td class="align-middle">{{ fine.money }}Kč</td>

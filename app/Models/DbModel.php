@@ -182,10 +182,19 @@ class DbModel {
      */
     public function userLikedDivision($userID, $divisionID){
         $query =  $this->pdo->prepare("UPDATE " . TABLE_USER . " SET idDivision= :idDivision  WHERE id= :userId");
-        $query->execute(array(
+        $result = $query->execute(array(
             ":idDivision" => $divisionID,
             ":userId" => $userID
         ));
+
+        // pokud neni false, tak vratim vysledek, jinak null
+        if ($result) {
+            // neni false
+            return true;
+        } else {
+            // je false
+            return false;
+        }
     }
 
     /**
@@ -194,9 +203,18 @@ class DbModel {
      */
     public function unLikeDivision($userID){
         $query =  $this->pdo->prepare("UPDATE " . TABLE_USER . " SET idDivision=NULL WHERE id= :userId");
-        $query->execute(array(
+        $result = $query->execute(array(
             ":userId" => $userID
         ));
+
+        // pokud neni false, tak vratim vysledek, jinak null
+        if ($result) {
+            // neni false
+            return true;
+        } else {
+            // je false
+            return false;
+        }
     }
 
     /**

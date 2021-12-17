@@ -12,6 +12,7 @@
 {% block keywords %}{% endblock keywords %}
 
 {% block content %}
+
     <div id="administration">
         <h2>Upravit uživatele: {{ editUser.username }}</h2>
         <form method="post" enctype="multipart/form-data" action="/{{ pageName }}?form=editUser">

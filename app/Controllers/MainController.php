@@ -1,5 +1,7 @@
 <?php
 
+use \Tamtamchik\SimpleFlash\Flash;
+
 abstract class MainController
 {
 
@@ -59,6 +61,8 @@ abstract class MainController
         $this->data['navItems'] = NAV_ITEMS;
         $this->data['pageName'] = $controllerName;
         $this->data['mainColor'] = MAIN_APP_COLOR;
+
+        $this->data['flashmessage'] = flash()->display();
 
         // Overeni, jestli ma uzivatel k teto strance pristup
         if(!($this->checkRole(get_called_class(), $this->getAllowRoles(get_called_class())))){

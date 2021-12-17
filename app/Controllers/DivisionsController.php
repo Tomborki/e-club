@@ -19,14 +19,25 @@ class DivisionsController extends MainController
     }
 
     public function ACTION_likeDivision($id){
-        $this->db->userLikedDivision($_SESSION['userID'], $id);
-        $_SESSION['userDivision'] = $id;
+        if($this->db->userLikedDivision($_SESSION['userID'], $id)){
+            $_SESSION['userDivision'] = $id;
+            $division = $this->db->getDivisionById($id);
+            Flash::success('Oblíbil jste si oddíl: ' . $division['nameDivision']);
+        }else{
+            Flash::error('Něco se pokazilo');
+        }
+
         $this->redirect(divisions);
     }
 
     public function ACTION_unLikeDivision(){
-        $this->db->unLikeDivision($_SESSION['userID']);
-        $_SESSION['userDivision'] = null;
+        if($this->db->unLikeDivision($_SESSION['userID'])){
+            $_SESSION['userDivision'] = null;
+            Flash::success('Odoblíbil jste si oddíl');
+        }else{
+            Flash::error('Něco se pokazilo');
+        }
+
         $this->redirect(divisions);
     }
 }
