@@ -72,7 +72,7 @@
                                    alertYes="Ano, odstranit"
                                    alertNo="Zrušit"
                                    href="/{{ pageName }}?action=deleteUser({{ user.id }})" role="button"><i class='bx bx-trash'></i></a>
-                                <a class="btn btn-primary" title="Upravit uživatele" href="/{{ pageName }}npo" role="button"><i class='bx bx-pencil'></i></a>
+                                <a class="btn btn-primary" title="Upravit uživatele" href="/{{ pageName }}?action=redirectToEditUser({{ user.id }})" role="button"><i class='bx bx-pencil'></i></a>
                                 {% if user.cashier == 0 %}
                                     <a class="btn btn-secondary" title="Pověřit pokladníkem" href="/{{ pageName }}?action=entrustCashier({{ user.id }})" role="button"><i class='bx bx-badge-check'></i></a>
                                 {% else %}
@@ -111,7 +111,7 @@
                                    alertYes="Ano, odstranit"
                                    alertNo="Zrušit"
                                    href="/{{ pageName }}?action=deleteFineType({{ fine.id }})" role="button"><i class='bx bx-trash'></i></a>
-                                <a class="btn btn-primary" title="Upravit typ pokuty" href="/{{ pageName }}?action=redirectToEdit({{ user.id }})" role="button"><i class='bx bx-pencil'></i></a>
+                                <a class="btn btn-primary" title="Upravit typ pokuty" href="/{{ pageName }}?action=redirectToEditFineType({{ fine.id }})" role="button"><i class='bx bx-pencil'></i></a>
                             </td>
                             <td class="align-middle">{{ fine.nameFine }}</td>
                             <td class="align-middle">{{ fine.money }}Kč</td>

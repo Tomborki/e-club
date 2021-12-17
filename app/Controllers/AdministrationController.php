@@ -25,6 +25,10 @@ class AdministrationController extends MainController
             $this->data['editUser'] = $this->db->getUserById($_GET['editedUserId']);
         }
 
+        if(isset($_GET['editedFineTypeId'])){
+            $this->data['editTypeFine'] = $this->db->getFineTypeById($_GET['editedFineTypeId']);
+        }
+
         $this->displayTwig();
     }
 
@@ -180,7 +184,7 @@ class AdministrationController extends MainController
 
             $allUsers = $this->db->getAllUsers();
             foreach ($allUsers as $user){
-                if($user['username'] == $username){
+                if($user['username'] == $username && $userID != $user['id']){
                     Flash::error('Uživatelské jméno "' . $username . '" je již zabrané!');
                     $this->redirect('administration/editUser?editedUserId=' . $userID);
                 }
@@ -209,10 +213,15 @@ class AdministrationController extends MainController
 
                 if(empty($errors)==true){
                     $structure = './data/userAvatars/' . $userID . '/';
-
+                    if(is_dir($structure)){
                         $this->deleteFiles($structure);
-                        move_uploaded_file($file_tmp,"./data/userAvatars/" . $userID . "/" . $avatarName);
-                        $this->db->changeUserAvatarImageName($userID, $avatarName);
+                    }else{
+                        if (!mkdir($structure, 0777, true)) {
+                            die('Failed to create directories...');
+                        }
+                    }
+                    move_uploaded_file($file_tmp,"./data/userAvatars/" . $userID . "/" . $avatarName);
+                    $this->db->changeUserAvatarImageName($userID, $avatarName);
 
                 }else{
                     Flash::error($errors);
@@ -234,6 +243,26 @@ class AdministrationController extends MainController
             Flash::success('Uživatel úspěšně upraven');
             $this->redirect(administration);
 
+
+        }else{
+            Flash::error('Někde se stala chyba');
+            $this->redirect(administration);
+        }
+    }
+
+    public function FORM_editFineType(){
+        if(isset($_POST['submitEditFineType'])){
+            $fineId = $_POST['fineTypeId'];
+            $fineName = $_POST['fineName'];
+            $fineMoney = $_POST['money'];
+
+            if($this->db->editFineType($fineId, $fineName, $fineMoney)){
+                Flash::success('Typ pokuty úspěšně upraven');
+                $this->redirect(administration);
+            }else{
+                Flash::success('Pokuta se nepodařila úspěšně upravit');
+                $this->redirect(administration);
+            }
 
         }else{
             Flash::error('Někde se stala chyba');
@@ -308,8 +337,16 @@ class AdministrationController extends MainController
      * @param $id
      * Akce presmeruje stranku stranku na editaci uzivatele
      */
-    public function ACTION_redirectToEditUser($id, $errorMessage = null){
+    public function ACTION_redirectToEditUser($id){
         $this->redirect(administration . "/editUser?editedUserId=" . $id);
+    }
+
+    /**
+     * @param $id
+     * Akce presmeruje stranku stranku na editaci typu pokuty
+     */
+    public function ACTION_redirectToEditFineType($id){
+        $this->redirect(administration . "/editFineType?editedFineTypeId=" . $id);
     }
 
     /**

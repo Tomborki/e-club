@@ -472,4 +472,35 @@ class DbModel {
         }
     }
 
+    /**
+     * @param $idFine
+     * @return mixed
+     * Metoda vrati typ pokuty podle jeho id
+     */
+    public function getFineTypeById($idFine){
+        $query = $this->pdo->prepare("SELECT * FROM " . TABLE_TYPE_FINES . " WHERE id = :idFine");
+        $query->execute(array(
+            "idFine" => $idFine
+        ));
+        return $query->fetchAll(PDO::FETCH_ASSOC)[0];
+    }
+
+    public function editFineType($idFine, $fineName, $fineMoney){
+        $query =  $this->pdo->prepare("UPDATE " . TABLE_TYPE_FINES . " SET nameFine= :nameFine, money= :money  WHERE id= :fineId");
+        $result = $query->execute(array(
+            ":fineId" => $idFine,
+            ":nameFine" => $fineName,
+            ":money" => $fineMoney,
+        ));
+
+        // pokud neni false, tak vratim vysledek, jinak null
+        if ($result) {
+            // neni false
+            return true;
+        } else {
+            // je false
+            return false;
+        }
+    }
+
 }

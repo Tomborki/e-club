@@ -1,0 +1,34 @@
+{% extends 'rozlozeni.html.twig' %}
+
+{# Page title #}
+{% block title %}
+    Administrace - upravit typ pokuty {{ editTypeFine.nameFine }}
+{% endblock title %}
+
+{# Page description #}
+{% block description %}Upravit typ pokuty: {{ editTypeFine.nameFine }}{% endblock description %}
+
+{# Page keywords #}
+{% block keywords %}{% endblock keywords %}
+
+{% block content %}
+    <div id="administration">
+        <h2>Upravit pokut s názvem:  {{ editTypeFine.nameFine }}</h2>
+        <form method="post" action="/{{ pageName }}?form=editFineType">
+            <div class="form-group">
+                <label for="divisionName">Název pokuty</label>
+                <input type="text" value="{{ editTypeFine.nameFine }}" class="form-control form-control-lg" name="fineName" id="fineName" placeholder="Název pokuty" required>
+            </div>
+            <div class="form-group">
+                <label for="divisionChief">Pokuta v Kč</label>
+                <input value="{{ editTypeFine.money }}" type="number" class="form-control form-control-lg" name="money" id="money" required>
+            </div>
+            <input value="{{ editTypeFine.id }}" type="hidden" name="fineTypeId">
+            <button type="submit" name="submitEditFineType" class="btn btn-primary">Upravit pokutu</button>
+        </form>
+    </div>
+{% endblock content%}
+
+{% block scripts %}
+
+{% endblock scripts%}
