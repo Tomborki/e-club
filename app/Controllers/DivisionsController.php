@@ -18,6 +18,10 @@ class DivisionsController extends MainController
         $this->displayTwig();
     }
 
+    /**
+     * @param $id
+     * Akce lajkne oddil uzivateli
+     */
     public function ACTION_likeDivision($id){
         if($this->db->userLikedDivision($_SESSION['userID'], $id)){
             $_SESSION['userDivision'] = $id;
@@ -30,6 +34,9 @@ class DivisionsController extends MainController
         $this->redirect(divisions);
     }
 
+    /**
+     * Akce "odlajkne" oddil uzivateli
+     */
     public function ACTION_unLikeDivision(){
         if($this->db->unLikeDivision($_SESSION['userID'])){
             $_SESSION['userDivision'] = null;

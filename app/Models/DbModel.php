@@ -46,9 +46,10 @@ class DbModel {
      * @param $surname
      * @param $email
      * @param $tel
+     * @param $avatar
      * @param null $idRole
      * @param null $idDivision
-     * @param $cashier
+     * @param int $cashier
      * @return false|string
      * Metoda prida noveho uzivatele do databaze. Samotna metoda se stara o zaheshovani hesla
      */
@@ -86,6 +87,11 @@ class DbModel {
         }
     }
 
+    /**
+     * @param $userId
+     * @return bool
+     * Metoda poveri uzivatele pokladnikem podle jeho id
+     */
     public function entrustUserToCashier($userId){
         $query =  $this->pdo->prepare("UPDATE " . TABLE_USER . " SET cashier= 1  WHERE id= :userId");
         $result = $query->execute(array(
@@ -102,6 +108,11 @@ class DbModel {
         }
     }
 
+    /**
+     * @param $userId
+     * @return bool
+     * Metoda odpoveri uzivatele pokladnikem podle jeho id
+     */
     public function unEntrustUserToCashier($userId){
         $query =  $this->pdo->prepare("UPDATE " . TABLE_USER . " SET cashier= 0  WHERE id= :userId");
         $result = $query->execute(array(
@@ -305,6 +316,11 @@ class DbModel {
         }
     }
 
+    /**
+     * @param $roleId
+     * @return mixed
+     * Metoda vrati roly podle jeji id
+     */
     public function getRoleById($roleId){
         $query = $this->pdo->prepare("SELECT * FROM " . TABLE_ROLES . " WHERE id = :roleId");
         $query->execute(array(
@@ -313,18 +329,32 @@ class DbModel {
         return $query->fetchAll(PDO::FETCH_ASSOC)[0];
     }
 
+    /**
+     * @return array|false
+     * Metoda vrati vsechny role
+     */
     public function getAllRoles(){
         $query = $this->pdo->prepare("SELECT * FROM " . TABLE_ROLES);
         $query->execute();
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * @return array|false
+     * Metoda vraci vsechny typy pokut
+     */
     public function getAllTypeFines(){
         $query = $this->pdo->prepare("SELECT * FROM " . TABLE_TYPE_FINES);
         $query->execute();
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * @param $nameFine
+     * @param $money
+     * @return bool
+     * Medota prida novy typ pokuty
+     */
     public function addFineType($nameFine, $money){
         $query = $this->pdo->prepare("INSERT INTO " . TABLE_TYPE_FINES . " (nameFine, money) VALUES (:nameFine, :money)");
         $result = $query->execute(array(
@@ -342,6 +372,11 @@ class DbModel {
         }
     }
 
+    /**
+     * @param $idFine
+     * @return bool
+     * Metoda odstrani typ pokuty podle id
+     */
     public function deleteFineType($idFine){
         $query = $this->pdo->prepare("DELETE FROM " . TABLE_TYPE_FINES . " WHERE id = :fineID");
         $result = $query->execute(array(
@@ -358,6 +393,12 @@ class DbModel {
         }
     }
 
+    /**
+     * @param $userId
+     * @param $newPassword
+     * @return bool
+     * Metoda zmeni uzivateli jeho heslo. Uzivatel se identifikuje podle jeho id. Heslo automaticky zahesovano
+     */
     public function changeUserPassword($userId, $newPassword){
         $query =  $this->pdo->prepare("UPDATE " . TABLE_USER . " SET password= :password  WHERE id= :userId");
         $result = $query->execute(array(
@@ -375,6 +416,12 @@ class DbModel {
         }
     }
 
+    /**
+     * @param $userId
+     * @param $newName
+     * @return bool
+     * Metoda upravi jmeno obrazku, ktery smeruje na avatar v ulozisti
+     */
     public function changeUserAvatarImageName($userId, $newName){
         $query =  $this->pdo->prepare("UPDATE " . TABLE_USER . " SET avatarImageName= :avatarImageName  WHERE id= :userId");
         $result = $query->execute(array(
@@ -392,6 +439,17 @@ class DbModel {
         }
     }
 
+    /**
+     * @param $userId
+     * @param $username
+     * @param $name
+     * @param $surname
+     * @param $email
+     * @param $tel
+     * @param null $idRole
+     * @return bool
+     * Metoda upravi utivatele v databazi podle jeho id. V teto metode se nezadava heslo ani jmeno obrazku avatara
+     */
     public function editUserWithoutPassAvatar($userId, $username, $name, $surname, $email, $tel, $idRole = NULL){
         $query = $this->pdo->prepare("UPDATE " . TABLE_USER . " SET username=:username, name=:name, surname=:surname, email=:email, tel=:tel, idRole=:idRole  WHERE id= :userId");
         $result = $query->execute(array(

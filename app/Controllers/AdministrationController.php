@@ -28,6 +28,10 @@ class AdministrationController extends MainController
         $this->displayTwig();
     }
 
+    /**
+     * Funce zpracovava odpovedi od formulare addNewDivision
+     * Formular na pridavani noveho oddilu
+     */
     public function FORM_addNewDivision(){
         if(isset($_POST['submitAddDivisionForm'])){
             $name = $_POST['divisionName'];
@@ -47,6 +51,10 @@ class AdministrationController extends MainController
         }
     }
 
+    /**
+     * Funkce zpracovava odpovedi od formulare addNewFine
+     * Formular na pridavani noveho typu pokuty
+     */
     public function FORM_addNewFine(){
         if(isset($_POST['submitAddFineForm'])){
             $name = $_POST['fineName'];
@@ -65,6 +73,10 @@ class AdministrationController extends MainController
         }
     }
 
+    /**
+     * Funkce zpracovava odpovedi od formulare editDivision
+     * Formular na editovani oddilu
+     */
     public function FORM_editDivision(){
         if(isset($_POST['submitEditDivisionForm'])){
             $name = $_POST['divisionName'];
@@ -86,6 +98,11 @@ class AdministrationController extends MainController
         }
     }
 
+    /**
+     * @throws Exception
+     * Funkce zpracovava odpovedi od formulare addNewUser
+     * Formular na pridavani noveho uzivatele
+     */
     public function FORM_addNewUser(){
         if(isset($_POST['submitAddUserForm'])){
             $username = $_POST['username'];
@@ -145,6 +162,11 @@ class AdministrationController extends MainController
         }
     }
 
+    /**
+     * @throws Exception
+     * Funkce zpracovava odpovedi od formulare editUser
+     * Formular na upravovani uzivatele
+     */
     public function FORM_editUser(){
         if(isset($_POST['submitEditUserForm'])){
             $username = $_POST['username'];
