@@ -139,6 +139,18 @@ nav{
     margin-left: auto;
     margin-right: 12px;
     margin-bottom: 3px;
+
+    p{
+        margin: 0px;
+        position: relative;
+
+        span{
+            position: absolute;
+            left: -78px;
+            top: 4px;
+            color: white;
+        }
+    }
 }
 
 .active::before {

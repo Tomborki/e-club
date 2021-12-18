@@ -19,6 +19,7 @@ class LoginController extends MainController
                 $_SESSION['userRole'] = $check['idRole'];
                 $_SESSION['userDivision'] = $check['idDivision'];
                 $_SESSION['userAvatar'] = $check['avatarImageName'];
+                $_SESSION['cashier'] = $check['cashier'];
                 $this->redirect(home);
             }else {
                 $this->data['errorMessage'] = "Nesprávné přihlašovací jméno nebo heslo";

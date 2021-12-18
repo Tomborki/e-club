@@ -49,6 +49,8 @@ abstract class MainController
 
         $controllerName = strtolower(str_replace('Controller', '', get_called_class()));
 
+        $this->data['navItems'] = NAV_ITEMS;
+
         //Predani zakladnich informaci o strance
         if(isset($_SESSION['name']) && isset($_SESSION['surname'])){
             $this->data['name'] = $_SESSION['name'];
@@ -56,9 +58,13 @@ abstract class MainController
             $this->data['userID'] = $_SESSION['userID'];
             $this->data['userRole'] = $_SESSION['userRole'];
             $this->data['userAvatar'] = $_SESSION['userAvatar'];
+            $this->data['isUserCashier'] = $_SESSION['cashier'];
+
+            if($_SESSION['cashier'] == 1){
+                array_push($this->data['navItems'], 'cashier');
+            }
         }
 
-        $this->data['navItems'] = NAV_ITEMS;
         $this->data['pageName'] = $controllerName;
         $this->data['mainColor'] = MAIN_APP_COLOR;
 
@@ -168,6 +174,9 @@ abstract class MainController
                     return true;
                 }
                 foreach ($roles as $oneRole){
+                    if($oneRole == "cashier" && $_SESSION['cashier'] == 1) {
+                        return true;
+                    }
                     if($oneRole == $_SESSION['userRole']){
                         return true;
                     }

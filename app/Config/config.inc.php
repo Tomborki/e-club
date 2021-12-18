@@ -23,6 +23,7 @@ const NAV_ITEMS = array(
     array('Mé zápasy', 'football', array('all'), 'my-matches'),
     array('Oddíly', 'sitemap', array('all'), 'divisions'),
     array('Uživatelé', 'user', array(1), 'users'),
+    array('Pokladník', 'wallet', array('cashier', 1), 'cashier-page'),
     array('Administrace', 'cog', array(1), 'administration'),
 );
 
