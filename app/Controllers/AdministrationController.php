@@ -250,6 +250,10 @@ class AdministrationController extends MainController
         }
     }
 
+    /**
+     * Funkce zpracovava odpovedi od formulare editFineType
+     * Formular na upravovani typu pokuty
+     */
     public function FORM_editFineType(){
         if(isset($_POST['submitEditFineType'])){
             $fineId = $_POST['fineTypeId'];

@@ -18,7 +18,7 @@
         <form method="post" enctype="multipart/form-data" action="/{{ pageName }}?form=editUser">
             <div class="form-group">
                 <label for="divisionName">Uživatelské jméno (login)</label>
-                <input type="text" class="form-control form-control-lg" name="username" id="username" placeholder="login" required value="{{ editUser.username }}">
+                <input type="text" class="form-control form-control-lg" name="username" id="username" placeholder="login" required value="{{ editUser.username }}" required>
                 <small id="telHelp" class="form-text text-muted">Slouží k přihlášení</small>
             </div>
             <div class="form-group">
@@ -30,18 +30,18 @@
             <div class="form-row">
                 <div class="col">
                     <label for="realName">Reálné jméno</label>
-                    <input value="{{ editUser.name }}" type="text" name="realName" class="form-control" placeholder="Jméno">
+                    <input value="{{ editUser.name }}" type="text" name="realName" class="form-control" placeholder="Jméno" required>
                 </div>
                 <div class="col">
                     <label for="realSurname">Reálné příjmení</label>
-                    <input value="{{ editUser.surname }}" type="text" name="realSurname" class="form-control" placeholder="Příjmení">
+                    <input value="{{ editUser.surname }}" type="text" name="realSurname" class="form-control" placeholder="Příjmení" required>
                 </div>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input value="{{ editUser.email }}" type="email" class="form-control" name="email" id="email" placeholder="email" >
+                <input value="{{ editUser.email }}" type="email" class="form-control" name="email" id="email" placeholder="email" required>
                 <label for="tel">Telefon</label>
-                <input value="{{ editUser.tel }}" type="tel" pattern="^\+420([0-9]{3}[0-9]{3}[0-9]{3})\b"  class="form-control" name="tel" id="tel" placeholder="telefon" required>
+                <input value="{{ editUser.tel }}" type="tel" class="form-control" name="tel" id="tel" placeholder="telefon" required>
                 <small id="telHelp" class="form-text text-muted">Telefon zadávejte ve formátu: +420123456789</small>
             </div>
             <div class="form-group">
@@ -86,6 +86,10 @@
         $('input[type="file"]').change(function(e){
             var fileName = e.target.files[0].name;
             $('.custom-file-label').html(fileName);
+        });
+
+        jQuery.extend(jQuery.validator.messages, {
+            required: "Toto pole je povinné",
         });
 
         $( document ).ready(function() {

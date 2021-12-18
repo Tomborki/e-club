@@ -131,6 +131,16 @@ nav .show {
   margin-right: 12px;
   margin-bottom: 3px;
 }
+.header_name p {
+  margin: 0px;
+  position: relative;
+}
+.header_name p span {
+  position: absolute;
+  left: -78px;
+  top: 4px;
+  color: white;
+}
 
 .active::before {
   content: "";
@@ -651,6 +661,46 @@ nav .show {
 }
 #administration form {
   padding-bottom: 30px;
+}
+
+#myFines .info-container {
+  margin-bottom: 30px;
+}
+#myFines .main-container {
+  display: flex;
+  gap: 20px;
+}
+@media only screen and (max-width: 1000px) {
+  #myFines .main-container {
+    flex-direction: column;
+  }
+}
+#myFines .main-container .box {
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: white;
+  border-radius: 10px;
+  width: 100%;
+  min-height: 200px;
+}
+#myFines .main-container .box h4 {
+  margin-bottom: 20px;
+}
+@media only screen and (max-width: 530px) {
+  #myFines .main-container .box h4 {
+    text-align: center;
+  }
+}
+#myFines .main-container .box .nothing {
+  width: 100%;
+  height: 80%;
+  min-height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  font-weight: 700;
+  text-align: center;
 }
 
 html {

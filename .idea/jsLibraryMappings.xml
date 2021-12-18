@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="PROJECT" libraries="{bootbox.js, bootstrap, boxicons, iconify, jquery-3.5.1, jquery-validate, jquery-validation, jquery.dataTables, jquery.form}" />
+    <file url="PROJECT" libraries="{bootbox.js, bootstrap, bootstrap-select, boxicons, iconify, jquery-3.5.1, jquery-validate, jquery-validation, jquery.dataTables, jquery.form}" />
   </component>
 </project>

@@ -6,16 +6,121 @@
 {% endblock title %}
 
 {# Page description #}
-{% block description %}Hlavní stránka aplikace e-club{% endblock description %}
+{% block description %}Stránka s méma pokutama{% endblock description %}
 
 {# Page keywords #}
 {% block keywords %}{% endblock keywords %}
 
 {% block content %}
-    <h2>Moje pokuty
-    </h2>
+    <div id="myFines">
+        <h2>Mé pokuty</h2>
+        <div class="info-container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="card text-center border-danger mb-2">
+                        <div class="card-header bg-transparent border-danger">
+                            Zbývá zaplatit:
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ dept }} Kč</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card text-center border-success mb-2">
+                        <div class="card-header bg-transparent border-success">
+                            Zaplaceno:
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ paid }} Kč</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card text-center border-primary mb-2">
+                        <div class="card-header bg-transparent border-primary">
+                            Dohromady v pokutách
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ all }} Kč</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main-container">
+            <div class="box">
+                <h4>Nezaplacené pokuty</h4>
+                {% if unPaidFines != null %}
+                <table class="table table-striped" id="unpaidTable">
+                    <thead>
+                    <tr>
+                        <th class="text-center" scope="col">#</th>
+                        <th scope="col">Název</th>
+                        <th scope="col">Datum vzniku</th>
+                        <th scope="col">Hodnota</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for fine in unPaidFines %}
+                        <tr class="table-danger">
+                            <th class="text-center align-middle" scope="row">{{ loop.index }}</th>
+                            <td class="align-middle">{{ fine.fineName }}</td>
+                            <td class="align-middle">{{ fine.date }}</td>
+                            <td class="align-middle">{{ fine.money }} Kč</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                {% else %}
+                <div class="nothing">
+                    Máte vše zaplaceno! :)
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="box">
+                <h4>Zaplacené pokuty</h4>
+                {% if paidFines != null %}
+                <table class="table table-striped" id="paidTable">
+                    <thead>
+                    <tr>
+                        <th class="text-center" scope="col">#</th>
+                        <th scope="col">Název</th>
+                        <th scope="col">Datum vzniku</th>
+                        <th scope="col">Hodnota</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for fine in paidFines %}
+                        {% if fine.paid == 1 %}
+                        <tr class="table-success">
+                            <th class="text-center align-middle" scope="row">{{ loop.index }}</th>
+                            <td class="align-middle">{{ fine.fineName }}</td>
+                            <td class="align-middle">{{ fine.date }}</td>
+                            <td class="align-middle">{{ fine.money }} Kč</td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                </table>
+                {% else %}
+                <div class="nothing">
+                    Ještě jste nic neplatil.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 {% endblock content%}
 
 {% block scripts %}
-
+    <script>
+        $(document).ready( function () {
+            $('#unpaidTable').DataTable({
+                responsive: false,
+            });
+            $('#paidTable').DataTable({
+                responsive: false
+            });
+        } );
+    </script>
 {% endblock scripts%}

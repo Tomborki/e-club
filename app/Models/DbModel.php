@@ -164,6 +164,25 @@ class DbModel {
     }
 
     /**
+     * @param $idUser
+     * @return array|false
+     * Metoda vraci vsechny pokuty ktere patri uzivatele s jeho predanym id. Vraci se i nazev a hodnota
+     */
+    public function getAllUserFinesWithNameAndMoney($idUser){
+        $allFines = $this->getAllFinesIdUser($idUser);
+        $j = 0;
+
+        foreach ($allFines as $oneFine){
+            $fineInfo = $this->getFinerInfo($oneFine['typeFines_id']);
+            $allFines[$j]['fineName'] = $fineInfo['nameFine'];
+            $allFines[$j]['money'] = $fineInfo['money'];
+            $j++;
+        }
+
+        return $allFines;
+    }
+
+    /**
      * @param int $finerID
      * @return mixed
      * Metoda vraci jmeno pokuty podle jeho id
@@ -485,6 +504,13 @@ class DbModel {
         return $query->fetchAll(PDO::FETCH_ASSOC)[0];
     }
 
+    /**
+     * @param $idFine
+     * @param $fineName
+     * @param $fineMoney
+     * @return bool
+     * Metoda upravi typo pokuty
+     */
     public function editFineType($idFine, $fineName, $fineMoney){
         $query =  $this->pdo->prepare("UPDATE " . TABLE_TYPE_FINES . " SET nameFine= :nameFine, money= :money  WHERE id= :fineId");
         $result = $query->execute(array(
