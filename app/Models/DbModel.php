@@ -582,17 +582,19 @@ class DbModel {
             $result[$j]['user']['allAmount'] = $this->getFinesAmountsByUserId($user['id'])[2];
 
             $currentDivison = $this->getDivisionById($user['idDivision']);
-            $result[$j]['user']['division'] = $currentDivison['nameDivision'];
-            $result[$j]['user']['divisionChief'] = $currentDivison['chief'];
-            $result[$j]['user']['divisionChiefTel'] = $currentDivison['telContact'];
-            $result[$j]['user']['divisionChiefEmail'] = $currentDivison['emailContact'];
+
+            if($currentDivison != null){
+                $result[$j]['user']['division'] = $currentDivison['nameDivision'];
+                $result[$j]['user']['divisionChief'] = $currentDivison['chief'];
+                $result[$j]['user']['divisionChiefTel'] = $currentDivison['telContact'];
+                $result[$j]['user']['divisionChiefEmail'] = $currentDivison['emailContact'];
 
 
-            $divisionFines = $this->getFinesAmountsByDivisionId($user['idDivision']);
-            $result[$j]['division']['unpaidAmount'] = $divisionFines[0];
-            $result[$j]['division']['paidAmount'] = $divisionFines[1];
-            $result[$j]['division']['allAmount'] = $divisionFines[2];
-
+                $divisionFines = $this->getFinesAmountsByDivisionId($user['idDivision']);
+                $result[$j]['division']['unpaidAmount'] = $divisionFines[0];
+                $result[$j]['division']['paidAmount'] = $divisionFines[1];
+                $result[$j]['division']['allAmount'] = $divisionFines[2];
+            }
 
             $result[$j]['date'] = $fine['date'];
             $result[$j]['paid'] = $fine['paid'];
@@ -729,6 +731,39 @@ class DbModel {
         $result = $query->execute(array(
             ":fineId" => $idFine,
             ":paid" => 0
+        ));
+
+        // pokud neni false, tak vratim vysledek, jinak null
+        if ($result) {
+            // neni false
+            return true;
+        } else {
+            // je false
+            return false;
+        }
+    }
+
+    public function editUserEmailByUserId($userID, $email){
+        $query =  $this->pdo->prepare("UPDATE " . TABLE_USER . " SET email= :email WHERE id= :userId");
+        $result = $query->execute(array(
+            ":email" => $email,
+            ":userId" => $userID
+        ));
+
+        // pokud neni false, tak vratim vysledek, jinak null
+        if ($result) {
+            // neni false
+            return true;
+        } else {
+            // je false
+            return false;
+        }
+    }
+    public function editUserTelByUserId($userID, $tel){
+        $query =  $this->pdo->prepare("UPDATE " . TABLE_USER . " SET tel= :tel WHERE id= :userId");
+        $result = $query->execute(array(
+            ":tel" => $tel,
+            ":userId" => $userID
         ));
 
         // pokud neni false, tak vratim vysledek, jinak null

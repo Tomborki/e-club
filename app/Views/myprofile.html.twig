@@ -15,16 +15,258 @@
     <div id="my-profile">
         <h2>Můj profil</h2>
         <div class="info-box">
-            <h3>{{ name }} {{ surname }}</h3>
-            {% if userAvatar != null %}
-                <img src="/data/userAvatars/{{ userID }}/{{ userAvatar }}" alt="Profilový obrázek">
-            {% else %}
-                <img src="/data/userAvatars/default.png" alt="Profilový obrázek">
-            {% endif %}
+            <h3></h3>
+            <div class="flex-container">
+                <div class="avatar-container">
+                    <figure class="figure">
+                        {% if userAvatar != null %}
+                            <img src="/data/userAvatars/{{ userID }}/{{ userAvatar }}" class="img-thumbnail" alt="Profilový obrázek">
+                        {% else %}
+                            <img src="/data/userAvatars/default.png" class="img-thumbnail" alt="Profilový obrázek">
+                        {% endif %}
+
+                        <figcaption class="figure-caption"><button data-toggle="modal" data-target="#avatarModal" class="btn btn-outline-secondary">Změnit profilový obrázek</button></figcaption>
+                        <div class="modal fade" id="avatarModal" tabindex="-1" role="dialog" aria-labelledby="avatarModalTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Změnit profilový obrázek</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="avatarForm" method="post" enctype="multipart/form-data" action="/{{ pageName }}?form=editAvatar">
+                                            <div class="form-group">
+                                                <label for="divisionName">Nový profilový obrázek</label>
+                                                <div class="custom-file">
+                                                    <input type="file" name="avatar" class="custom-file-input" id="inputGroupFile01"
+                                                           aria-describedby="inputGroupFileAddon01" required>
+                                                    <label class="custom-file-label" for="inputGroupFile01">Vyber obrázek</label>
+                                                </div>
+                                            </div>
+                                            <button type="submit" name="submitEditAvatarForm" class="btn btn-primary">Upravit profilový obrázek</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Zrušit</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </figure>
+                </div>
+                <div class="info-container">
+                    <ol class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-start disabled">
+                            <div class="ms-2 me-auto">
+                                <h6>Vaše jméno:</h6>
+                                {{ name }} {{ surname }}
+
+                            </div>
+                            <small>Jméno může změnit pouze administrátor</small>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start disabled">
+                            <div class="ms-2 me-auto">
+                                <h6>Vaše přihlašovací jméno:</h6>
+                                {{ currentUser.username }}
+                            </div>
+                            <small>Login může změnit pouze administrátor</small>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <h6>Váš email:</h6>
+                                {{ currentUser.email }}
+                            </div>
+                            <span><button type="button" data-toggle="modal" data-target="#emailModal" class="btn btn-outline-secondary">Změnit email</button></span>
+                            <div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="emailModalTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Změnit email</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="emailForm" method="post" action="/{{ pageName }}?form=editEmail">
+                                                <div class="form-group">
+                                                    <label for="divisionName">Nový email</label>
+                                                    <input type="email" class="form-control" name="email" id="email" placeholder="email" required>
+                                                </div>
+                                                <button type="submit" name="submitEditEmailForm" class="btn btn-primary">Upravit email</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Zrušit</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <h6>Váš telefon:</h6>
+                                {{ currentUser.tel }}
+                            </div>
+                            <span><button type="button" data-toggle="modal" data-target="#telModal" class="btn btn-outline-secondary">Změnit telefon</button></span>
+                            <div class="modal fade" id="telModal" tabindex="-1" role="dialog" aria-labelledby="telModalTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Změnit telefon</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="telForm" method="post" action="/{{ pageName }}?form=editTel">
+                                                <div class="form-group">
+                                                    <label for="divisionName">Nový telefon</label>
+                                                    <input type="tel" class="form-control" name="tel" id="tel" placeholder="telefon" required>
+                                                    <small id="telHelp" class="form-text text-muted">Telefon zadávejte ve formátu: +420123456789</small>
+                                                </div>
+                                                <button type="submit" name="submitEditTelForm" class="btn btn-primary">Upravit telefon</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Zrušit</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <h6>Heslo</h6>
+                            </div>
+                            <span><button type="button"  data-toggle="modal" data-target="#passModal" class="btn btn-outline-danger">Změnit heslo</button></span>
+                            <div class="modal fade" id="passModal" tabindex="-1" role="dialog" aria-labelledby="passModalTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Změnit heslo</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="passForm" method="post" action="/{{ pageName }}?form=editPass">
+                                                <div class="form-group">
+                                                    <label for="oldPass">Staré heslo</label>
+                                                    <input type="password" class="form-control" name="oldPass" id="oldPass" placeholder="Staré heslo" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="newPass">Nové heslo</label>
+                                                    <input type="password" class="form-control" name="newPass" id="newPass" placeholder="Nové heslo" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="newPass2">Zopakujte nové heslo</label>
+                                                    <input type="password" class="form-control" name="newPass2" id="newPass2" placeholder="Zopakujte nové heslo" required>
+                                                </div>
+
+                                                <button type="submit" name="submitEditPassForm" class="btn btn-primary">Změnit heslo</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Zrušit</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock content%}
 
 {% block scripts %}
+    <script>
 
+        $('input[type="file"]').change(function(e){
+            var fileName = e.target.files[0].name;
+            $('.custom-file-label').html(fileName);
+        });
+
+        jQuery.extend(jQuery.validator.messages, {
+            required: "Toto pole je povinné",
+        });
+
+        jQuery('#telForm').validate({
+            rules : {
+                tel: {
+                    required: tel,
+                }
+            },
+            messages: {
+                tel: {
+                    regex: "sdfsdf"
+                },
+            },
+            errorClass: 'error help-inline',
+            errorElement: 'span',
+
+            submitHandler: function(form) {
+                form.submit();
+            }
+        });
+
+        jQuery('#emailForm').validate({
+            rules : {
+                email: {
+                    required: true,
+                    email: true,
+                }
+            },
+            messages: {
+                email: {
+                    email: 'Zadejte email ve správném formátu'
+                }
+            },
+            errorClass: 'error help-inline',
+            errorElement: 'span',
+
+            submitHandler: function(form) {
+                form.submit();
+            }
+        });
+
+        jQuery('#avatarForm').validate({
+            rules : {
+                avatar: {
+                    required: true,
+                }
+            },
+            errorClass: 'error help-inline',
+            errorElement: 'span',
+
+            submitHandler: function(form) {
+                form.submit();
+            }
+        });
+
+        jQuery('#passForm').validate({
+            rules : {
+                newPass : {
+                    minlength : 8
+                },
+                newPass2 : {
+                    equalTo : "#newPass"
+                },
+            },
+            messages: {
+                newPass: {
+                    minlength: "Minimální délka hesla je 8 znaků",
+                    equalTo: "Hesla se neshodují"
+                },
+                newPass2: {
+                    equalTo: "Hesla se neshodují"
+                },
+            },
+            errorClass: 'error help-inline',
+            errorElement: 'span',
+
+            submitHandler: function(form) {
+                form.submit();
+            }
+        });
+
+        $.validator.addMethod("tel", function(value, element) {
+            return this.optional(element) || /^\+420[0-9]{3}[0-9]{3}[0-9]{3}$/i.test(value);
+        }, "Telefon není ve správném formátu");
+    </script>
 {% endblock scripts%}

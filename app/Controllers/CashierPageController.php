@@ -14,16 +14,20 @@ class CashierPageController extends MainController
     }
 
     public function FORM_test(){
-        $users = $_POST['selectedUsers'];
-        $fines = $_POST['selectedFines'];
+        if(isset($_POST['submitAddFineToUsersForm'])){
+            $users = $_POST['selectedUsers'];
+            $fines = $_POST['selectedFines'];
 
-        if($this->db->addFine($users, $fines, $_SESSION['userID'])){
-            Flash::success('Pokuta/pokuty byly úspěšně přidány');
+            if($this->db->addFine($users, $fines, $_SESSION['userID'])){
+                Flash::success('Pokuta/pokuty byly úspěšně přidány');
+            }else{
+                Flash::error('Pokuta/pokuty se nepovedli přidat');
+            }
+
+            $this->redirect('cashier-page');
         }else{
-            Flash::error('Pokuta/pokuty se nepovedli přidat');
+            $this->redirect('cashier-page');
         }
-
-        $this->redirect('cashier-page');
     }
 
     public function usersInDivisions(){

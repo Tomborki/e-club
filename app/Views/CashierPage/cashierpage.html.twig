@@ -26,11 +26,13 @@
                         data-selected-text-format="count > 4"
                         data-count-selected-text= "{0} vybraných uživatelů">
                     {% for key, insideDivision in usersInDivisions %}
-                        <optgroup label="{{ key }} (vybrat všechny v oddílu)" style="cursor: pointer">
-                        {% for user in insideDivision %}
-                            <option data-tokens="{{ key }}" value="{{ user.id }}" data-subtext="{{ user.email }}">{{ user.name }} {{ user.surname }}</option>
-                        {% endfor %}
-                        </optgroup>
+                        {% if key != "Nepřiřazeno" %}
+                            <optgroup label="{{ key }} (vybrat všechny v oddílu)" >
+                            {% for user in insideDivision %}
+                                <option data-tokens="{{ key }}" value="{{ user.id }}" data-subtext="{{ user.email }}">{{ user.name }} {{ user.surname }}</option>
+                            {% endfor %}
+                            </optgroup>
+                        {% endif %}
                     {% endfor %}
                 </select>
                 <small id="userHel" class="form-text text-muted">Vyberte jednoho nebo více uživatelů, kteří mají dostat pokutu.</small>

@@ -1,0 +1,64 @@
+#my-profile{
+
+  .info-box{
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: white;
+    border-radius: 10px;
+    width: 100%;
+
+    h3{
+      margin-bottom: 20px;
+    }
+
+    .flex-container{
+      display: flex;
+      gap: 30px;
+
+      @media only screen and (max-width: 1000px) {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .info-container{
+        width: 100%;
+
+        .list-group-item{
+
+          @media only screen and (max-width: 500px) {
+            flex-direction: column;
+          }
+
+          button{
+            @media only screen and (max-width: 500px) {
+              margin-top: 10px;
+            }
+          }
+        }
+      }
+
+      .error{
+        color: red;
+        margin-top: 5px;
+        display: block;
+      }
+
+      img{
+        height: 250px;
+        width: 250px;
+        object-fit: contain;
+      }
+
+      figcaption{
+        button{
+          margin: auto;
+          display: block;
+          margin-top: 10px;
+        }
+      }
+
+    }
+
+
+  }
+}

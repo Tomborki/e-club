@@ -761,6 +761,55 @@ nav .show {
   display: block;
 }
 
+#my-profile .info-box {
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: white;
+  border-radius: 10px;
+  width: 100%;
+}
+#my-profile .info-box h3 {
+  margin-bottom: 20px;
+}
+#my-profile .info-box .flex-container {
+  display: flex;
+  gap: 30px;
+}
+@media only screen and (max-width: 1000px) {
+  #my-profile .info-box .flex-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+#my-profile .info-box .flex-container .info-container {
+  width: 100%;
+}
+@media only screen and (max-width: 500px) {
+  #my-profile .info-box .flex-container .info-container .list-group-item {
+    flex-direction: column;
+  }
+}
+@media only screen and (max-width: 500px) {
+  #my-profile .info-box .flex-container .info-container .list-group-item button {
+    margin-top: 10px;
+  }
+}
+#my-profile .info-box .flex-container .error {
+  color: red;
+  margin-top: 5px;
+  display: block;
+}
+#my-profile .info-box .flex-container img {
+  height: 250px;
+  width: 250px;
+  object-fit: contain;
+}
+#my-profile .info-box .flex-container figcaption button {
+  margin: auto;
+  display: block;
+  margin-top: 10px;
+}
+
 html {
   height: 100%;
   width: 100%;
