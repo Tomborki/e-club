@@ -1,0 +1,32 @@
+{% extends 'rozlozeni.html.twig' %}
+
+{# Page title #}
+{% block title %}
+    Administrace - přidat pokutu
+{% endblock title %}
+
+{# Page description #}
+{% block description %}Přidat nový typ pokuty{% endblock description %}
+
+{# Page keywords #}
+{% block keywords %}{% endblock keywords %}
+
+{% block content %}
+    <div id="mymatches">
+        <form method="post" action="/{{ pageName }}?form=addNewFine">
+            <div class="form-group">
+                <label for="divisionName">Název pokuty</label>
+                <input type="text" class="form-control form-control-lg" name="fineName" id="fineName" placeholder="Název pokuty" required>
+            </div>
+            <div class="form-group">
+                <label for="divisionChief">Pokuta v Kč</label>
+                <input type="number" class="form-control form-control-lg" name="money" id="money" required>
+            </div>
+            <button type="submit" name="submitAddFineForm" class="btn btn-primary">Přidat pokutu</button>
+        </form>
+    </div>
+{% endblock content%}
+
+{% block scripts %}
+
+{% endblock scripts%}

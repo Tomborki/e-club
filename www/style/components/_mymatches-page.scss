@@ -1,0 +1,27 @@
+#matches{
+  .table-container{
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: white;
+    border-radius: 10px;
+    width: 100%;
+
+    .dataTables_wrapper{
+      overflow-x: auto;
+
+      table{
+        table-layout: auto;
+      }
+    }
+  }
+
+  .no-division{
+    text-align: center;
+    margin-top: 100px;
+
+    i{
+      font-size: 40px;
+      margin-bottom: 15px;
+    }
+  }
+}

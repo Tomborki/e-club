@@ -581,19 +581,23 @@ class DbModel {
             $result[$j]['user']['unpaidAmount'] = $this->getFinesAmountsByUserId($user['id'])[0];
             $result[$j]['user']['allAmount'] = $this->getFinesAmountsByUserId($user['id'])[2];
 
-            $currentDivison = $this->getDivisionById($user['idDivision']);
 
-            if($currentDivison != null){
-                $result[$j]['user']['division'] = $currentDivison['nameDivision'];
-                $result[$j]['user']['divisionChief'] = $currentDivison['chief'];
-                $result[$j]['user']['divisionChiefTel'] = $currentDivison['telContact'];
-                $result[$j]['user']['divisionChiefEmail'] = $currentDivison['emailContact'];
+            $userDivision = $user['idDivision'];
 
+            if($userDivision != null){
+                $currentDivision = $this->getDivisionById($user['idDivision']);
+                $result[$j]['user']['hasDivision'] = true;
+                $result[$j]['user']['division'] = $currentDivision['nameDivision'];
+                $result[$j]['user']['divisionChief'] = $currentDivision['chief'];
+                $result[$j]['user']['divisionChiefTel'] = $currentDivision['telContact'];
+                $result[$j]['user']['divisionChiefEmail'] = $currentDivision['emailContact'];
 
                 $divisionFines = $this->getFinesAmountsByDivisionId($user['idDivision']);
                 $result[$j]['division']['unpaidAmount'] = $divisionFines[0];
                 $result[$j]['division']['paidAmount'] = $divisionFines[1];
                 $result[$j]['division']['allAmount'] = $divisionFines[2];
+            }else{
+                $result[$j]['user']['hasDivision'] = false;
             }
 
             $result[$j]['date'] = $fine['date'];
@@ -650,7 +654,12 @@ class DbModel {
         foreach ($fines as $fine){
             $currentUser = $this->getUserById($fine['users_id']);
             $currentTypeFine = $this->getFineTypeById($fine['typeFines_id']);
-            $divisionName = $this->getDivisionById($currentUser['idDivision'])['nameDivision'];
+            if($currentUser['idDivision'] == null){
+                $divisionName = "Nepřiřazeno";
+            }else{
+                $divisionName = $this->getDivisionById($currentUser['idDivision'])['nameDivision'];
+            }
+
             $fine['currentUser'] = $currentUser;
             $fine['currentFineType'] = $currentTypeFine;
             $result[$divisionName][] = $fine;
@@ -759,6 +768,8 @@ class DbModel {
             return false;
         }
     }
+
+
     public function editUserTelByUserId($userID, $tel){
         $query =  $this->pdo->prepare("UPDATE " . TABLE_USER . " SET tel= :tel WHERE id= :userId");
         $result = $query->execute(array(
@@ -774,6 +785,37 @@ class DbModel {
             // je false
             return false;
         }
+    }
+
+    public function getMatchesByDivisionId($divisionId){
+        $query =  $this->pdo->prepare("SELECT * FROM " . TABLE_MATCHES . " WHERE idDivision= :idDivision");
+        $query->execute(array(
+            ":idDivision" => $divisionId,
+        ));
+
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getTeamNameById($teamId){
+        $query =  $this->pdo->prepare("SELECT teamName FROM " . TABLE_TEAMS . " WHERE id= :teamId");
+        $query->execute(array(
+            ":teamId" => $teamId,
+        ));
+
+        return $query->fetchAll(PDO::FETCH_ASSOC)[0];
+    }
+
+    public function getMatchesByDivisionIdWithNames($divisionId){
+        $allMatches = $this->getMatchesByDivisionId($divisionId);
+        $j = 0;
+
+        foreach ($allMatches as $match){
+            $allMatches[$j]['homeTeamName'] = $this->getTeamNameById($match['idTeam1'])['teamName'];
+            $allMatches[$j]['awayTeamName'] = $this->getTeamNameById($match['idTeam2'])['teamName'];
+            $j++;
+        }
+
+        return $allMatches;
     }
 
 }

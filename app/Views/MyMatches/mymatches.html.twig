@@ -6,16 +6,138 @@
 {% endblock title %}
 
 {# Page description #}
-{% block description %}Hlavní stránka aplikace e-club{% endblock description %}
+{% block description %}Stránka s uživateli{% endblock description %}
 
 {# Page keywords #}
 {% block keywords %}{% endblock keywords %}
 
 {% block content %}
-    <h2>Moje zápasy
-    </h2>
+    <div id="matches">
+        <h2>Moje zápasy</h2>
+        <div class="other-buttons">
+            <a class="btn btn-success" href="{{ pageName }}/addFine" role="button"><i class='bx bx-plus-circle'></i> Přidat nový zápas</a>
+        </div>
+        {% if userDivision != null %}
+            <span class="drag-info">posouvejte doleva <i class='bx bx-arrow-from-left'></i></span>
+            <div class="table-container">
+                <h5>Nadcházející zápasy</h5>
+                <table class="table table-striped" id="matchesTable">
+                    <thead>
+                    <tr>
+                        <th scope="col">Domácí tým</th>
+                        <th scope="col">Hostující tým</th>
+                        <th scope="col">Datum</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for match in unplayedMatches %}
+                        <tr matchId="{{ match.id }}">
+                            <td class="align-middle">
+                                {{ match.homeTeamName }}
+                            </td>
+                            <td class="align-middle">
+                                {{ match.awayTeamName }}
+                            </td>
+                            <td class="align-middle">
+                                {{ match.date }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+            <div class="table-container">
+                <h5>Odehrané zápasy</h5>
+                <table class="table table-striped" id="matchesTable">
+                    <thead>
+                    <tr>
+                        <th scope="col">Domácí tým</th>
+                        <th scope="col">Hostující tým</th>
+                        <th scope="col">Datum</th>
+                        <th scope="col">Goly domácí</th>
+                        <th scope="col">Goly hosté</th>
+                        <th scope="col">Výtěz</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for match in playedMatches %}
+                        <tr matchId="{{ match.id }}">
+                            <td class="align-middle">
+                                {{ match.homeTeamName }}
+                            </td>
+                            <td class="align-middle">
+                                {{ match.awayTeamName }}
+                            </td>
+                            <td class="align-middle">
+                                {{ match.date }}
+                            </td>
+                            <td class="align-middle">
+                                {{ match.team1Score }}
+                            </td>
+                            <td class="align-middle">
+                                {{ match.team2Score }}
+                            </td>
+                            <td class="align-middle">
+                                {% if match.team1Score > match.team2Score  %}
+                                    {{ match.homeTeamName }}
+                                {% elseif match.team1Score < match.team2Score %}
+                                    {{ match.awayTeamName }}
+                                {% else %}
+                                    Remíza
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% else %}
+            <div class="no-division">
+                <i class='bx bx-info-circle'></i>
+                <h5>Nepřiřadil jste se k žádnýmu oddílu</h5>
+                <p>Oddíl si vyberete na stránce oddíly</p>
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <a href="divisions?a=testse&b=dsfsdf" class="btn btn-primary" type="button">Oddíly</a>
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
 {% endblock content%}
 
 {% block scripts %}
+    <script>
+
+        $(document).ready( function () {
+            var match = getUrlParameter('highlight');
+
+            $("[matchId=" + match + "]").css("background-color", "#fff70059");
+        } );
+
+
+        $(document).ready( function () {
+            $('#matchesTable').DataTable({
+                responsive: false,
+            });
+        } );
+
+
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = window.location.search.substring(1),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                }
+            }
+            return false;
+        };
+    </script>
+
+
 
 {% endblock scripts%}
