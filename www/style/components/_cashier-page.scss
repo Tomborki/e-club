@@ -1,0 +1,68 @@
+#cashier{
+
+  form{
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: white;
+    border-radius: 10px;
+    width: 100%;
+  }
+
+  h3{
+    margin-top: 30px;
+  }
+
+  .drag-info{
+    display: none;
+    text-align: right;
+    margin-bottom: 5px;
+
+    @media only screen and (max-width: 1540px) {
+      display: block;
+    }
+  }
+
+  .table-container{
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: white;
+    border-radius: 10px;
+    width: 100%;
+
+    table{
+      table-layout: auto;
+      width: 100% !important;
+    }
+
+    .dataTables_wrapper{
+      overflow-x: auto;
+    }
+
+    .modal-name{
+      text-decoration: underline;
+      color: blue;
+      cursor: pointer;
+    }
+
+    .badge{
+      font-size: 15px;
+      color: white;
+      padding: 10px;
+      width: 60px;
+      text-align: center;
+      vertical-align: middle;
+    }
+  }
+
+  .selected{
+    font-weight: 700;
+    text-decoration: underline !important;
+    background-color: #d6eeff !important;
+  }
+
+  .error{
+    color: red;
+    margin-top: 5px;
+    display: block;
+  }
+}

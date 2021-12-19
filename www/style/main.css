@@ -703,6 +703,64 @@ nav .show {
   text-align: center;
 }
 
+#cashier form {
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: white;
+  border-radius: 10px;
+  width: 100%;
+}
+#cashier h3 {
+  margin-top: 30px;
+}
+#cashier .drag-info {
+  display: none;
+  text-align: right;
+  margin-bottom: 5px;
+}
+@media only screen and (max-width: 1540px) {
+  #cashier .drag-info {
+    display: block;
+  }
+}
+#cashier .table-container {
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: white;
+  border-radius: 10px;
+  width: 100%;
+}
+#cashier .table-container table {
+  table-layout: auto;
+  width: 100% !important;
+}
+#cashier .table-container .dataTables_wrapper {
+  overflow-x: auto;
+}
+#cashier .table-container .modal-name {
+  text-decoration: underline;
+  color: blue;
+  cursor: pointer;
+}
+#cashier .table-container .badge {
+  font-size: 15px;
+  color: white;
+  padding: 10px;
+  width: 60px;
+  text-align: center;
+  vertical-align: middle;
+}
+#cashier .selected {
+  font-weight: 700;
+  text-decoration: underline !important;
+  background-color: #d6eeff !important;
+}
+#cashier .error {
+  color: red;
+  margin-top: 5px;
+  display: block;
+}
+
 html {
   height: 100%;
   width: 100%;

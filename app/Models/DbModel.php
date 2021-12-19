@@ -302,6 +302,10 @@ class DbModel {
      * Metoda vrati oddil podle jejiho id
      */
     public function getDivisionById($idDivision){
+        if($idDivision == null){
+            return null;
+        }
+
         $query = $this->pdo->prepare("SELECT * FROM " . TABLE_DIVISIONS . " WHERE id = :divisionId");
         $query->execute(array(
             ":divisionId" => $idDivision,
@@ -529,4 +533,91 @@ class DbModel {
         }
     }
 
+    public function addFine(array $users, array $fines, $cashierID){
+        date_default_timezone_set('Europe/Prague');
+        $today = date("Y-m-d H:i:s");
+        $query =  $this->pdo->prepare("INSERT INTO " . TABLE_FINER . " (typeFines_id, users_id, date, paid, cashierId) VALUES (:typeFines_id, :users_id, :date, :paid, :cashierId)");
+
+        foreach ($users as $user){
+            foreach ($fines as $fine){
+                $result = $query->execute(array(
+                    ":typeFines_id" => $fine,
+                    ":users_id" => $user,
+                    ":date" => $today,
+                    ":paid" => 0,
+                    ":cashierId" => $cashierID
+                ));
+                if(!$result){
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public function getAllFines(){
+        $query = $this->pdo->prepare("SELECT * FROM " . TABLE_FINER);
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getAllFinesWithNames(){
+        $fines = $this->getAllFines();
+        $result = array();
+        $j = 0;
+
+        foreach ($fines as $fine){
+            $result[$j]['typeFine'] = $this->getFineTypeById($fine['typeFines_id']);
+
+            $user = $this->getUserById($fine['users_id']);
+            $result[$j]['user']['id'] = $user['id'];
+            $result[$j]['user']['name'] = $user['name'];
+            $result[$j]['user']['surname'] = $user['surname'];
+            $result[$j]['user']['paidAmount'] = $this->getFinesAmountsByUserId($user['id'])[1];
+            $result[$j]['user']['unpaidAmount'] = $this->getFinesAmountsByUserId($user['id'])[0];
+            $result[$j]['user']['allAmount'] = $this->getFinesAmountsByUserId($user['id'])[2];
+
+            $result[$j]['date'] = $fine['date'];
+            $result[$j]['paid'] = $fine['paid'];
+
+            $cashier = $this->getUserById($fine['cashierId']);
+            $result[$j]['cashier']['id'] = $cashier['id'];
+            $result[$j]['cashier']['name'] = $cashier['name'];
+            $result[$j]['cashier']['surname'] = $cashier['surname'];
+            $j++;
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param $userId
+     * @return array|int[]
+     * Metoda vraci neuhrazene, uhrazene a vsechny pokuty dohromady
+     * [0] = neuhrazene pokuty
+     * [1] = uhrazene pokuty
+     * [2] = vsechny pokuty
+     */
+    private function getFinesAmountsByUserId($userId){
+        $myfiners = $this->getAllFinesIdUser($userId);
+        $allUnpaidMoney = 0;
+        $allPaidMoney = 0;
+        $allFines = 0;
+
+        foreach ($myfiners as $finer){
+            $money = $this->getFinerInfo($finer['typeFines_id'])['money'];
+
+            if($finer['paid'] == 0){
+                $allUnpaidMoney = $allUnpaidMoney + $money;
+            }
+            if($finer['paid'] == 1){
+                $allPaidMoney = $allPaidMoney + $money;
+            }
+            $allFines = $allFines + $money;
+        }
+
+        return array($allUnpaidMoney, $allPaidMoney, $allFines);
+    }
 }
+

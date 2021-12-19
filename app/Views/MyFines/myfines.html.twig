@@ -66,7 +66,7 @@
                         <tr class="table-danger">
                             <th class="text-center align-middle" scope="row">{{ loop.index }}</th>
                             <td class="align-middle">{{ fine.fineName }}</td>
-                            <td class="align-middle">{{ fine.date }}</td>
+                            <td class="align-middle">{{ fine.date|date("d. m. Y H:i") }}</td>
                             <td class="align-middle">{{ fine.money }} Kč</td>
                         </tr>
                     {% endfor %}
@@ -96,7 +96,7 @@
                         <tr class="table-success">
                             <th class="text-center align-middle" scope="row">{{ loop.index }}</th>
                             <td class="align-middle">{{ fine.fineName }}</td>
-                            <td class="align-middle">{{ fine.date }}</td>
+                            <td class="align-middle">{{ fine.date|date("d. m. Y H:i") }}</td>
                             <td class="align-middle">{{ fine.money }} Kč</td>
                         </tr>
                         {% endif %}

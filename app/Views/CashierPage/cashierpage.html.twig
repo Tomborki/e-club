@@ -12,13 +12,250 @@
 {% block keywords %}{% endblock keywords %}
 
 {% block content %}
-    <div id="myFines">
+    <div id="cashier">
         <h2>Pokladník</h2>
+        <form method="post" action="/{{ pageName }}?form=test">
+            <div class="form-group">
+                <label for="selectedUsers">Vyberte, koho chcete pokutovat</label>
+                <select name="selectedUsers[]" id="test" class="selectpicker form-control" required
+                        data-select-all-headers="true"
+                        multiple
+                        data-actions-box="true"
+                        title="Vyberte uživatele"
+                        data-live-search="true"
+                        data-selected-text-format="count > 4"
+                        data-count-selected-text= "{0} vybraných uživatelů">
+                    {% for key, insideDivision in usersInDivisions %}
+                        <optgroup label="{{ key }} (vybrat všechny v oddílu)" style="cursor: pointer">
+                        {% for user in insideDivision %}
+                            <option data-tokens="{{ key }}" value="{{ user.id }}" data-subtext="{{ user.email }}">{{ user.name }} {{ user.surname }}</option>
+                        {% endfor %}
+                        </optgroup>
+                    {% endfor %}
+                </select>
+                <small id="userHel" class="form-text text-muted">Vyberte jednoho nebo více uživatelů, kteří mají dostat pokutu.</small>
+            </div>
+            <div class="form-group">
+                <label for="selectedFines">Vyberte, jaké pokuty chcete udělit</label>
+                <select name="selectedFines[]" id="test" class="selectpicker form-control" required
+                        data-select-all-headers="true"
+                        multiple
+                        data-actions-box="true"
+                        title="Vyberte pokutu / pokuty"
+                        data-live-search="true"
+                        data-selected-text-format="count > 1"
+                        data-count-selected-text= "Počet udělovaných pokut: {0}">
+                    {% for fine in fineTypes %}
+                        <option value="{{ fine.id }}" data-subtext="{{ fine.money }} Kč" >{{ fine.nameFine }}</option>
+                    {% endfor %}
+                </select>
+                <small id="userHel" class="form-text text-muted">Vyberte jednu nebo více pokut, které se mají udělat vybraným uživatelům výše.</small>
+            </div>
+            <button type="submit" name="submitAddFineToUsersForm" class="btn btn-primary">Přidat pokuty</button>
+        </form>
+
+        <h3>Historie pokut</h3>
+        <span class="drag-info">posouvejte doleva <i class='bx bx-arrow-from-left'></i></span>
+        <div class="table-container">
+            <table class="table table-striped" id="finesTable">
+                <thead>
+                <tr>
+                    <th class="text-center" scope="col">Datum</th>
+                    <th scope="col">Splaceno?</th>
+                    <th scope="col">Jméno pokladníka</th>
+                    <th scope="col">Pokutu dostal</th>
+                    <th scope="col">Název pokuty</th>
+                    <th scope="col">Akce</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for fine in allFines %}
+                    <tr>
+                        <td class="text-center"><span style="display: none">{{ fine.date|date('U') }}</span>{{ fine.date|date("d. m. Y H:i") }}</td>
+                        <td class="text-center">
+                            {% if fine.paid == 1 %}
+                                <span class="badge bg-success">ANO</span>
+                            {% else %}
+                                <span class="badge bg-danger">NE</span>
+                            {% endif %}
+                        </td>
+                        <td class="align-middle">{{ fine.cashier.name }} {{ fine.cashier.surname }}</td>
+                        <td class="align-middle modal-name" data-toggle="modal" data-target="#exampleModalCenter{{ loop.index }}">
+
+                                {{ fine.user.name }} {{ fine.user.surname }}
+
+                        </td>
+                        <td class="align-middle">{{ fine.typeFine.nameFine }}</td>
+                        <td class="align-middle">
+                            <a class="btn btn-primary confirmation" title="Odpustit pokutu"
+                               alertMess="Opravdu chcete odstranit pokutu: {{ fine.nameFine }}?"
+                               alertYes="Ano, odstranit"
+                               alertNo="Zrušit"
+                               href="/{{ pageName }}?action=deleteFine({{ fine.id }})" role="button"><i class='bx bx-undo'></i></a>
+                            <a class="btn btn-warning confirmation" title="Pokuta byla zaplacena"
+                               alertMess="Opravdu chcete odstranit pokutu: {{ fine.nameFine }}?"
+                               alertYes="Ano, odstranit"
+                               alertNo="Zrušit"
+                               href="/{{ pageName }}?action=deleteFine({{ fine.id }})" role="button"><i class='bx bx-donate-heart'></i></a>
+                        </td>
+                    </tr>
+                    <div class="modal fade" id="exampleModalCenter{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">{{ fine.user.name }} {{ fine.user.surname }}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Neuhrazene pokuty: {{ fine.user.unpaidAmount }}</p>
+                                    <p>Uhrazene pokuty: {{ fine.user.paidAmount }}</p>
+                                    <p>Dohromady: {{ fine.user.allAmount }}</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
     </div>
 {% endblock content%}
 
 {% block scripts %}
     <script>
+
+        jQuery('form').validate({
+            rules : {
+                'selectedUsers[]' : {
+                    required: true,
+                },
+                'selectedFines[]' : {
+                    required : true
+                },
+            },
+            messages:{
+                'selectedUsers[]' : {
+                    required: "Musíte vybrat nejméně jednoho uživatele"
+                },
+                'selectedFines[]' : {
+                    required: "Musíte vybrat nejméně jednu pokutu"
+                },
+            },
+
+            errorClass: 'error help-inline',
+            errorElement: 'span',
+
+            submitHandler: function(form) {
+                form.submit();
+            }
+        });
+
+        $(document).ready(function () {
+            // Setup - add a text input to each footer cell
+            $('#finesTable thead tr')
+                .clone(true)
+                .addClass('filters')
+                .appendTo('#finesTable thead');
+
+            var table = $('#finesTable').DataTable({
+                orderCellsTop: true,
+                fixedHeader: true,
+                order: [[ 0, 'desc' ]],
+                initComplete: function () {
+                    var api = this.api();
+
+                    // For each column
+                    api
+                        .columns()
+                        .eq(0)
+                        .each(function (colIdx) {
+                            // Set the header cell to contain the input element
+                            var cell = $('.filters th').eq(
+                                $(api.column(colIdx).header()).index()
+                            );
+                            var title = $(cell).text();
+                            $(cell).html('<input type="text" placeholder="' + title + '" />');
+
+                            // On every keypress in this input
+                            $(
+                                'input',
+                                $('.filters th').eq($(api.column(colIdx).header()).index())
+                            )
+                                .off('keyup change')
+                                .on('keyup change', function (e) {
+                                    e.stopPropagation();
+
+                                    // Get the search value
+                                    $(this).attr('title', $(this).val());
+                                    var regexr = '({search})'; //$(this).parents('th').find('select').val();
+
+                                    var cursorPosition = this.selectionStart;
+                                    // Search the column for that value
+                                    api
+                                        .column(colIdx)
+                                        .search(
+                                            this.value != ''
+                                                ? regexr.replace('{search}', '(((' + this.value + ')))')
+                                                : '',
+                                            this.value != '',
+                                            this.value == ''
+                                        )
+                                        .draw();
+
+                                    $(this)
+                                        .focus()[0]
+                                        .setSelectionRange(cursorPosition, cursorPosition);
+                                });
+                        });
+                },
+            });
+        });
+
+        $('#test').selectpicker().on('loaded.bs.select', enableBoostrapSelectOptgroup);
+
+        function enableBoostrapSelectOptgroup() {
+
+            let that = $(this).data('selectpicker'),
+                inner = that.$menu.children('.inner');
+
+            // remove default event
+            inner.off('click','.divider, .dropdown-header');
+            // add new event
+            inner.on('click','.divider, .dropdown-header', function (e){
+                // original functionality
+                e.preventDefault();
+                e.stopPropagation();
+                if (that.options.liveSearch) {
+                    that.$searchbox.trigger('focus');
+                } else {
+                    that.$button.trigger('focus');
+                }
+
+                // extended functionality
+                let position0 = that.isVirtual() ? that.selectpicker.view.position0 : 0,
+                    clickedData = that.selectpicker.current.data[$(this).index() + position0];
+
+                // copied parts from changeAll function
+                let selected = null;
+                for (let i = 0, data = that.selectpicker.current.data, len = data.length; i < len; i++) {
+                    let element = data[i];
+                    if(element.type === 'option' && element.optID === clickedData.optID) {
+                        if(selected === null) {
+                            selected = !element.selected;
+                        }
+                        element.option.selected = selected;
+                    }
+                }
+                that.setOptionStatus();
+                that.$element.triggerNative('change');
+            });
+        }
 
     </script>
 {% endblock scripts%}
