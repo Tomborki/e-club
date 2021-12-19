@@ -10,7 +10,6 @@ class CashierPageController extends MainController
         $this->data['fineTypes'] = $this->db->getAllTypeFines();
         $this->data['allFines'] = $this->db->getAllFinesWithNames();
 
-
         $this->displayTwig();
     }
 
@@ -43,6 +42,36 @@ class CashierPageController extends MainController
         }
 
         return $result;
+    }
+
+    public function ACTION_deleteFine($idFine){
+        if($this->db->deletFineById($idFine)){
+            Flash::success('Pokuta byla úspěšně odpuštěna');
+        }else{
+            Flash::error('Pokutu se nepodařilo odpustit');
+        }
+
+        $this->redirect('cashier-page');
+    }
+
+    public function ACTION_markPaidFine($idFine){
+        if($this->db->editFinePaidToTrue($idFine)){
+            Flash::success('Pokuta byla úspěšně označena jako <b>zaplacená</b>');
+        }else{
+            Flash::error('Pokutu se nepodařilo označit jako zaplacenou');
+        }
+
+        $this->redirect('cashier-page');
+    }
+
+    public function ACTION_markUnpaidFine($idFine){
+        if($this->db->editFinePaidToFalse($idFine)){
+            Flash::success('Pokuta byla úspěšně označena jako <b>nezaplacená</b>');
+        }else{
+            Flash::error('Pokutu se nepodařilo označit jako zaplacenou');
+        }
+
+        $this->redirect('cashier-page');
     }
 
 }

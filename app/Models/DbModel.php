@@ -570,13 +570,29 @@ class DbModel {
         foreach ($fines as $fine){
             $result[$j]['typeFine'] = $this->getFineTypeById($fine['typeFines_id']);
 
+            $result[$j]['id'] = $fine['id'];
             $user = $this->getUserById($fine['users_id']);
             $result[$j]['user']['id'] = $user['id'];
             $result[$j]['user']['name'] = $user['name'];
             $result[$j]['user']['surname'] = $user['surname'];
+            $result[$j]['user']['tel'] = $user['tel'];
+            $result[$j]['user']['email'] = $user['email'];
             $result[$j]['user']['paidAmount'] = $this->getFinesAmountsByUserId($user['id'])[1];
             $result[$j]['user']['unpaidAmount'] = $this->getFinesAmountsByUserId($user['id'])[0];
             $result[$j]['user']['allAmount'] = $this->getFinesAmountsByUserId($user['id'])[2];
+
+            $currentDivison = $this->getDivisionById($user['idDivision']);
+            $result[$j]['user']['division'] = $currentDivison['nameDivision'];
+            $result[$j]['user']['divisionChief'] = $currentDivison['chief'];
+            $result[$j]['user']['divisionChiefTel'] = $currentDivison['telContact'];
+            $result[$j]['user']['divisionChiefEmail'] = $currentDivison['emailContact'];
+
+
+            $divisionFines = $this->getFinesAmountsByDivisionId($user['idDivision']);
+            $result[$j]['division']['unpaidAmount'] = $divisionFines[0];
+            $result[$j]['division']['paidAmount'] = $divisionFines[1];
+            $result[$j]['division']['allAmount'] = $divisionFines[2];
+
 
             $result[$j]['date'] = $fine['date'];
             $result[$j]['paid'] = $fine['paid'];
@@ -619,5 +635,111 @@ class DbModel {
 
         return array($allUnpaidMoney, $allPaidMoney, $allFines);
     }
+
+    /**
+     * @return array
+     * Metoda vraci pole pokut podle jednotlivých oddilu
+     */
+    public function getDivisionFines(){
+        $fines = $this->getAllFines();
+        $result = array();
+        $j = 0;
+
+        foreach ($fines as $fine){
+            $currentUser = $this->getUserById($fine['users_id']);
+            $currentTypeFine = $this->getFineTypeById($fine['typeFines_id']);
+            $divisionName = $this->getDivisionById($currentUser['idDivision'])['nameDivision'];
+            $fine['currentUser'] = $currentUser;
+            $fine['currentFineType'] = $currentTypeFine;
+            $result[$divisionName][] = $fine;
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param $divisionId
+     * @return mixed
+     * Metoda vraci pole pokut pouze pro konkretni oddil. Oddil se identifikuje podle jeho id predanym v parametru metody
+     */
+    public function getDivisionFinesByDivisionId($divisionId){
+        $allDivisionFines = $this->getDivisionFines();
+        $correctDivisionName = $this->getDivisionById($divisionId)['nameDivision'];
+
+        return($allDivisionFines[$correctDivisionName]);
+    }
+
+
+    public function getFinesAmountsByDivisionId($divisionId){
+        $currentDivisionFines = $this->getDivisionFinesByDivisionId($divisionId);
+        $allUnpaidMoney = 0;
+        $allPaidMoney = 0;
+        $allFines = 0;
+
+        foreach ($currentDivisionFines as $fine){
+            $money = $fine['currentFineType']['money'];
+
+            if($fine['paid'] == 0){
+                $allUnpaidMoney = $allUnpaidMoney + $money;
+            }
+            if($fine['paid'] == 1){
+                $allPaidMoney = $allPaidMoney + $money;
+            }
+            $allFines = $allFines + $money;
+        }
+
+        return array($allUnpaidMoney, $allPaidMoney, $allFines);
+    }
+
+    public function deletFineById($fineId){
+        $query = $this->pdo->prepare("DELETE FROM " . TABLE_FINER . " WHERE id = :fineID");
+        $result = $query->execute(array(
+            ":fineID" => $fineId,
+        ));
+
+        // pokud neni false, tak vratim vysledek, jinak null
+        if ($result) {
+            // neni false
+            return true;
+        } else {
+            // je false
+            return false;
+        }
+    }
+
+    public function editFinePaidToTrue($idFine){
+        $query =  $this->pdo->prepare("UPDATE " . TABLE_FINER . " SET paid= :paid WHERE id= :fineId");
+        $result = $query->execute(array(
+            ":fineId" => $idFine,
+            ":paid" => 1
+        ));
+
+        // pokud neni false, tak vratim vysledek, jinak null
+        if ($result) {
+            // neni false
+            return true;
+        } else {
+            // je false
+            return false;
+        }
+    }
+
+    public function editFinePaidToFalse($idFine){
+        $query =  $this->pdo->prepare("UPDATE " . TABLE_FINER . " SET paid= :paid WHERE id= :fineId");
+        $result = $query->execute(array(
+            ":fineId" => $idFine,
+            ":paid" => 0
+        ));
+
+        // pokud neni false, tak vratim vysledek, jinak null
+        if ($result) {
+            // neni false
+            return true;
+        } else {
+            // je false
+            return false;
+        }
+    }
+
 }
 
