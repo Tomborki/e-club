@@ -5,5 +5,9 @@
     background-color: white;
     border-radius: 10px;
     width: 100%;
+
+    .dataTables_wrapper{
+      overflow-x: auto;
+    }
   }
 }

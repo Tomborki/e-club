@@ -13,6 +13,10 @@
       flex-direction: column;
     }
 
+    .dataTables_wrapper{
+      overflow-x: auto;
+    }
+
     .box{
       padding: 20px;
       box-sizing: border-box;

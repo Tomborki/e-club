@@ -533,6 +533,13 @@ class DbModel {
         }
     }
 
+    /**
+     * @param array $users
+     * @param array $fines
+     * @param $cashierID
+     * @return bool
+     * Metoda pridava novou pokutu do db
+     */
     public function addFine(array $users, array $fines, $cashierID){
         date_default_timezone_set('Europe/Prague');
         $today = date("Y-m-d H:i:s");
@@ -556,12 +563,20 @@ class DbModel {
         return true;
     }
 
+    /**
+     * @return array|false
+     * Metoda vraci vsechny pokuty
+     */
     public function getAllFines(){
         $query = $this->pdo->prepare("SELECT * FROM " . TABLE_FINER);
         $query->execute();
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * @return array
+     * Metoda vraci vsechny pokuty se vsemi informacemi a jmeny
+     */
     public function getAllFinesWithNames(){
         $fines = $this->getAllFines();
         $result = array();
@@ -680,7 +695,14 @@ class DbModel {
         return($allDivisionFines[$correctDivisionName]);
     }
 
-
+    /**
+     * @param $divisionId
+     * @return array|int[]
+     * Metoda vraci castky oddílu podle id oddilu
+     * [0] = nezaplacene pokuty
+     * [1] = zaplacene pokuty
+     * [2] = vsechny pokuty dohromady
+     */
     public function getFinesAmountsByDivisionId($divisionId){
         $currentDivisionFines = $this->getDivisionFinesByDivisionId($divisionId);
         $allUnpaidMoney = 0;
@@ -702,6 +724,11 @@ class DbModel {
         return array($allUnpaidMoney, $allPaidMoney, $allFines);
     }
 
+    /**
+     * @param $fineId
+     * @return bool
+     * Metoda odstrani pokutu podle jeji id
+     */
     public function deletFineById($fineId){
         $query = $this->pdo->prepare("DELETE FROM " . TABLE_FINER . " WHERE id = :fineID");
         $result = $query->execute(array(
@@ -718,6 +745,11 @@ class DbModel {
         }
     }
 
+    /**
+     * @param $idFine
+     * @return bool
+     * Metoda oznacuje pokutu jako zaplacenou podle jeji id
+     */
     public function editFinePaidToTrue($idFine){
         $query =  $this->pdo->prepare("UPDATE " . TABLE_FINER . " SET paid= :paid WHERE id= :fineId");
         $result = $query->execute(array(
@@ -735,6 +767,11 @@ class DbModel {
         }
     }
 
+    /**
+     * @param $idFine
+     * @return bool
+     * Metoda oznacuje pokutu jako nezaplacenou podle jeji id
+     */
     public function editFinePaidToFalse($idFine){
         $query =  $this->pdo->prepare("UPDATE " . TABLE_FINER . " SET paid= :paid WHERE id= :fineId");
         $result = $query->execute(array(
@@ -752,6 +789,12 @@ class DbModel {
         }
     }
 
+    /**
+     * @param $userID
+     * @param $email
+     * @return bool
+     * Metoda upravuje email uzivatele podle jeho id
+     */
     public function editUserEmailByUserId($userID, $email){
         $query =  $this->pdo->prepare("UPDATE " . TABLE_USER . " SET email= :email WHERE id= :userId");
         $result = $query->execute(array(
@@ -769,7 +812,12 @@ class DbModel {
         }
     }
 
-
+    /**
+     * @param $userID
+     * @param $tel
+     * @return bool
+     * Metoda upravuje telefon uzivatele podle jeho id
+     */
     public function editUserTelByUserId($userID, $tel){
         $query =  $this->pdo->prepare("UPDATE " . TABLE_USER . " SET tel= :tel WHERE id= :userId");
         $result = $query->execute(array(
@@ -787,6 +835,11 @@ class DbModel {
         }
     }
 
+    /**
+     * @param $divisionId
+     * @return array|false
+     * Medota vraci zapasy podle id divize predanym v parametru
+     */
     public function getMatchesByDivisionId($divisionId){
         $query =  $this->pdo->prepare("SELECT * FROM " . TABLE_MATCHES . " WHERE idDivision= :idDivision");
         $query->execute(array(
@@ -796,6 +849,11 @@ class DbModel {
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * @param $teamId
+     * @return mixed
+     * Metoda vraci nazev tymu podle jeho id predanym v parametru
+     */
     public function getTeamNameById($teamId){
         $query =  $this->pdo->prepare("SELECT teamName FROM " . TABLE_TEAMS . " WHERE id= :teamId");
         $query->execute(array(
@@ -805,6 +863,11 @@ class DbModel {
         return $query->fetchAll(PDO::FETCH_ASSOC)[0];
     }
 
+    /**
+     * @param $divisionId
+     * @return array|false
+     * Metoda vraci zapasy podle id divize spolecne se jmenymy nazvy misto klicu
+     */
     public function getMatchesByDivisionIdWithNames($divisionId){
         $allMatches = $this->getMatchesByDivisionId($divisionId);
         $j = 0;

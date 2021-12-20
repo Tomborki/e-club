@@ -20,12 +20,7 @@
             </div>
         </div>
         <div class="right-div">
-            {#
-            <label class="switch">
-                <input type="checkbox" class="checkbox" onclick="changeBackgroundColor()">
-                <span class="slider round"></span>
-            </label>
-            #}
+
             <form method="POST">
                 <svg width="130" height="130" viewBox="0 0 130 130" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -80,7 +75,7 @@
                                                                            onmouseover="passwordView()" class="password-eye icon-eye-4"></span><br>
                 <p id="errorLogin">{{errorMessage}}</p>
                 <button type="submit" name="submit">Log in <span class="icon-login-1"></span></button><br>
-                <a href="#">Zapomenuté heslo?</a>
+
             </form>
         </div>
     </div>

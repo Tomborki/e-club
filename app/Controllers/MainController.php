@@ -293,6 +293,10 @@ abstract class MainController
         rmdir($dirPath);
     }
 
+    /**
+     * @param $dir
+     * Metoda odstrani soubory v adresari
+     */
     function deleteFiles($dir)
     {
         // loop through the files one by one

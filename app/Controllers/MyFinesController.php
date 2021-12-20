@@ -28,6 +28,13 @@ class MyFinesController extends MainController
         $this->displayTwig();
     }
 
+    /**
+     * @return array|int[]
+     * Metoda vraci dluh uzivatele
+     * [0] = nezaplacene pokuty
+     * [1] = zaplacene pokuty
+     * [2] = vsechny poktuy dohromady
+     */
     private function getDept(){
         $myfiners = $this->db->getAllFinesIdUser($_SESSION['userID']);
         $allUnpaidMoney = 0;

@@ -1,5 +1,14 @@
 #cashier{
 
+  .bootstrap-select .dropdown-menu li a{
+    word-wrap: break-word;
+    white-space: normal;
+  }
+
+  .bootstrap-select .dropdown-menu{
+    width: 100% !important;
+  }
+
   form{
     padding: 20px;
     box-sizing: border-box;

@@ -2,10 +2,14 @@
 
 class RouterController extends MainController
 {
-// Instance controlleru
+
     protected $kontroler;
 
-    // Metoda převede pomlčkovou variantu controlleru na název třídy
+    /**
+     * @param $text
+     * @return array|string|string[]
+     * Metoda prevadi string z pomlcek do velbloudi notace
+     */
     private function pomlckyDoVelbloudiNotace($text)
     {
         $veta = str_replace('-', ' ', $text);
@@ -14,22 +18,26 @@ class RouterController extends MainController
         return $veta;
     }
 
-    // Naparsuje URL adresu podle lomítek a vrátí pole parametrů
+    /**
+     * @param $url
+     * @return false|string[]
+     * Metoda naparsuje url
+     */
     private function parsujURL($url)
     {
         // Naparsuje jednotlivé části URL adresy do asociativního pole
         $naparsovanaURL = parse_url($url);
-        // Odstranění počátečního lomítka
         $naparsovanaURL["path"] = ltrim($naparsovanaURL["path"], "/");
         $naparsovanaURL["path"] = rtrim($naparsovanaURL["path"], "/");
-        // Odstranění bílých znaků kolem adresy
         $naparsovanaURL["path"] = trim($naparsovanaURL["path"]);
-        // Rozbití řetězce podle lomítek
         $rozdelenaCesta = explode("/", $naparsovanaURL["path"]);
         return $rozdelenaCesta;
     }
 
-    // Naparsování URL adresy a vytvoření příslušného controlleru
+    /**
+     * @param $parametry
+     * Funkce zpracovava vstupni data a predava sablone
+     */
     public function zpracuj($parametry)
     {
         $naparsovanaURL = $this->parsujURL($parametry[0]);

@@ -14,9 +14,7 @@
 {% block content %}
     <div id="matches">
         <h2>Moje zápasy</h2>
-        <div class="other-buttons">
-            <a class="btn btn-success" href="{{ pageName }}/addFine" role="button"><i class='bx bx-plus-circle'></i> Přidat nový zápas</a>
-        </div>
+
         {% if userDivision != null %}
             <span class="drag-info">posouvejte doleva <i class='bx bx-arrow-from-left'></i></span>
             <div class="table-container">
@@ -48,7 +46,7 @@
 
             <div class="table-container">
                 <h5>Odehrané zápasy</h5>
-                <table class="table table-striped" id="matchesTable">
+                <table class="table table-striped" id="matchesPlayedTable">
                     <thead>
                     <tr>
                         <th scope="col">Domácí tým</th>
@@ -116,6 +114,9 @@
 
         $(document).ready( function () {
             $('#matchesTable').DataTable({
+                responsive: false,
+            });
+            $('#matchesPlayedTable').DataTable({
                 responsive: false,
             });
         } );

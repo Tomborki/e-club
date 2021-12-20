@@ -7,6 +7,11 @@
     display: flex;
     gap: 20px;
 
+    @media only screen and (max-width: 1540px) {
+      flex-direction: column;
+      align-items: center;
+    }
+
     #calendar{
       max-width: 400px;
       width: 100%;
@@ -17,7 +22,16 @@
       box-sizing: content-box;
       border-radius: 15px;
 
+      @media only screen and (max-width: 500px) {
+        padding: 7px;
+        box-sizing: border-box;
+      }
+
       #calendar-esports{
+        @media only screen and (max-width: 500px) {
+          display: none;
+        }
+
         span{
           font-size: 20px;
           display: block;
@@ -31,6 +45,11 @@
           margin-top: 0;
           padding: 0;
           padding-top: 7px;
+
+          @media only screen and (max-width: 500px) {
+            top: -39px;
+            font-size: 17px;
+          }
         }
 
         .divTableCellCalendar{
@@ -60,6 +79,11 @@
           cursor: pointer;
           transition: all 0.2s ease-in-out;
 
+          @media only screen and (max-width: 500px) {
+            flex-direction: column;
+            align-items: center;
+          }
+
           &:hover{
             background-color: #e0e0e0;
           }
@@ -84,6 +108,11 @@
               margin: 0px;
               font-size: 20px;
               display: flex;
+
+              @media only screen and (max-width: 500px) {
+                align-items: center;
+                justify-content: center;
+              }
 
               span{
                 margin: 0px 10px;
@@ -118,10 +147,19 @@
       height: 200px;
       text-align: center;
 
+      @media only screen and (max-width: 500px) {
+        box-sizing: border-box;
+        height: unset;
+      }
+
       p{
         font-size: 60px;
         font-weight: 700;
       }
+    }
+
+    .mx-auto{
+      text-align: center;
     }
   }
 }

@@ -12,6 +12,10 @@ class MyProfileController extends MainController
         $this->displayTwig();
     }
 
+    /**
+     * Funkce zpracovava odpovedi od formulare editEmail
+     * Formular na upravovani emailu uzivatele
+     */
     public function FORM_editEmail(){
         if(isset($_POST['submitEditEmailForm'])){
             $email = $_POST['email'];
@@ -29,6 +33,10 @@ class MyProfileController extends MainController
         }
     }
 
+    /**
+     * Funkce zpracovava odpovedi od formulare editTel
+     * Formular na upravovani telefonu uzivatele
+     */
     public function FORM_editTel(){
         if(isset($_POST['submitEditTelForm'])){
             $tel = $_POST['tel'];
@@ -46,6 +54,10 @@ class MyProfileController extends MainController
         }
     }
 
+    /**
+     * Funkce zpracovava odpovedi od formulare editAvatar
+     * Formular na upravovani avataru uzivatele
+     */
     public function FORM_editAvatar(){
         if(isset($_POST['submitEditAvatarForm'])){
             if($_FILES['avatar']['name'] != null){
@@ -95,6 +107,10 @@ class MyProfileController extends MainController
         }
     }
 
+    /**
+     * Funkce zpracovava odpovedi od formulare editPass
+     * Formular na upravovani hesla uzivatele
+     */
     public function FORM_editPass(){
         if(isset($_POST['submitEditPassForm'])){
             $oldPass = $_POST['oldPass'];

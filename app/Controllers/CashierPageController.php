@@ -13,7 +13,11 @@ class CashierPageController extends MainController
         $this->displayTwig();
     }
 
-    public function FORM_test(){
+    /**
+     * Funkce zpracovava odpovedi od formulare addFine
+     * Formular na pridavani pokut
+     */
+    public function FORM_addFine(){
         if(isset($_POST['submitAddFineToUsersForm'])){
             $users = $_POST['selectedUsers'];
             $fines = $_POST['selectedFines'];
@@ -30,6 +34,10 @@ class CashierPageController extends MainController
         }
     }
 
+    /**
+     * @return array
+     * Metoda vraci pole s uzivateli v jednotlivých oddílech
+     */
     public function usersInDivisions(){
         $allUsers = $this->db->getAllUsers();
         $result = array();
@@ -48,6 +56,10 @@ class CashierPageController extends MainController
         return $result;
     }
 
+    /**
+     * @param $idFine
+     * Akce odstranuje pokutu podle jeji id
+     */
     public function ACTION_deleteFine($idFine){
         if($this->db->deletFineById($idFine)){
             Flash::success('Pokuta byla úspěšně odpuštěna');
@@ -58,6 +70,10 @@ class CashierPageController extends MainController
         $this->redirect('cashier-page');
     }
 
+    /**
+     * @param $idFine
+     * Akce oznaci pokutu jako zaplacenou podle jeji id
+     */
     public function ACTION_markPaidFine($idFine){
         if($this->db->editFinePaidToTrue($idFine)){
             Flash::success('Pokuta byla úspěšně označena jako <b>zaplacená</b>');
@@ -68,6 +84,10 @@ class CashierPageController extends MainController
         $this->redirect('cashier-page');
     }
 
+    /**
+     * @param $idFine
+     * Akce oznaci pokutu jako nezaplacenou podle jeji id
+     */
     public function ACTION_markUnpaidFine($idFine){
         if($this->db->editFinePaidToFalse($idFine)){
             Flash::success('Pokuta byla úspěšně označena jako <b>nezaplacená</b>');

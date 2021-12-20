@@ -447,6 +447,12 @@ nav .show {
   display: flex;
   gap: 20px;
 }
+@media only screen and (max-width: 1540px) {
+  #homepage .content {
+    flex-direction: column;
+    align-items: center;
+  }
+}
 #homepage .content #calendar {
   max-width: 400px;
   width: 100%;
@@ -456,6 +462,17 @@ nav .show {
   padding: 30px;
   box-sizing: content-box;
   border-radius: 15px;
+}
+@media only screen and (max-width: 500px) {
+  #homepage .content #calendar {
+    padding: 7px;
+    box-sizing: border-box;
+  }
+}
+@media only screen and (max-width: 500px) {
+  #homepage .content #calendar #calendar-esports {
+    display: none;
+  }
 }
 #homepage .content #calendar #calendar-esports span {
   font-size: 20px;
@@ -470,6 +487,12 @@ nav .show {
   margin-top: 0;
   padding: 0;
   padding-top: 7px;
+}
+@media only screen and (max-width: 500px) {
+  #homepage .content #calendar #calendar-esports span {
+    top: -39px;
+    font-size: 17px;
+  }
 }
 #homepage .content #calendar #calendar-esports .divTableCellCalendar:before {
   margin: 0px;
@@ -494,6 +517,12 @@ nav .show {
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
+@media only screen and (max-width: 500px) {
+  #homepage .content #calendar .matches .match {
+    flex-direction: column;
+    align-items: center;
+  }
+}
 #homepage .content #calendar .matches .match:hover {
   background-color: #e0e0e0;
 }
@@ -516,6 +545,12 @@ nav .show {
   margin: 0px;
   font-size: 20px;
   display: flex;
+}
+@media only screen and (max-width: 500px) {
+  #homepage .content #calendar .matches .match .info p {
+    align-items: center;
+    justify-content: center;
+  }
 }
 #homepage .content #calendar .matches .match .info p span {
   margin: 0px 10px;
@@ -542,9 +577,18 @@ nav .show {
   height: 200px;
   text-align: center;
 }
+@media only screen and (max-width: 500px) {
+  #homepage .content #dept {
+    box-sizing: border-box;
+    height: unset;
+  }
+}
 #homepage .content #dept p {
   font-size: 60px;
   font-weight: 700;
+}
+#homepage .content .mx-auto {
+  text-align: center;
 }
 
 #divisions {
@@ -676,6 +720,9 @@ nav .show {
     flex-direction: column;
   }
 }
+#myFines .main-container .dataTables_wrapper {
+  overflow-x: auto;
+}
 #myFines .main-container .box {
   padding: 20px;
   box-sizing: border-box;
@@ -704,6 +751,13 @@ nav .show {
   text-align: center;
 }
 
+#cashier .bootstrap-select .dropdown-menu li a {
+  word-wrap: break-word;
+  white-space: normal;
+}
+#cashier .bootstrap-select .dropdown-menu {
+  width: 100% !important;
+}
 #cashier form {
   padding: 20px;
   box-sizing: border-box;
@@ -818,6 +872,9 @@ nav .show {
   border-radius: 10px;
   width: 100%;
 }
+#users .table-container .dataTables_wrapper {
+  overflow-x: auto;
+}
 
 #matches .table-container {
   padding: 20px;
@@ -825,6 +882,7 @@ nav .show {
   background-color: white;
   border-radius: 10px;
   width: 100%;
+  margin-bottom: 30px;
 }
 #matches .table-container .dataTables_wrapper {
   overflow-x: auto;

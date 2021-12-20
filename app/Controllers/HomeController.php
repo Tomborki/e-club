@@ -30,6 +30,10 @@ class HomeController extends MainController
         $this->displayTwig();
     }
 
+    /**
+     * @return int|mixed
+     * Metoda vraci dluh uzivatele
+     */
     private function getDept(){
         $myfiners = $this->db->getAllFinesIdUser($_SESSION['userID']);
         $allMoney = 0;
