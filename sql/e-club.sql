@@ -9,21 +9,20 @@ DROP TABLE IF EXISTS `divisions`;
 CREATE TABLE `divisions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nameDivision` varchar(255) COLLATE utf8_czech_ci NOT NULL,
-  `chief` varchar(255) COLLATE utf8_czech_ci NOT NULL,
-  `telContact` varchar(255) COLLATE utf8_czech_ci DEFAULT NULL,
-  `emailContact` varchar(255) COLLATE utf8_czech_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `chiefUserId` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `chiefUserId` (`chiefUserId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
-INSERT INTO `divisions` (`id`, `nameDivision`, `chief`, `telContact`, `emailContact`) VALUES
-(1,	'Muži A',	'Josef Dobrý',	'+420153698226',	'josefdobry@gmail.com'),
-(2,	'Muži B',	'František Novák',	'+420157854256',	'frno@gmail.com'),
-(4,	'Starší dorost',	'Tomáš Bohdan',	'+420345728473',	NULL),
-(5,	'Mladší dorost',	'',	'',	''),
-(6,	'Starší žáci',	'',	'',	''),
-(7,	'Mladší žáci',	'',	'',	''),
-(8,	'Přípravka',	'',	'',	''),
-(29,	'Stará garda',	'Jiří Gertner',	'+420159875552',	'gertnerj@centrum.cz');
+INSERT INTO `divisions` (`id`, `nameDivision`, `chiefUserId`) VALUES
+(1,	'Muži A',	15),
+(2,	'Muži B',	18),
+(4,	'Starší dorost',	19),
+(5,	'Mladší dorost',	15),
+(6,	'Starší žáci',	5),
+(7,	'Mladší žáci',	18),
+(8,	'Přípravka',	18),
+(29,	'Stará garda',	20);
 
 DROP TABLE IF EXISTS `finer`;
 CREATE TABLE `finer` (
@@ -61,10 +60,9 @@ INSERT INTO `finer` (`id`, `typeFines_id`, `users_id`, `date`, `paid`, `cashierI
 (22,	3,	15,	'2021-12-19 01:19:11',	1,	15),
 (23,	3,	2,	'2021-12-19 01:20:23',	0,	15),
 (24,	5,	2,	'2021-12-19 01:20:23',	0,	15),
-(25,	5,	3,	'2021-12-19 01:21:16',	0,	15),
 (27,	21,	2,	'2021-12-19 03:08:34',	0,	2),
 (28,	21,	3,	'2021-12-19 03:08:34',	1,	2),
-(29,	2,	15,	'2021-12-19 16:00:12',	0,	15);
+(29,	2,	15,	'2021-12-19 16:00:12',	1,	15);
 
 DROP TABLE IF EXISTS `matches`;
 CREATE TABLE `matches` (
@@ -82,7 +80,7 @@ CREATE TABLE `matches` (
   KEY `idDivision` (`idDivision`),
   CONSTRAINT `matches_ibfk_1` FOREIGN KEY (`idTeam1`) REFERENCES `teams` (`id`),
   CONSTRAINT `matches_ibfk_2` FOREIGN KEY (`idTeam2`) REFERENCES `teams` (`id`),
-  CONSTRAINT `matches_ibfk_3` FOREIGN KEY (`idDivision`) REFERENCES `divisions` (`id`)
+  CONSTRAINT `matches_ibfk_4` FOREIGN KEY (`idDivision`) REFERENCES `divisions` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 INSERT INTO `matches` (`id`, `idTeam1`, `idTeam2`, `idDivision`, `date`, `team1Score`, `team2Score`, `end`) VALUES
@@ -97,6 +95,25 @@ INSERT INTO `matches` (`id`, `idTeam1`, `idTeam2`, `idDivision`, `date`, `team1S
 (12,	10,	4,	2,	'2021-12-25',	NULL,	NULL,	0),
 (13,	13,	4,	1,	'2021-12-25',	NULL,	NULL,	0),
 (14,	4,	6,	1,	'2022-01-02',	NULL,	NULL,	0);
+
+DROP TABLE IF EXISTS `messages`;
+CREATE TABLE `messages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) COLLATE utf8_czech_ci NOT NULL,
+  `content` mediumtext COLLATE utf8_czech_ci NOT NULL,
+  `date` datetime NOT NULL,
+  `chiefId` int(11) NOT NULL,
+  `divisionId` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `chiefId` (`chiefId`),
+  KEY `divisionId` (`divisionId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+INSERT INTO `messages` (`id`, `title`, `content`, `date`, `chiefId`, `divisionId`) VALUES
+(5,	'Informace ohledně soustředění',	'<p>Ahoj sportovci,&nbsp;<br>posílám informace ohledně zimního soustředění. Informace jsou dostupné na následujícím odkaze:&nbsp;<a href=\"https://www.youtube.com/watch?v=dQw4w9WgXcQ&amp;ab_channel=RickAstley\" target=\"_blank\">Odkaz na informace</a><br><br>Díky a sportu zdar!&nbsp;</p>',	'2021-12-20 21:27:03',	15,	1),
+(6,	'Zprava pro hráče',	'<p>Blalalalalala</p><p>sfjsalfkj<b>aslkfjlsadkf sa</b></p><p>fsadfasdfasdfsadf</p><ul><li>sfsadfasdf</li><li>asdf</li><li>asdf</li></ul>',	'2021-12-20 21:52:43',	15,	1),
+(3,	'etstets',	'<p>estest</p>',	'2021-12-20 17:22:47',	15,	7),
+(4,	'Testovací zpráva',	'<p><b>Ahoj</b></p><p>Musím říct, že tuty zprávy jsou super!&nbsp;</p>',	'2021-12-20 20:40:39',	15,	5);
 
 DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles` (
@@ -199,17 +216,18 @@ CREATE TABLE `users` (
   KEY `idRole` (`idRole`),
   KEY `idDivision` (`idDivision`),
   CONSTRAINT `users_ibfk_1` FOREIGN KEY (`idRole`) REFERENCES `roles` (`id`),
-  CONSTRAINT `users_ibfk_3` FOREIGN KEY (`idDivision`) REFERENCES `divisions` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `users_ibfk_4` FOREIGN KEY (`idDivision`) REFERENCES `divisions` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 INSERT INTO `users` (`id`, `username`, `password`, `name`, `surname`, `email`, `tel`, `idRole`, `idDivision`, `cashier`, `avatarImageName`) VALUES
 (2,	'terka',	'$2y$10$xGgL46PabI0DUC3RqRy0XeO.VyxKqvxSaEBhmi8BNhzASYol8MztS',	'Terka',	'Richterová',	'terka@gmail.com',	'+420789456123',	2,	1,	1,	'avatar9ec937e7b5ab6614fd3726e36e5f3cad4ee5c7e8.jpg'),
 (3,	'filip',	'$2y$10$K/KLqtPNm6VpYkFO8GdltOmZrAWUu71B6upuxgaYF19SvMfK.sJ/m',	'Filip',	'Borkovec',	'asdf@gamilc.om',	'+420159852222',	3,	1,	1,	'avatar72d7e2267899ebb00b385217a6ec53a26aabe22e.png'),
 (5,	'petr',	'$2y$10$Zg3XtJo1SJvRePpm2/Udp.vfrVToH33QBBcnpczMDVg2oS91d9FNK',	'Petr',	'Bartovský',	'petr@gmail.com',	'+420111444777',	3,	4,	0,	'avatara81f91c2ddfd7eb7d139e5cc7b38f9f5e2623e05.jpg'),
-(15,	'tomborki',	'$2y$10$ApXG0k0uvZswKaQImzBNNuOQYBooNICwLqePfUMwx8W7JyGDkbem2',	'Tomáš',	'Borkovec',	'tomasborki@gmail.com',	'+420720141853',	1,	2,	0,	'avatar02c4680fbb78c1efc115965a4321345c57e2ba8f.jpg'),
+(15,	'tomborki',	'$2y$10$ApXG0k0uvZswKaQImzBNNuOQYBooNICwLqePfUMwx8W7JyGDkbem2',	'Tomáš',	'Borkovec',	'testsetse@seznam.cz',	'+420720141853',	1,	1,	0,	'avatar02c4680fbb78c1efc115965a4321345c57e2ba8f.jpg'),
 (16,	'michal',	'$2y$10$gFTTvoYqh3UTDOBLBgHM3etv6XQF9dV24pswlwj3Lk1ilKoFEZY2m',	'Michal',	'Čerepjuk',	'cery@gmail.com',	'+420156663225',	3,	1,	0,	'avatarba70c4f9d470fa22008add9d360d7bbecd2e7eee.jpg'),
 (17,	'dobrak',	'$2y$10$vNkDnrzeBTQmL8ks1vHude.CNKqBdmWFw/XUjyPovHNh/Mm5gXBxm',	'Josef',	'Dobrý',	'db@gmail.com',	'+420157441853',	3,	1,	0,	'avatar879a502cee6fc10de4fe4d50810bed391ecf01ee.jpg'),
 (18,	'tomik',	'$2y$10$FoNuMjChAZfgR6r90FdKgeoJvRL0/38v.2NR93X0cDRRZFNdBW1y6',	'Tomáš',	'Hanách',	'hanach@seznam.cz',	'+420987777456',	3,	5,	0,	'avatar08ee7803b800d9e2daf7d4c6e634825d3230bc4e.png'),
-(19,	'lhotakdavid',	'$2y$10$U7zbi8yPtNO3PM7uuDif8.pXfdlFi91D5H21EWnNiqATJOUYbrl5.',	'Jakub',	'Lhoták',	'lhotakdavid@gmail.com',	'+420155963255',	3,	5,	0,	'avatar397804bec3c42e259f5f1e8cf172c5922212ead3.jpg');
+(19,	'lhotakdavid',	'$2y$10$U7zbi8yPtNO3PM7uuDif8.pXfdlFi91D5H21EWnNiqATJOUYbrl5.',	'Jakub',	'Lhoták',	'lhotakdavid@gmail.com',	'+420155963255',	3,	5,	0,	'avatar397804bec3c42e259f5f1e8cf172c5922212ead3.jpg'),
+(20,	'jirkagertner',	'$2y$10$Rs.XEyaRjI3zNANmgusSYO4Px3zLSm3Omd0KZZ9RSQagCYfuZTUaG',	'Jiří',	'Gernter',	'jirkagertner@seznam.cz',	'+420147458889',	3,	NULL,	0,	'avatar218cb90a72b1f2b2adc79e358531aa7e4743d2e9.jpg');
 
--- 2021-12-20 01:13:52
+-- 2021-12-20 21:00:12
