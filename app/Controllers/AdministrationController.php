@@ -38,7 +38,7 @@ class AdministrationController extends MainController
      */
     public function FORM_addNewDivision(){
         if(isset($_POST['submitAddDivisionForm'])){
-            $name = $_POST['divisionName'];
+            $name = htmlspecialchars($_POST['divisionName'], ENT_QUOTES, 'UTF-8');
             $chief = $_POST['selectedChief'];
 
             if($this->db->addDivision($name, $chief)){
@@ -59,8 +59,8 @@ class AdministrationController extends MainController
      */
     public function FORM_addNewFine(){
         if(isset($_POST['submitAddFineForm'])){
-            $name = $_POST['fineName'];
-            $money = $_POST['money'];
+            $name = htmlspecialchars($_POST['fineName'], ENT_QUOTES, 'UTF-8');
+            $money = htmlspecialchars($_POST['money'], ENT_QUOTES, 'UTF-8');
 
             if($this->db->addFineType($name, $money)){
                 Flash::success('Pokuta úspěšně přidána');
@@ -81,7 +81,7 @@ class AdministrationController extends MainController
      */
     public function FORM_editDivision(){
         if(isset($_POST['submitEditDivisionForm'])){
-            $name = $_POST['divisionName'];
+            $name = htmlspecialchars($_POST['divisionName'], ENT_QUOTES, 'UTF-8');
             $chief = $_POST['selectedChief'];
             $idDivision = $_POST['divisionId'];
 
@@ -105,12 +105,12 @@ class AdministrationController extends MainController
      */
     public function FORM_addNewUser(){
         if(isset($_POST['submitAddUserForm'])){
-            $username = $_POST['username'];
-            $password = $_POST['password'];
-            $realName = $_POST['realName'];
-            $realSurname = $_POST['realSurname'];
-            $email = $_POST['email'];
-            $tel = $_POST['tel'];
+            $username = htmlspecialchars($_POST['username'], ENT_QUOTES, 'UTF-8');
+            $password = htmlspecialchars($_POST['password'], ENT_QUOTES, 'UTF-8');
+            $realName = htmlspecialchars($_POST['realName'], ENT_QUOTES, 'UTF-8');
+            $realSurname = htmlspecialchars($_POST['realSurname'], ENT_QUOTES, 'UTF-8');
+            $email = htmlspecialchars($_POST['email'], ENT_QUOTES, 'UTF-8');
+            $tel = htmlspecialchars($_POST['tel'], ENT_QUOTES, 'UTF-8');
             $role = $_POST['role'];
 
             $allUsers = $this->db->getAllUsers();
@@ -169,12 +169,12 @@ class AdministrationController extends MainController
      */
     public function FORM_editUser(){
         if(isset($_POST['submitEditUserForm'])){
-            $username = $_POST['username'];
-            $password = $_POST['password'];
-            $realName = $_POST['realName'];
-            $realSurname = $_POST['realSurname'];
-            $email = $_POST['email'];
-            $tel = $_POST['tel'];
+            $username = htmlspecialchars($_POST['username'], ENT_QUOTES, 'UTF-8');
+            $password = htmlspecialchars($_POST['password'], ENT_QUOTES, 'UTF-8');
+            $realName = htmlspecialchars($_POST['realName'], ENT_QUOTES, 'UTF-8');
+            $realSurname = htmlspecialchars($_POST['realSurname'], ENT_QUOTES, 'UTF-8');
+            $email = htmlspecialchars($_POST['email'], ENT_QUOTES, 'UTF-8');
+            $tel = htmlspecialchars($_POST['tel'], ENT_QUOTES, 'UTF-8');
             $role = $_POST['role'];
             $userID = $_POST['editedUserId'];
 
@@ -253,8 +253,8 @@ class AdministrationController extends MainController
     public function FORM_editFineType(){
         if(isset($_POST['submitEditFineType'])){
             $fineId = $_POST['fineTypeId'];
-            $fineName = $_POST['fineName'];
-            $fineMoney = $_POST['money'];
+            $fineName = htmlspecialchars($_POST['fineName'], ENT_QUOTES, 'UTF-8');
+            $fineMoney = htmlspecialchars($_POST['money'], ENT_QUOTES, 'UTF-8');
 
             if($this->db->editFineType($fineId, $fineName, $fineMoney)){
                 Flash::success('Typ pokuty úspěšně upraven');

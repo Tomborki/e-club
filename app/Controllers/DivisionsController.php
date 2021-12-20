@@ -61,7 +61,7 @@ class DivisionsController extends MainController
     public function FORM_addNewMessage(){
         if(isset($_POST['submitAddMessForm'])){
             $content = $_POST['messContent'];
-            $title = $_POST['messTitle'];
+            $title = htmlspecialchars($_POST['messTitle'], ENT_QUOTES, 'UTF-8');
             $chiefId = $_POST['chiefId'];
             $divisionId = $_POST['divisionId'];
 

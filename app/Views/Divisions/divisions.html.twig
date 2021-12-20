@@ -74,7 +74,9 @@
                                                 <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{ loop.index }}" aria-expanded="true" aria-controls="collapseOne">
                                                     {{ mess.title }} | {{ mess.date|date("d.m.Y") }}
                                                 </button>
-                                                <a href="divisions?action=removeMess({{ mess.id }})" class="btn btn-danger float-right" type="button">
+                                                <a alertMess="Opravdu chcete ostranit zprávu?"
+                                                   alertYes="Ano"
+                                                   alertNo="Zrušit" href="divisions?action=removeMess({{ mess.id }})" class="btn btn-danger float-right confirmation" type="button">
                                                     <i class='bx bx-trash'></i>
                                                 </a>
                                             </h5>
@@ -147,6 +149,34 @@
 
 {% block scripts %}
     <script>
+        $('.confirmation').on('click', function (e) {
+            e.preventDefault();
+
+            var href = $(this).attr('href');
+            var alertMess = $(this).attr('alertMess');
+            var alertYes = $(this).attr('alertYes');
+            var alertNo = $(this).attr('alertNo');
+
+            return bootbox.confirm({
+                message: alertMess,
+                buttons: {
+                    confirm: {
+                        label: alertYes,
+                        className: 'btn-outline-primary'
+                    },
+                    cancel: {
+                        label: alertNo,
+                        className: 'btn-secondary'
+                    }
+                },
+                callback: function (result) {
+                    if (result) {
+                        window.location = href
+                    }
+                }
+            });
+        });
+
         $('.summernote').each(function() {
             $(this).summernote({
                 height: 300,                 // set editor height

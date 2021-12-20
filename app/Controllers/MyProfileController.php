@@ -18,7 +18,7 @@ class MyProfileController extends MainController
      */
     public function FORM_editEmail(){
         if(isset($_POST['submitEditEmailForm'])){
-            $email = $_POST['email'];
+            $email = htmlspecialchars($_POST['email'], ENT_QUOTES, 'UTF-8');
 
             if($this->db->editUserEmailByUserId($_SESSION['userID'], $email)){
                 Flash::success('Email byl upraven');
@@ -113,9 +113,9 @@ class MyProfileController extends MainController
      */
     public function FORM_editPass(){
         if(isset($_POST['submitEditPassForm'])){
-            $oldPass = $_POST['oldPass'];
-            $newPass = $_POST['newPass'];
-            $newPass2 = $_POST['newPass2'];
+            $oldPass = htmlspecialchars($_POST['oldPass'], ENT_QUOTES, 'UTF-8');
+            $newPass = htmlspecialchars($_POST['newPass'], ENT_QUOTES, 'UTF-8');
+            $newPass2 = htmlspecialchars($_POST['newPass2'], ENT_QUOTES, 'UTF-8');
 
             $currentUserPassHash = $this->db->getUserById($_SESSION['userID'])['password'];
 

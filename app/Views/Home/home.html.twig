@@ -84,7 +84,9 @@ Hlavní stránka
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">{{ mess.title }}</h5>
-                            <p class="card-text">{{ mess.content|raw }}</p>
+
+                                <p class="card-text">{{ mess.content|raw }}</p>
+
                             <p class="card-text"><small class="text-muted">{{ mess.date|date("d.m.Y") }}</small></p>
                         </div>
                     </div>
