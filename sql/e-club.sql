@@ -58,15 +58,13 @@ INSERT INTO `finer` (`id`, `typeFines_id`, `users_id`, `date`, `paid`, `cashierI
 (16,	33,	15,	'2021-12-19 00:08:00',	0,	15),
 (17,	36,	15,	'2021-12-19 00:08:00',	0,	15),
 (18,	5,	15,	'2021-12-19 01:15:48',	0,	15),
-(19,	3,	15,	'2021-12-19 01:16:52',	0,	15),
-(20,	3,	15,	'2021-12-19 01:18:02',	0,	15),
-(21,	3,	15,	'2021-12-19 00:18:23',	0,	15),
-(22,	3,	15,	'2021-12-19 01:19:11',	0,	15),
+(22,	3,	15,	'2021-12-19 01:19:11',	1,	15),
 (23,	3,	2,	'2021-12-19 01:20:23',	0,	15),
 (24,	5,	2,	'2021-12-19 01:20:23',	0,	15),
 (25,	5,	3,	'2021-12-19 01:21:16',	0,	15),
 (27,	21,	2,	'2021-12-19 03:08:34',	0,	2),
-(28,	21,	3,	'2021-12-19 03:08:34',	1,	2);
+(28,	21,	3,	'2021-12-19 03:08:34',	1,	2),
+(29,	2,	15,	'2021-12-19 16:00:12',	0,	15);
 
 DROP TABLE IF EXISTS `matches`;
 CREATE TABLE `matches` (
@@ -88,9 +86,17 @@ CREATE TABLE `matches` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 INSERT INTO `matches` (`id`, `idTeam1`, `idTeam2`, `idDivision`, `date`, `team1Score`, `team2Score`, `end`) VALUES
-(1,	1,	2,	1,	'2021-11-29',	2,	1,	1),
-(2,	5,	3,	1,	'2021-11-29',	0,	1,	1),
-(3,	7,	9,	1,	'2021-11-29',	NULL,	NULL,	0);
+(1,	4,	2,	1,	'2021-10-15',	2,	1,	1),
+(2,	5,	4,	1,	'2021-12-05',	0,	1,	1),
+(3,	7,	4,	1,	'2021-12-12',	0,	1,	1),
+(4,	4,	8,	1,	'2021-12-19',	NULL,	NULL,	0),
+(5,	4,	2,	2,	'2021-10-15',	2,	5,	1),
+(6,	5,	4,	2,	'2021-10-20',	1,	1,	1),
+(7,	7,	4,	2,	'2021-11-11',	3,	0,	1),
+(8,	4,	8,	2,	'2021-12-19',	NULL,	NULL,	0),
+(12,	10,	4,	2,	'2021-12-25',	NULL,	NULL,	0),
+(13,	13,	4,	1,	'2021-12-25',	NULL,	NULL,	0),
+(14,	4,	6,	1,	'2022-01-02',	NULL,	NULL,	0);
 
 DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles` (
@@ -198,9 +204,12 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `password`, `name`, `surname`, `email`, `tel`, `idRole`, `idDivision`, `cashier`, `avatarImageName`) VALUES
 (2,	'terka',	'$2y$10$xGgL46PabI0DUC3RqRy0XeO.VyxKqvxSaEBhmi8BNhzASYol8MztS',	'Terka',	'Richterová',	'terka@gmail.com',	'+420789456123',	2,	1,	1,	'avatar9ec937e7b5ab6614fd3726e36e5f3cad4ee5c7e8.jpg'),
-(3,	'filip',	'$2y$10$uFM38K23Q2J6ym654auwyesvgiUgF9q7Wa19YP7Tin5rWSspATGsq',	'Filip',	'Borkovec',	'filip@gmail.com',	'+420789456123',	3,	1,	1,	'avatar991fc280fd8d287488ed09d6461118cce3cd3719.png'),
-(5,	'petr',	'$2y$10$wOJr4UYq5TT1D03Wo9uoM.q4pFbIy72DJT0Oxh9cDHOtDR5cuXb5.',	'Petr',	'Bartovský',	'petr@gmail.com',	'+420111444777',	3,	4,	0,	'avatara81f91c2ddfd7eb7d139e5cc7b38f9f5e2623e05.jpg'),
-(15,	'tomborki',	'$2y$10$1hYTpfxcb98oAoult.TSQuTMWEng015q0My3i4jzHXVwTok7zkt5y',	'Tomáš',	'Borkovec',	'tomasborki@gmail.com',	'+420720141853',	1,	2,	0,	'avatar02c4680fbb78c1efc115965a4321345c57e2ba8f.jpg'),
-(16,	'michal',	'$2y$10$aFYAQTzRHLAxO6VLMc/LvODPGnATw1wbmVkHWjy62m1Ya9TNpWkXa',	'Michal',	'Čerepjuk',	'cery@gmail.com',	'+420156663225',	3,	NULL,	0,	'avatarba70c4f9d470fa22008add9d360d7bbecd2e7eee.jpg');
+(3,	'filip',	'$2y$10$K/KLqtPNm6VpYkFO8GdltOmZrAWUu71B6upuxgaYF19SvMfK.sJ/m',	'Filip',	'Borkovec',	'asdf@gamilc.om',	'+420159852222',	3,	1,	1,	'avatar72d7e2267899ebb00b385217a6ec53a26aabe22e.png'),
+(5,	'petr',	'$2y$10$Zg3XtJo1SJvRePpm2/Udp.vfrVToH33QBBcnpczMDVg2oS91d9FNK',	'Petr',	'Bartovský',	'petr@gmail.com',	'+420111444777',	3,	4,	0,	'avatara81f91c2ddfd7eb7d139e5cc7b38f9f5e2623e05.jpg'),
+(15,	'tomborki',	'$2y$10$ApXG0k0uvZswKaQImzBNNuOQYBooNICwLqePfUMwx8W7JyGDkbem2',	'Tomáš',	'Borkovec',	'tomasborki@gmail.com',	'+420720141853',	1,	2,	0,	'avatar02c4680fbb78c1efc115965a4321345c57e2ba8f.jpg'),
+(16,	'michal',	'$2y$10$gFTTvoYqh3UTDOBLBgHM3etv6XQF9dV24pswlwj3Lk1ilKoFEZY2m',	'Michal',	'Čerepjuk',	'cery@gmail.com',	'+420156663225',	3,	1,	0,	'avatarba70c4f9d470fa22008add9d360d7bbecd2e7eee.jpg'),
+(17,	'dobrak',	'$2y$10$vNkDnrzeBTQmL8ks1vHude.CNKqBdmWFw/XUjyPovHNh/Mm5gXBxm',	'Josef',	'Dobrý',	'db@gmail.com',	'+420157441853',	3,	1,	0,	'avatar879a502cee6fc10de4fe4d50810bed391ecf01ee.jpg'),
+(18,	'tomik',	'$2y$10$FoNuMjChAZfgR6r90FdKgeoJvRL0/38v.2NR93X0cDRRZFNdBW1y6',	'Tomáš',	'Hanách',	'hanach@seznam.cz',	'+420987777456',	3,	5,	0,	'avatar08ee7803b800d9e2daf7d4c6e634825d3230bc4e.png'),
+(19,	'lhotakdavid',	'$2y$10$U7zbi8yPtNO3PM7uuDif8.pXfdlFi91D5H21EWnNiqATJOUYbrl5.',	'Jakub',	'Lhoták',	'lhotakdavid@gmail.com',	'+420155963255',	3,	5,	0,	'avatar397804bec3c42e259f5f1e8cf172c5922212ead3.jpg');
 
--- 2021-12-19 14:44:35
+-- 2021-12-20 01:13:52
