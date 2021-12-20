@@ -158,9 +158,9 @@
                                             <li class="list-group-item list-group-item-success">Uhrazene pokuty (celý oddíl): <span style="font-weight: 700">{{ fine.division.paidAmount }}Kč</span></li>
                                             <li class="list-group-item list-group-item-danger">Neuhrazene pokuty (celý oddíl): <span style="font-weight: 700">{{ fine.division.unpaidAmount }}Kč</span></li>
                                             <li class="list-group-item list-group-item-primary">Dohromady (celý oddíl): <span style="font-weight: 700">{{ fine.division.allAmount }}Kč</span></li>
-                                            <li class="list-group-item">Vedoucí oddílu: {{ fine.user.divisionChief }}</li>
-                                            <li class="list-group-item">Telefon na vedoucího: <a href="tel:{{ fine.user.divisionChiefTel }}">{{ fine.user.divisionChiefTel }}</a></li>
-                                            <li class="list-group-item">Email na vedoucího: <a href="mailto:{{ fine.user.divisionChiefEmail }}">{{ fine.user.divisionChiefEmail }}</a></li>
+                                            <li class="list-group-item">Vedoucí oddílu: {{ fine.division.chiefName }} {{ fine.division.chiefSurname }}</li>
+                                            <li class="list-group-item">Telefon na vedoucího: <a href="tel: {{ fine.division.chiefTel }}">{{ fine.division.chiefTel }}</a></li>
+                                            <li class="list-group-item">Email na vedoucího: <a href="mailto:{{ fine.division.chiefEmail }}">{{ fine.division.chiefEmail }}</a></li>
                                         </ul>
                                     </div>
                                     <div class="modal-footer">

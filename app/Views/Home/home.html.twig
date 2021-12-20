@@ -17,55 +17,79 @@ Hlavní stránka
             <span id="name"></span>!
         </h2>
         <div class="content">
-        <div id="calendar">
-            {% if userDivision is not null %}
-            <div id="calendar-esports">
-                <div class="header-month">
-                    <div class="arrow-circle arrow-prev">
-                        <i class=" arrow left"></i>
+            <div id="calendar">
+                {% if userDivision is not null %}
+                <div id="calendar-esports">
+                    <div class="header-month">
+                        <div class="arrow-circle arrow-prev">
+                            <i class=" arrow left"></i>
+                        </div>
+                        <p></p>
+                        <div class="arrow-circle arrow-next">
+                            <i class=" arrow right"></i>
+                        </div>
                     </div>
-                    <p></p>
-                    <div class="arrow-circle arrow-next">
-                        <i class=" arrow right"></i>
-                    </div>
+                    <div id="calendar-content"></div>
                 </div>
-                <div id="calendar-content"></div>
+                <div class="matches">
+                    <h5>Nejbližší zápasy</h5>
+                    {% for match in unplayedMatches|slice(0, 3) %}
+                    <div class="match" onclick="window.location.href='my-matches?highlight={{ match.id }}'">
+                        <div class="date">{{ match.date|date("d.m.") }}</div>
+                        <div class="info">
+                            <p><span>{{ match.homeTeamName }}</span>vs<span>{{ match.awayTeamName }}</span></p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="mx-auto">
+                    <a href="my-matches" class="btn btn-primary" type="button">Další zápasy</a>
+                </div>
+                {% else %}
+                    <div class="no-division">
+                        <i class='bx bx-info-circle'></i>
+                        <h5>Nepřiřadil jste se k žádnýmu oddílu</h5>
+                        <p>Oddíl si vyberete na stránce oddíly</p>
+                        <div class="d-grid gap-2 col-6 mx-auto">
+                            <a href="divisions?a=testse&b=dsfsdf" class="btn btn-primary" type="button">Oddíly</a>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
-            <div class="matches">
-                <h5>Nejbližší zápasy</h5>
-                {% for match in unplayedMatches|slice(0, 3) %}
-                <div class="match" onclick="window.location.href='my-matches?highlight={{ match.id }}'">
-                    <div class="date">{{ match.date|date("d.m.") }}</div>
-                    <div class="info">
-                        <p><span>{{ match.homeTeamName }}</span>vs<span>{{ match.awayTeamName }}</span></p>
-                    </div>
+
+            <div id="deptCard" class="card text-center {% if dept > 20 %}border-danger{% elseif dept != 0 %}border-warning{% else %}border-success{% endif %} mb-3" style="max-width: 18rem;">
+                <div class="card-header">Momentálně dlužím: </div>
+                <div class="card-body {% if dept > 20 %}text-danger{% elseif dept != 0 %}text-warning{% else %}text-success{% endif %}">
+                    <h4 class="card-title">{{ dept }}Kč</h4>
+                    <p class="card-text">Svoje pokuty si můžete zkontrolovat na stránce "mé pokuty"</p>
+                    <a href="/my-fines" class="btn {% if dept > 20 %}btn-danger{% elseif dept != 0 %}btn-warning{% else %}btn-success{% endif %}">Mé pokuty</a>
                 </div>
+            </div>
+
+            <!--
+            <div id="dept">
+                <h5>Momentálně dlužím: </h5>
+                <p class="">{{ dept }}Kč</p>
+                <div class="mx-auto">
+                    <a href="my-fines" class="btn btn-secondary" type="button">Mé všechny pokuty</a>
+                </div>
+            </div>
+            -->
+
+            <div class="container messContainer">
+                {% for mess in currentMessages %}
+                    <div id="messCard" class="card">
+                        <div class="card-header">
+                            Zpráva od: {{ mess.chief.name }} {{ mess.chief.surname }}
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ mess.title }}</h5>
+                            <p class="card-text">{{ mess.content|raw }}</p>
+                            <p class="card-text"><small class="text-muted">{{ mess.date|date("d.m.Y") }}</small></p>
+                        </div>
+                    </div>
                 {% endfor %}
             </div>
-            <div class="mx-auto">
-                <a href="my-matches" class="btn btn-primary" type="button">Další zápasy</a>
-            </div>
-            {% else %}
-                <div class="no-division">
-                    <i class='bx bx-info-circle'></i>
-                    <h5>Nepřiřadil jste se k žádnýmu oddílu</h5>
-                    <p>Oddíl si vyberete na stránce oddíly</p>
-                    <div class="d-grid gap-2 col-6 mx-auto">
-                        <a href="divisions?a=testse&b=dsfsdf" class="btn btn-primary" type="button">Oddíly</a>
-                    </div>
-                </div>
-            {% endif %}
-        </div>
-
-
-
-        <div id="dept">
-            <h5>Momentálně dlužím: </h5>
-            <p class="{% if dept > 20 %}text-danger{% elseif dept != 0 %}text-warning{% else %}text-success{% endif %}">{{ dept }}Kč</p>
-            <div class="mx-auto">
-                <a href="my-fines" class="btn btn-secondary" type="button">Mé všechny pokuty</a>
-            </div>
-        </div>
         </div>
     </div>
 {% endblock content%}

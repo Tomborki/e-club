@@ -39,11 +39,9 @@ class AdministrationController extends MainController
     public function FORM_addNewDivision(){
         if(isset($_POST['submitAddDivisionForm'])){
             $name = $_POST['divisionName'];
-            $chief = $_POST['divisionChief'];
-            $email = $_POST['emailContact'];
-            $tel = $_POST['telContact'];
+            $chief = $_POST['selectedChief'];
 
-            if($this->db->addDivision($name, $chief, $tel, $email)){
+            if($this->db->addDivision($name, $chief)){
                 Flash::success('Oddíl úspěšně přidán');
                 $this->redirect(administration);
             }else{
@@ -84,12 +82,10 @@ class AdministrationController extends MainController
     public function FORM_editDivision(){
         if(isset($_POST['submitEditDivisionForm'])){
             $name = $_POST['divisionName'];
-            $chief = $_POST['divisionChief'];
-            $email = $_POST['emailContact'];
-            $tel = $_POST['telContact'];
+            $chief = $_POST['selectedChief'];
             $idDivision = $_POST['divisionId'];
 
-            if($this->db->editDivision($idDivision ,$name, $chief, $tel, $email)){
+            if($this->db->editDivision($idDivision ,$name, $chief)){
                 Flash::success('Oddíl úspěšně upraven');
                 $this->redirect(administration);
             }else{

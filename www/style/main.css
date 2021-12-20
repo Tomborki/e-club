@@ -447,7 +447,7 @@ nav .show {
   display: flex;
   gap: 20px;
 }
-@media only screen and (max-width: 1540px) {
+@media only screen and (max-width: 1200px) {
   #homepage .content {
     flex-direction: column;
     align-items: center;
@@ -456,12 +456,20 @@ nav .show {
 #homepage .content #calendar {
   max-width: 400px;
   width: 100%;
-  max-width: 400px;
-  width: 100%;
   background-color: white;
   padding: 30px;
   box-sizing: content-box;
   border-radius: 15px;
+}
+@media only screen and (max-width: 1300px) {
+  #homepage .content #calendar {
+    padding: 15px;
+  }
+}
+@media only screen and (max-width: 1300px) and (max-width: 1200px) {
+  #homepage .content #calendar {
+    max-width: unset;
+  }
 }
 @media only screen and (max-width: 500px) {
   #homepage .content #calendar {
@@ -469,7 +477,7 @@ nav .show {
     box-sizing: border-box;
   }
 }
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 1200px) {
   #homepage .content #calendar #calendar-esports {
     display: none;
   }
@@ -567,6 +575,22 @@ nav .show {
   font-size: 40px;
   margin-bottom: 15px;
 }
+#homepage .content #deptCard {
+  height: fit-content;
+}
+@media only screen and (max-width: 1200px) {
+  #homepage .content #deptCard {
+    max-width: unset !important;
+    width: 100% !important;
+  }
+}
+#homepage .content #messCard {
+  margin-bottom: 20px;
+}
+#homepage .content .messContainer {
+  max-height: 800px;
+  overflow-y: auto;
+}
 #homepage .content #dept {
   max-width: 300px;
   width: 100%;
@@ -593,6 +617,25 @@ nav .show {
 
 #divisions {
   position: relative;
+}
+#divisions .row {
+  margin-bottom: 20px;
+}
+#divisions .note-editor .note-toolbar, #divisions .note-popover .popover-content {
+  background-color: #8080803d;
+}
+#divisions .accordion {
+  max-height: 450px;
+  overflow-y: auto;
+}
+@media only screen and (max-width: 900px) {
+  #divisions .row {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+#divisions .row .btn {
+  margin-bottom: 5px;
 }
 #divisions h2 {
   margin-bottom: 30px;

@@ -20,17 +20,14 @@
                 <input value="{{ editDivision.nameDivision }}" type="text" class="form-control form-control-lg" name="divisionName" id="divisionName" placeholder="Jméno oddílu" required>
             </div>
             <div class="form-group">
-                <label for="divisionChief">Vedoucí oddílu</label>
-                <input value="{{ editDivision.chief }}" type="text" class="form-control" name="divisionChief" id="divisionChief" placeholder="Vedoucí" required>
-            </div>
-            <div class="form-group">
-                <label for="emailContact">Email na vedoucího oddílu</label>
-                <input value="{{ editDivision.emailContact }}" type="email" class="form-control" name="emailContact" id="emailContact" placeholder="Email" >
-            </div>
-            <div class="form-group">
-                <label for="telContact">Telefon na vedoucího oddílu</label>
-                <input value="{{ editDivision.telContact }}" type="tel" class="form-control" aria-describedby="telHelp" name="telContact" id="telContact" pattern="^\+420([0-9]{3}[0-9]{3}[0-9]{3})\b" placeholder="Telefon" >
-                <small id="telHelp" class="form-text text-muted">Telefon zadávejte ve formátu: +420123456789</small>
+                <label for="divisionName">Vedoucí oddílu</label>
+                <select name="selectedChief" id="test" class="selectpicker form-control" required
+                        title="Vyberte uživatele"
+                        data-live-search="true">
+                    {% for user in users %}
+                        <option value="{{ user.id }}" data-subtext="{{ user.email }}" {% if editDivision.chiefUserId == user.id %} selected {% endif %}>{{ user.name }} {{ user.surname }}</option>
+                    {% endfor %}
+                </select>
             </div>
             <input value="{{ editDivision.id }}" type="hidden" name="divisionId">
             <button type="submit" name="submitEditDivisionForm" class="btn btn-primary">Upravit oddíl</button>

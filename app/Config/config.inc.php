@@ -63,6 +63,9 @@ const TABLE_TEAMS = "teams";
 /** Tabulka s oddilama. */
 const TABLE_DIVISIONS = "divisions";
 
+/** Tabulka s oddilama. */
+const TABLE_MESSAGES = "messages";
+
 
 //------------------------------ ADRESARE ------------------------------------
 

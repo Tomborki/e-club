@@ -7,7 +7,17 @@ class DivisionsController extends MainController
 
     public function zpracuj($parametry)
     {
-        $this->data['divisions'] = $this->db->getAllDivisions();
+        $allDivisions = $this->db->getAllDivisions();
+        $j = 0;
+
+        $this->data['allMessages'] = $this->db->getAllMessagesByDivisions();
+
+        foreach ($allDivisions as $division){
+            $allDivisions[$j]['chief'] = $this->db->getUserById($division['chiefUserId']);
+            $j++;
+        }
+
+        $this->data['divisions'] = $allDivisions;
 
         if(isset($_SESSION['userDivision'])){
             $this->data['userDivision'] = $_SESSION['userDivision'];
@@ -46,5 +56,48 @@ class DivisionsController extends MainController
         }
 
         $this->redirect(divisions);
+    }
+
+    public function FORM_addNewMessage(){
+        if(isset($_POST['submitAddMessForm'])){
+            $content = $_POST['messContent'];
+            $title = $_POST['messTitle'];
+            $chiefId = $_POST['chiefId'];
+            $divisionId = $_POST['divisionId'];
+
+            if($this->db->addMessage($title, $content, $chiefId, $divisionId)){
+                Flash::success('Zpráva byla přidána');
+            }else{
+                Flash::error('Zprávu se nepodařilo přidat');
+            }
+
+            $this->redirect(divisions);
+        }else{
+            $this->redirect(divisions);
+        }
+    }
+
+    /**
+     * @param $idMess
+     * Akce odebira aktualitu podle jeho id
+     */
+    public function ACTION_removeMess($idMess){
+
+        $mess = $this->db->getMessageById($idMess);
+
+        if($mess['chiefId'] == $_SESSION['userID']){
+            if($this->db->removeMessById($idMess)){
+                Flash::success('Zpráva byla odebrána');
+            }else{
+                Flash::error('Zprávu se nepovedlo odebrat');
+            }
+            $this->redirect(divisions);
+        }else{
+            $this->redirect(divisions);
+        }
+
+
+
+
     }
 }

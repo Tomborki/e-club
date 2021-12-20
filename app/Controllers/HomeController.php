@@ -9,6 +9,7 @@ class HomeController extends MainController
         $this->data['name'] = $_SESSION['name'];
         $this->data['dept'] = $this->getDept();
         $this->data['userDivision'] = $_SESSION['userDivision'];
+        $this->data['currentMessages'] = $this->db->getAllMessagesByIdDivision($_SESSION['userDivision']);
 
         if($_SESSION['userDivision'] != null){
             $allMatches = $this->db->getMatchesByDivisionIdWithNames($_SESSION['userDivision']);

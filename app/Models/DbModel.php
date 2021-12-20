@@ -255,14 +255,12 @@ class DbModel {
      * @return bool
      * Metoda pridava novy oddil. Pokud se prikaz nevykoda dobre, metoda vrati false... jinak true.
      */
-    public function addDivision($nameDivision, $chief, $telContact = NULL, $emailContact = NULL){
-        $query = $this->pdo->prepare("INSERT INTO " . TABLE_DIVISIONS . " (nameDivision, chief, telContact, emailContact) VALUES (:nameDivision, :chief, :telContact, :emailContact)");
+    public function addDivision($nameDivision, $chief){
+        $query = $this->pdo->prepare("INSERT INTO " . TABLE_DIVISIONS . " (nameDivision, chiefUserId) VALUES (:nameDivision, :chief)");
 
         $result = $query->execute(array(
             ":nameDivision" => $nameDivision,
             ":chief" => $chief,
-            ":telContact" => $telContact,
-            ":emailContact" => $emailContact
         ));
 
         // pokud neni false, tak vratim vysledek, jinak null
@@ -319,14 +317,12 @@ class DbModel {
      * @return mixed
      * Metoda vrati oddil podle jejiho id
      */
-    public function editDivision($idDivision, $nameDivision, $chief, $telContact = NULL, $emailContact = NULL){
-        $query = $this->pdo->prepare("UPDATE " . TABLE_DIVISIONS . " SET nameDivision=:nameDivision, chief=:chief, telContact=:telContact, emailContact=:emailContact  WHERE id=:idDivision");
+    public function editDivision($idDivision, $nameDivision, $chief){
+        $query = $this->pdo->prepare("UPDATE " . TABLE_DIVISIONS . " SET nameDivision=:nameDivision, chiefUserId=:chief  WHERE id=:idDivision");
         $result = $query->execute(array(
             "idDivision" => $idDivision,
             ":nameDivision" => $nameDivision,
             ":chief" => $chief,
-            ":telContact" => $telContact,
-            ":emailContact" => $emailContact
         ));
 
         // pokud neni false, tak vratim vysledek, jinak null
@@ -476,7 +472,7 @@ class DbModel {
     public function editUserWithoutPassAvatar($userId, $username, $name, $surname, $email, $tel, $idRole = NULL){
         $query = $this->pdo->prepare("UPDATE " . TABLE_USER . " SET username=:username, name=:name, surname=:surname, email=:email, tel=:tel, idRole=:idRole  WHERE id= :userId");
         $result = $query->execute(array(
-            "username" => $username,
+            ":username" => $username,
             ":name" => $name,
             ":surname" => $surname,
             ":email" => $email,
@@ -603,11 +599,16 @@ class DbModel {
                 $currentDivision = $this->getDivisionById($user['idDivision']);
                 $result[$j]['user']['hasDivision'] = true;
                 $result[$j]['user']['division'] = $currentDivision['nameDivision'];
-                $result[$j]['user']['divisionChief'] = $currentDivision['chief'];
-                $result[$j]['user']['divisionChiefTel'] = $currentDivision['telContact'];
-                $result[$j]['user']['divisionChiefEmail'] = $currentDivision['emailContact'];
 
                 $divisionFines = $this->getFinesAmountsByDivisionId($user['idDivision']);
+                $division = $this->getDivisionById($user['idDivision']);
+                $divisionChief = $this->getUserById($division['chiefUserId']);
+
+                $result[$j]['division']['chiefName'] = $divisionChief['name'];
+                $result[$j]['division']['chiefSurname'] = $divisionChief['surname'];
+                $result[$j]['division']['chiefTel'] = $divisionChief['tel'];
+                $result[$j]['division']['chiefEmail'] = $divisionChief['email'];
+
                 $result[$j]['division']['unpaidAmount'] = $divisionFines[0];
                 $result[$j]['division']['paidAmount'] = $divisionFines[1];
                 $result[$j]['division']['allAmount'] = $divisionFines[2];
@@ -879,6 +880,114 @@ class DbModel {
         }
 
         return $allMatches;
+    }
+
+    /**
+     * @param $title
+     * @param $content
+     * @param $chiefId
+     * @param $divisionId
+     * @return bool
+     * Metoda prida zpravu do databaze
+     */
+    public function addMessage($title, $content, $chiefId, $divisionId){
+        $query = $this->pdo->prepare("INSERT INTO " . TABLE_MESSAGES . " (title, content, date, chiefId, divisionId) VALUES (:title, :content, :date, :chiefId, :divisionId)");
+
+        date_default_timezone_set('Europe/Prague');
+        $today = date("Y-m-d H:i:s");
+
+        $result = $query->execute(array(
+            ":title" => $title,
+            ":content" => $content,
+            ":date" => $today,
+            ":chiefId" => $chiefId,
+            ":divisionId" => $divisionId,
+        ));
+
+        // pokud neni false, tak vratim vysledek, jinak null
+        if ($result) {
+            // neni false
+            return true;
+        } else {
+            // je false
+            return false;
+        }
+    }
+
+    /**
+     * @return array
+     * Metoda vradi pole se vsema zpravama. Jako klice prvniho stupne pole je id oddilu
+     */
+    public function getAllMessagesByDivisions(){
+        $query = $this->pdo->prepare("SELECT * FROM " . TABLE_MESSAGES . " ORDER BY date DESC");
+        $result = array();
+
+        $query->execute();
+
+        $messages = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($messages as $mess){
+            $result[$mess['divisionId']][] = $mess;
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param $id
+     * @return bool
+     * Metoda odstrani zpravu z db podel jeji id
+     */
+    public function removeMessById($id){
+        $query = $this->pdo->prepare("DELETE FROM " . TABLE_MESSAGES . " WHERE id = :idMess");
+        $result = $query->execute(array(
+            ":idMess" => $id,
+        ));
+
+        // pokud neni false, tak vratim vysledek, jinak null
+        if ($result) {
+            // neni false
+            return true;
+        } else {
+            // je false
+            return false;
+        }
+    }
+
+    /**
+     * @param $idDivision
+     * @return array|false
+     * Metoda vraci vsechny zpravy pro oddil identifikovany podle jeho id
+     */
+    public function getAllMessagesByIdDivision($idDivision){
+        $query = $this->pdo->prepare("SELECT *  FROM " . TABLE_MESSAGES . " WHERE divisionId = :divisionId ORDER BY date DESC");
+        $result = $query->execute(array(
+            ":divisionId" => $idDivision,
+        ));
+
+        $allMess  = $query->fetchAll(PDO::FETCH_ASSOC);
+        $j = 0;
+
+        foreach ($allMess as $mess){
+            $allMess[$j]['chief'] = $this->getUserById($mess['chiefId']);
+            $j++;
+        }
+
+        return $allMess;
+    }
+
+    /**
+     * @param $idMess
+     * @return mixed
+     * Metoda vraci jednu konkretni zpravu podle jeji id
+     */
+    public function getMessageById($idMess){
+        $query = $this->pdo->prepare("SELECT *  FROM " . TABLE_MESSAGES . " WHERE id = :idMess");
+        $query->execute(array(
+            ":idMess" => $idMess,
+        ));
+
+        return $query->fetchAll(PDO::FETCH_ASSOC)[0];
     }
 
 }

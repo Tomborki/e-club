@@ -14,6 +14,88 @@
 {% block content %}
     <div id="divisions">
         <h2>Oddíly</h2>
+        <div class="row">
+        {% for division in divisions %}
+            {% if division.chief.id == userID %}
+                    <div class="col">
+                        <div class="card">
+                            <h5 class="card-header">Můj oddíl: {{ division.nameDivision }}</h5>
+                            <div class="card-body">
+                                <p class="card-text">Jsem vedoucí tohoto oddílu</p>
+                                <a href="#" data-toggle="modal" data-target="#messModal{{ loop.index }}" class="btn btn-success">Napsat novou zprávu</a>
+                                <a href="#" data-toggle="modal" data-target="#oldMessModal{{ loop.index }}" class="btn btn-secondary">Zobrazit starší zprávy</a>
+                            </div>
+                        </div>
+                    </div>
+                <div class="modal fade" id="messModal{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="messModal{{ loop.index }}Title" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="messModal{{ loop.index }}Title">Napsat novou zprávu</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" action="/{{ pageName }}?form=addNewMessage">
+                                    <div class="form-group">
+                                        <label for="divisionName">Název zprávy</label>
+                                        <input type="text" class="form-control form-control-lg" name="messTitle" id="messTitle" placeholder="Název zprávy" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="messContent">Zpráva</label>
+                                        <textarea class="summernote" name="messContent"></textarea>
+                                    </div>
+                                    <input value="{{ division.id }}" type="hidden" name="divisionId">
+                                    <input value="{{ userID }}" type="hidden" name="chiefId">
+                                    <button type="submit" name="submitAddMessForm" class="btn btn-primary float-right ml-1">Přidat zprávu</button>
+                                    <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Zavřít</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="oldMessModal{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="oldMess{{ loop.index }}Title" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="messModal{{ loop.index }}Title">Starší zprávy</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="accordion" id="accordionExample">
+                                {% for mess in allMessages[division.id] %}
+                                    <div class="card">
+                                        <div class="card-header" id="headingOne">
+                                            <h5 class="mb-0">
+                                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{ loop.index }}" aria-expanded="true" aria-controls="collapseOne">
+                                                    {{ mess.title }} | {{ mess.date|date("d.m.Y") }}
+                                                </button>
+                                                <a href="divisions?action=removeMess({{ mess.id }})" class="btn btn-danger float-right" type="button">
+                                                    <i class='bx bx-trash'></i>
+                                                </a>
+                                            </h5>
+                                        </div>
+
+                                        <div id="collapse{{ loop.index }}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                            <div class="card-body">
+                                             {{ mess.content|raw }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            {% endif %}
+        {% endfor %}
+        </div>
         <span class="drag-info">posouvejte doleva <i class='bx bx-arrow-from-left'></i></span>
         <div class="table-container">
             <table class="table table-striped">
@@ -43,16 +125,16 @@
                         {% endif %}
                     </td>
                     <td class="align-middle">{{ division.nameDivision }}</td>
-                    <td class="align-middle">{{ division.chief }}</td>
+                    <td class="align-middle">{{ division.chief.name }} {{ division.chief.surname }}</td>
 
-                    {% if division.telContact != null %}
-                        <td class="align-middle"><a href="tel:{{ division.telContact }}">{{ division.telContact }}</a></td>
+                    {% if division.chief.tel != null %}
+                        <td class="align-middle"><a href="tel:{{ division.chief.tel }}">{{ division.chief.tel }}</a></td>
                     {% else %}
                         <td class="align-middle">---</td>
                     {% endif %}
 
-                    {% if division.emailContact != null %}
-                        <td class="align-middle"><a href="mailto:{{ division.emailContact }}">{{ division.emailContact }}</a></td>
+                    {% if division.chief.email != null %}
+                        <td class="align-middle"><a href="mailto:{{ division.chief.email }}">{{ division.chief.email }}</a></td>
                     {% else %}
                         <td class="align-middle">---</td>
                     {% endif %}
@@ -65,8 +147,13 @@
 
 {% block scripts %}
     <script>
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
+        $('.summernote').each(function() {
+            $(this).summernote({
+                height: 300,                 // set editor height
+                minHeight: null,             // set minimum height of editor
+                maxHeight: null,             // set maximum height of editor
+                focus: true                  // set focus to editable area after initializing summernote
+            });
         })
     </script>
 {% endblock scripts%}

@@ -1,6 +1,30 @@
 #divisions{
   position: relative;
-  
+
+  .row{
+    margin-bottom: 20px;
+  }
+
+  .note-editor .note-toolbar, .note-popover .popover-content{
+    background-color: #8080803d;
+  }
+
+  .accordion{
+    max-height: 450px;
+    overflow-y: auto;
+  }
+
+  .row{
+    @media only screen and (max-width: 900px) {
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .btn{
+      margin-bottom: 5px;
+    }
+  }
+
   h2{
     margin-bottom: 30px;
   }
