@@ -52,17 +52,16 @@ INSERT INTO `finer` (`id`, `typeFines_id`, `users_id`, `date`, `paid`, `cashierI
 (11,	3,	5,	'2019-12-21 12:05:43',	0,	15),
 (12,	6,	5,	'2019-12-21 12:05:43',	0,	15),
 (13,	4,	15,	'2021-12-19 00:07:12',	0,	15),
-(14,	20,	15,	'2021-12-19 00:08:00',	0,	15),
-(15,	26,	15,	'2021-12-19 00:08:00',	0,	15),
+(15,	26,	15,	'2021-12-19 00:08:00',	1,	15),
 (16,	33,	15,	'2021-12-19 00:08:00',	0,	15),
 (17,	36,	15,	'2021-12-19 00:08:00',	0,	15),
 (18,	5,	15,	'2021-12-19 01:15:48',	0,	15),
 (22,	3,	15,	'2021-12-19 01:19:11',	1,	15),
-(23,	3,	2,	'2021-12-19 01:20:23',	0,	15),
 (24,	5,	2,	'2021-12-19 01:20:23',	0,	15),
 (27,	21,	2,	'2021-12-19 03:08:34',	0,	2),
 (28,	21,	3,	'2021-12-19 03:08:34',	1,	2),
-(29,	2,	15,	'2021-12-19 16:00:12',	1,	15);
+(29,	2,	15,	'2021-12-19 16:00:12',	1,	15),
+(30,	12,	18,	'2021-12-21 00:50:09',	0,	15);
 
 DROP TABLE IF EXISTS `matches`;
 CREATE TABLE `matches` (
@@ -111,9 +110,9 @@ CREATE TABLE `messages` (
 
 INSERT INTO `messages` (`id`, `title`, `content`, `date`, `chiefId`, `divisionId`) VALUES
 (5,	'Informace ohledně soustředění',	'<p>Ahoj sportovci,&nbsp;<br>posílám informace ohledně zimního soustředění. Informace jsou dostupné na následujícím odkaze:&nbsp;<a href=\"https://www.youtube.com/watch?v=dQw4w9WgXcQ&amp;ab_channel=RickAstley\" target=\"_blank\">Odkaz na informace</a><br><br>Díky a sportu zdar!&nbsp;</p>',	'2021-12-20 21:27:03',	15,	1),
-(6,	'Zprava pro hráče',	'<p>Blalalalalala</p><p>sfjsalfkj<b>aslkfjlsadkf sa</b></p><p>fsadfasdfasdfsadf</p><ul><li>sfsadfasdf</li><li>asdf</li><li>asdf</li></ul>',	'2021-12-20 21:52:43',	15,	1),
 (3,	'etstets',	'<p>estest</p>',	'2021-12-20 17:22:47',	15,	7),
-(4,	'Testovací zpráva',	'<p><b>Ahoj</b></p><p>Musím říct, že tuty zprávy jsou super!&nbsp;</p>',	'2021-12-20 20:40:39',	15,	5);
+(4,	'Testovací zpráva',	'<p><b>Ahoj</b></p><p>Musím říct, že tuty zprávy jsou super!&nbsp;</p>',	'2021-12-20 20:40:39',	15,	5),
+(9,	'Testovací zpráva',	'<p>asdfasfasfsadf</p><p>asdf</p><p>asdf</p><p>asdfasdfasdf</p>',	'2021-12-21 00:40:43',	15,	1);
 
 DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles` (
@@ -220,14 +219,14 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 INSERT INTO `users` (`id`, `username`, `password`, `name`, `surname`, `email`, `tel`, `idRole`, `idDivision`, `cashier`, `avatarImageName`) VALUES
-(2,	'terka',	'$2y$10$xGgL46PabI0DUC3RqRy0XeO.VyxKqvxSaEBhmi8BNhzASYol8MztS',	'Terka',	'Richterová',	'terka@gmail.com',	'+420789456123',	2,	1,	1,	'avatar9ec937e7b5ab6614fd3726e36e5f3cad4ee5c7e8.jpg'),
+(2,	'terka',	'$2y$10$xGgL46PabI0DUC3RqRy0XeO.VyxKqvxSaEBhmi8BNhzASYol8MztS',	'Terka',	'Richterová',	'terka@gmail.com',	'+420789456123',	3,	1,	1,	'avatarbb4953fc74929b17f2e9114c3c69b85fde5203ff.jpg'),
 (3,	'filip',	'$2y$10$K/KLqtPNm6VpYkFO8GdltOmZrAWUu71B6upuxgaYF19SvMfK.sJ/m',	'Filip',	'Borkovec',	'asdf@gamilc.om',	'+420159852222',	3,	1,	1,	'avatar72d7e2267899ebb00b385217a6ec53a26aabe22e.png'),
-(5,	'petr',	'$2y$10$Zg3XtJo1SJvRePpm2/Udp.vfrVToH33QBBcnpczMDVg2oS91d9FNK',	'Petr',	'Bartovský',	'petr@gmail.com',	'+420111444777',	3,	4,	0,	'avatara81f91c2ddfd7eb7d139e5cc7b38f9f5e2623e05.jpg'),
-(15,	'tomborki',	'$2y$10$ApXG0k0uvZswKaQImzBNNuOQYBooNICwLqePfUMwx8W7JyGDkbem2',	'Tomáš',	'Borkovec',	'testsetse@seznam.cz',	'+420720141853',	1,	1,	0,	'avatar02c4680fbb78c1efc115965a4321345c57e2ba8f.jpg'),
-(16,	'michal',	'$2y$10$gFTTvoYqh3UTDOBLBgHM3etv6XQF9dV24pswlwj3Lk1ilKoFEZY2m',	'Michal',	'Čerepjuk',	'cery@gmail.com',	'+420156663225',	3,	1,	0,	'avatarba70c4f9d470fa22008add9d360d7bbecd2e7eee.jpg'),
-(17,	'dobrak',	'$2y$10$vNkDnrzeBTQmL8ks1vHude.CNKqBdmWFw/XUjyPovHNh/Mm5gXBxm',	'Josef',	'Dobrý',	'db@gmail.com',	'+420157441853',	3,	1,	0,	'avatar879a502cee6fc10de4fe4d50810bed391ecf01ee.jpg'),
-(18,	'tomik',	'$2y$10$FoNuMjChAZfgR6r90FdKgeoJvRL0/38v.2NR93X0cDRRZFNdBW1y6',	'Tomáš',	'Hanách',	'hanach@seznam.cz',	'+420987777456',	3,	5,	0,	'avatar08ee7803b800d9e2daf7d4c6e634825d3230bc4e.png'),
-(19,	'lhotakdavid',	'$2y$10$U7zbi8yPtNO3PM7uuDif8.pXfdlFi91D5H21EWnNiqATJOUYbrl5.',	'Jakub',	'Lhoták',	'lhotakdavid@gmail.com',	'+420155963255',	3,	5,	0,	'avatar397804bec3c42e259f5f1e8cf172c5922212ead3.jpg'),
-(20,	'jirkagertner',	'$2y$10$Rs.XEyaRjI3zNANmgusSYO4Px3zLSm3Omd0KZZ9RSQagCYfuZTUaG',	'Jiří',	'Gernter',	'jirkagertner@seznam.cz',	'+420147458889',	3,	NULL,	0,	'avatar218cb90a72b1f2b2adc79e358531aa7e4743d2e9.jpg');
+(5,	'petr',	'$2y$10$Zg3XtJo1SJvRePpm2/Udp.vfrVToH33QBBcnpczMDVg2oS91d9FNK',	'Petr',	'Bartovský',	'petr@gmail.com',	'+420111444777',	3,	4,	0,	'avatar7e51ff471e315bdbc789132238a72cb8920bc4a1.jpg'),
+(15,	'tomborki',	'$2y$10$OW/ZOhGJzYIIBXpXP3GcM.Aa8FCAIbXVH.QVivLpL2PAmrPDRC7TO',	'Tomáš',	'Borkovec',	'tomasborki@gmail.com',	'+420158559996',	1,	1,	0,	'avatarc34444a6ec18ca34e59526eb30d94717d9b069b4.jpg'),
+(16,	'michal',	'$2y$10$gFTTvoYqh3UTDOBLBgHM3etv6XQF9dV24pswlwj3Lk1ilKoFEZY2m',	'Michal',	'Čerepjuk',	'cery@gmail.com',	'+420156663225',	3,	1,	0,	'avatarb9504865f1b1d924f2b311bcee0c44517d13850d.jpg'),
+(17,	'dobrak',	'$2y$10$vNkDnrzeBTQmL8ks1vHude.CNKqBdmWFw/XUjyPovHNh/Mm5gXBxm',	'Josef',	'Dobrý',	'db@gmail.com',	'+420157441853',	3,	1,	0,	'avatar3e22a21c49de964fcb146d55221b1295211d4fab.jpg'),
+(18,	'tomik',	'$2y$10$FoNuMjChAZfgR6r90FdKgeoJvRL0/38v.2NR93X0cDRRZFNdBW1y6',	'Tomáš',	'Hanách',	'hanach@seznam.cz',	'+420987777456',	1,	5,	0,	'avatar08ee7803b800d9e2daf7d4c6e634825d3230bc4e.png'),
+(19,	'lhotakdavid',	'$2y$10$U7zbi8yPtNO3PM7uuDif8.pXfdlFi91D5H21EWnNiqATJOUYbrl5.',	'Jakub',	'Lhoták',	'lhotakdavid@gmail.com',	'+420155963255',	3,	5,	0,	'avatar61a15c0cd7c53d13472a4ae1c92e5c4578290f53.jpg'),
+(20,	'jirkagertner',	'$2y$10$Rs.XEyaRjI3zNANmgusSYO4Px3zLSm3Omd0KZZ9RSQagCYfuZTUaG',	'Jiří',	'Gernter',	'jirkagertner@seznam.cz',	'+420147458889',	3,	NULL,	0,	'avatarce7c6a2669424751f22444a65904881ad2f81460.jpg');
 
--- 2021-12-20 21:00:12
+-- 2021-12-21 00:01:16
